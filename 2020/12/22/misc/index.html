@@ -60,7 +60,7 @@
 
         </div>
         <div class="content markdown">
-            <p>工具的使用：<br>stegsolve:切到D盘然后用命令java -jar stegsolve.jar打开<br>    File Format:文件格式，这个主要是查看图片的具体信息<br>    Data Extract:数据抽取，图片中隐藏数据的抽取(lsb隐写,rgb零位勾为1，bit order勾为lsb先preview再save bin)<br>    Frame Browser:帧浏览器，主要是对GIF之类的动图进行分解，动图变成一张张图片，便于查看<br>    Image Combiner:拼图，图片拼接<br>做过的题目类型：<br>1.图类型a:动图：1.flag包含在图中<br>        b：静图：1.图片实际大小与展示大小不符，通过01 editor来修改<br>                2.改后缀为txt，然后找flag<br>                3.lsb隐写，用stegsolve找信息<br>2.压缩包a.带密码：1.用ARCHPR暴力破解<br>3.流量包1.用wireshark打开找password即为flag</p>
+            <p>工具的使用：<br>stegsolve:切到D盘然后用命令java -jar stegsolve.jar打开<br>    File Format:文件格式，这个主要是查看图片的具体信息<br>    Data Extract:数据抽取，图片中隐藏数据的抽取(lsb隐写,rgb零位勾为1，bit order勾为lsb先preview再save bin)<br>    Frame Browser:帧浏览器，主要是对GIF之类的动图进行分解，动图变成一张张图片，便于查看<br>    Image Combiner:拼图，图片拼接<br>jphswin的使用：<br>seek是查找文件中的隐藏信息，输入密码，然后保存为txt文件，txt中的信息即为隐藏信息<br>kali中工具使用的命令<br>binwalk:binwalk+文件名 binwalk -e +文件名(提取文件)<br>zstge：zstge+文件名 zstge -a +文件名(查看详细信息)<br>做过的题目类型：<br>1.图类型a:动图：1.flag包含在图中<br>               2.jphs隐写使用工具jphswin<br>        b：静图：1.图片实际大小与展示大小不符，通过01 editor来修改<br>                2.改后缀为txt，然后找flag<br>                3.lsb隐写，用stegsolve找信息<br>                4.图片里包含其他文件，用binwalk命令为binwalk+文件名，然后用binwalk+-e+文件名提取文件<br>2.压缩包a.真加密：1.用ARCHPR暴力破解(提示四位密码)<br>       b.伪加密，找504B(504B0304是头文件标识，504B0506是目录结束标识)然后将09 00改为00 00(位于504B0102后面一个字节)<br>3.流量包1.用wireshark打开找password即为flag</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
