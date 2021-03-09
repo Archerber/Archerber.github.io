@@ -61,6 +61,9 @@
         </div>
         <div class="content markdown">
             <p>关于vmtools的安装<br>安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz /opt 然后 cd /opt |  tar  -zxvf ····tar.gz ls cd ····disturb ./···.pl<br>在当前目录打开终端：sudo apt-get install nautilus-open-terminal<br>关于pwntools<br>remote(“一个域名或者ip地址”, 端口) 会连接到我们指定的地址及端口。 然后该函数会返回remote对象 (这里，我们将该对象保存到了变量 c). remote对象主要用来进行对远程主机的输入输出. 它有如下几个方法：<br>send(payload) 发送payload<br>sendline(payload) 发送payload，并进行换行（末尾\n）<br>sendafter(some_string, payload) 接收到 some_string 后, 发送你的 payload<br>recvn(N) 接受 N(数字) 字符<br>recvline() 接收一行输出<br>recvlines(N) 接收 N(数字) 行输出<br>recvuntil(some_string) 接收到 some_string 为止<br>在第三行中, p32() 可以让我们转换整数到小端序格式. p32 转换4字节. p64 和 p16 则分别转换 8 bit 和 2 bit 数字. c.sendline 将我们的payload发送到远程主机. “AAAA” * 14 是我们到key的偏移量. Pwntools 不能自动运算偏移量，用户需要自行计算。</p>
+<p>got表的地址+libc.sys中的地址才是真实地址，plt与got中的数据一一对应 plt表中的数据与got表中的数据存在偏移量，偏移量+plt=got，然后libc.sys中的数据相当于偏移量  libc.got中函数的地址=libc.got的基地址+sys中的偏移量 </p>
+<p>elf=ELF(“./level3”)<br>libc=ELF(“./libc_32.so.6”)这两句是引入plt和got表以及symbols<br>write_plt=elf.plt[‘write’]<br>write_got=elf.got[‘write’]<br>这些为引入相应的函数</p>
+<p>关于checksec的各个保护机制<br>1.PELRO主要针对got改写的保护方式<br>2.stack-canary栈溢出保护(通过向栈中插入信息然后查看该信息是否被改写)<br>3.NX开启后栈中的数据没有执行权限，但是可以通过rop绕过<br>4.ASLR使运行时栈堆中的数据的加载地址以及共享库的加载地址随机化，PIE则在编译时将程序编译为位置无关，即程序运行时各个段（如代码段等）加载的虚拟地址也是在装载时才确定。<br>5.FORTIFY<br>加了这个保护之后,一些敏感函数如read, fgets,memcpy, printf等等可能<br>导致漏洞出现的函数都会被替换成__read_chk,__fgets_chk, __memcpy_chk, __printf_chk等。<br>这些带了chk的函数会检查读取/复制的字节长度是否超过缓冲区长度，<br>通过检查诸如%n之类的字符串位置是否位于可能被用户修改的可写地址，<br>避免了格式化字符串跳过某些参数（如直接%7$x）等方式来避免漏洞出现。<br>开启了FORTIFY保护的程序会被checksec检出，此外，在反汇编时直接查看got表也会发现chk函数的存在</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
