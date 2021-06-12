@@ -89,7 +89,7 @@
 <meta property="og:image" content="http://example.com/images/chunk.png">
 <meta property="og:image" content="http://example.com/images/largebins.png">
 <meta property="article:published_time" content="2021-04-16T12:52:00.000Z">
-<meta property="article:modified_time" content="2021-05-27T12:10:05.886Z">
+<meta property="article:modified_time" content="2021-06-12T07:39:27.623Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
@@ -342,11 +342,17 @@
 <p>mmap<br>将文件或者其他对象映射进内存，当分配的内存大于128时就需要使用mmap了<br>详情见：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/huxiao-tee/p/4660352.html">https://www.cnblogs.com/huxiao-tee/p/4660352.html</a></p>
 <p>bins<br>ptmalloc通过bins将chunk联系起来，并通过不同的索引使用不同的chunk，bins中包括 unsorted bins、small bins，largebins，这些bins中储存的chunk都是通过双向链表联系起来的</p>
 <p>fastbins<br>当malloc申请的内存小于64B(32位)，128B(64位)时，会使用fastbin，fastbin通过单向链表将bins连起来，fastbins最多支持10个bins，从8B到80B，fastbins中的chunk的p位始终为1，保证不回被合并，只有当某个特定的时候才会被合并</p>
-<p>smallbins<br>索引从2到63，共62个bin，为循环双向链表，chunk的大小从16B-63B，每个bins中存放的chunk大小固定</p>
+<p>smallbins<br>索引从2到63，共62个bin，为循环双向链表，chunk的大小从16B-63B，每个bins中存放的chunk大小固定，64位最大为0x400</p>
 <p>largebins<br>见下图<br><img src="/images/largebins.png" alt="avatar"></p>
 <p>unsortbins<br>unsortedbins只有一个bin，chunk为乱序，chunk被分割之后如果剩下的部分大于64B就被放到这里(当释放一个不属于fastbins的chunk，chunk会先到这里)，可以理解为回收chunk的缓存区，当unsortbin中只有一个bin时，他的fd以及bk会指向main_arena，如果未从fastbin中找到合适的chunk，会从unsorted bin中找起</p>
 <p>top chunk<br>当free的chunk大于64B时，如果与topchunk相邻，该chunk会与topchunk合并(释放fastbin不用担心，必不可能与topchunk相邻)</p>
 <p>堆块合并<br>当free掉两个空闲且相邻的chunk(非fastbin)之后，这两个chunk会合并成一个大chunk，然后放入unsorted bin中，fastbin中的pre_in_use始终为1，不会发生堆块合并</p>
+<p>关于free时chunk的去向：<br>当我们free掉一个chunk时，系统会根据这个chunk的大小来判断属于哪种类型的chunk，如果属于fastbin，则将它放入fastbin中，不属于则触发unlink，先合并物理低地址块再合并物理高地址块，然后放入unsorted bin中</p>
+<p>unlink中free时检查前一个chunk是否在使用，如果未使用，则当前chunksize被修改为两个chunk之和，指针移到前一个chunk处，然后前一个chunk被删除(向后合并)</p>
+<p>free fast chunk时进行的操作：根据chunk的大小放入对应的bin中</p>
+<p>malloc chunk时进行的操作：检查大小是否与索引对应</p>
+<p>libc-2.26及以后加入了tcache，用以加快chunk的分配速度，free一个chunk时，会先尝试放入tcachebins中，也因此要使chunk到<br>fastbin中，应先free7个同样大小的chunk，bin每一个tcache最多包含7个块，<br>tcache中chunk在32位从12-512bytes,64位是24-1024bytes需要超过0x400才能进unsortbin</p>
+<p>当用户申请chunk的流程：<br>先在fastbin中寻找chunk，如果没找到则从small bin(判断大小是不是小于512B)中寻找，这时再没找到就会从unsorted bin中寻找，此时，unsorted bin中有属于smallbin中的chunk时，就会将chunk切割，然后用户就能得到chunk，并且得到的chunk的fd是切割前大chunk的fd</p>
 
       
     </div>

