@@ -80,9 +80,9 @@
 
 
 <meta name="description" content="工具安装关于vmtools的安装安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz &#x2F;opt 然后 cd &#x2F;opt |  tar  -zxvf ····tar.gz ls cd ····disturb .&#x2F;···.pl在当前目录打开终端：sudo apt-get install nautilus-open-terminalpwntools补全gcc库(学习的时候">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:title" content="pwn学习笔记">
-<meta property="og:url" content="http://example.com/drafts/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html">
+<meta property="og:url" content="http://example.com/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="工具安装关于vmtools的安装安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz &#x2F;opt 然后 cd &#x2F;opt |  tar  -zxvf ····tar.gz ls cd ····disturb .&#x2F;···.pl在当前目录打开终端：sudo apt-get install nautilus-open-terminalpwntools补全gcc库(学习的时候">
 <meta property="og:locale" content="zh_CN">
@@ -248,24 +248,86 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">pwn学习笔记</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>工具安装<br>关于vmtools的安装<br>安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz /opt 然后 cd /opt |  tar  -zxvf ····tar.gz ls cd ····disturb ./···.pl<br>在当前目录打开终端：sudo apt-get install nautilus-open-terminal<br>pwntools<br>补全gcc库(学习的时候有用)<br>libcsearcher:<br>git clone <a target="_blank" rel="noopener" href="https://github.com/lieanu/LibcSearcher.git">https://github.com/lieanu/LibcSearcher.git</a><br>cd LibcSearcher<br>sudo python setup.py develop</p>
+          <h1 class="post-title" itemprop="name headline">pwn学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-04T10:02:00+08:00">
+                2021-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>工具安装<br>关于vmtools的安装<br>安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz /opt 然后 cd /opt |  tar  -zxvf ····tar.gz ls cd ····disturb ./···.pl<br>在当前目录打开终端：sudo apt-get install nautilus-open-terminal<br>pwntools<br>补全gcc库(学习的时候有用)<br>libcsearcher:<br>git clone <a target="_blank" rel="noopener" href="https://github.com/lieanu/LibcSearcher.git">https://github.com/lieanu/LibcSearcher.git</a><br>cd LibcSearcher<br>sudo python setup.py develop</p>
 <p>git<br>gdb(+peda)<br>git</p>
 <p>pwntools<br>remote(“一个域名或者ip地址”, 端口) 会连接到我们指定的地址及端口。 然后该函数会返回remote对象 (这里，我们将该对象保存到了变量 c). remote对象主要用来进行对远程主机的输入输出. 它有如下几个方法：<br>send(payload) 发送payload<br>sendline(payload) 发送payload，并进行换行（末尾\n）<br>sendafter(some_string, payload) 接收到 some_string 后, 发送你的 payload<br>recvn(N) 接受 N(数字) 字符<br>recvline() 接收一行输出<br>recvlines(N) 接收 N(数字) 行输出<br>recvuntil(some_string) 接收到 some_string 为止<br>在第三行中, p32() 可以让我们转换整数到小端序格式. p32 转换4字节. p64 和 p16 则分别转换 8 bit 和 2 bit 数字. c.sendline 将我们的payload发送到远程主机. “AAAA” * 14 是我们到key的偏移量. Pwntools 不能自动运算偏移量，用户需要自行计算。</p>
 <p>got表的基地址+libc.sym中对应函数的地址==got中的地址<br>elf=ELF(“./level3”)<br>libc=ELF(“./libc_32.so.6”)这两句是引入plt和got表以及symbols<br>write_plt=elf.plt[‘write’]<br>write_got=elf.got[‘write’]<br>/bin/sh的地址可以在libc_32.so.6中找，通过strings -a -t x libc_32.so.6 | grep “/bin/sh”或者libc.seach[‘/bin/sh’].next()<br>main函数plt和got表调用不了，只能通过elf.sym[‘main’]调用<br>这些为引入相应的函数<br>write=libc_base-libc.sym[‘write’]<br>关于plt表与got表的理解:<br>      1.plt与got表的原理<br>      通过调用plt表，可以跳转到got表，从而得到函数的真实地址，通过这种调用函数的方式可以提高效率，不用一次把所有函数都加载到程序中去<br>      2.elf.got得到的只是got表的表地址，通过write函数等泄露出来的got表地址才是真实地址<br>libc=addr_got-obj.dump[‘对应函数’]<br>真实地址=libc+obj.dump[‘对应函数’]或者elf.sym[‘对应函数’]</p>
@@ -316,15 +378,57 @@
 <p>system系统调用：<br>当程序中缺少write函数等可以泄露libc的函数时，这时大概率需要使用系统调用，关于system系统调用的知识如下：<br>system系统调用号：11,存放在eax中<br>参数/bin/sh的地址，存放在ebx中<br>ecx：0<br>edx：0<br>int80(11,”/bin/sh”,null,null)</p>
 <p>关于peda的小技巧<br>通过pattern create + 长度 可以生成字符串<br>pattern offest + 栈顶的字符串可以显示偏移<br>不过最后4个或8个为ip<br>流程gdb ./pwn -&gt; pattern create 200 -&gt; start -&gt; c -&gt; 输入字符 -&gt;pattern offest aaaa</p>
 
-        
-      </div>
-      
-      
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/04/07/buupwn/" rel="prev" title="buupwn wp">
+                buupwn wp <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -377,7 +481,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

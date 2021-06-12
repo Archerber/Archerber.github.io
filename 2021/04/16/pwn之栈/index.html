@@ -80,9 +80,9 @@
 
 
 <meta name="description" content="当栈中不止可以溢出到eip，且程序中存在system以及&#x2F;bin&#x2F;sh时，此时可以直接跳转到system,payload&#x3D;’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)更复杂的情况(没有&#x2F;bin&#x2F;sh)：    1.寻找sh    2.手动将&#x2F;bin&#x2F;sh或者sh填充到某一已知地址 再复杂一点没给system：    1.有">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:title" content="pwn之栈">
-<meta property="og:url" content="http://example.com/drafts/pwn%E4%B9%8B%E6%A0%88.html">
+<meta property="og:url" content="http://example.com/2021/04/16/pwn%E4%B9%8B%E6%A0%88/index.html">
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="当栈中不止可以溢出到eip，且程序中存在system以及&#x2F;bin&#x2F;sh时，此时可以直接跳转到system,payload&#x3D;’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)更复杂的情况(没有&#x2F;bin&#x2F;sh)：    1.寻找sh    2.手动将&#x2F;bin&#x2F;sh或者sh填充到某一已知地址 再复杂一点没给system：    1.有">
 <meta property="og:locale" content="zh_CN">
@@ -248,24 +248,86 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/16/pwn%E4%B9%8B%E6%A0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">pwn之栈</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>当栈中不止可以溢出到eip，且程序中存在system以及/bin/sh时，此时可以直接跳转到system,payload=’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)<br>更复杂的情况(没有/bin/sh)：<br>    1.寻找sh<br>    2.手动将/bin/sh或者sh填充到某一已知地址</p>
+          <h1 class="post-title" itemprop="name headline">pwn之栈</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-16T20:47:00+08:00">
+                2021-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>当栈中不止可以溢出到eip，且程序中存在system以及/bin/sh时，此时可以直接跳转到system,payload=’a’*offest+’bbbb’+p32(system)+p32(system函数的返回地址)+p32(bin_ad)<br>更复杂的情况(没有/bin/sh)：<br>    1.寻找sh<br>    2.手动将/bin/sh或者sh填充到某一已知地址</p>
 <p>再复杂一点没给system：<br>    1.有puts，write等输出函数-&gt;泄露libc<br>    2.ropchain(系统调用)<br>    3.没开nx<br>    4.有mprotect</p>
 <p>再复杂一点只能溢出到eip：<br>    1.栈迁移(通过控制sp来控制程序流程)</p>
 <p>再复杂一点64位的程序：<br>    1.通过rop传参</p>
@@ -290,15 +352,61 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
 <p>当调用函数发生的过程：<br>push eip+4;<br>push ebp;<br>mov ebp,esp;</p>
 <p>结束：<br>leave == mov esp,ebp<br>ret ==pop eip</p>
 
-        
-      </div>
-      
-      
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/07/buupwn/" rel="next" title="buupwn wp">
+                <i class="fa fa-chevron-left"></i> buupwn wp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/04/16/pwn%E4%B9%8B%E5%A0%86/" rel="prev" title="pwn中堆的学习">
+                pwn中堆的学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -351,7 +459,7 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
