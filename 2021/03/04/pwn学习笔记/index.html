@@ -86,10 +86,12 @@
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="工具安装关于vmtools的安装安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz &#x2F;opt 然后 cd &#x2F;opt |  tar  -zxvf ····tar.gz ls cd ····disturb .&#x2F;···.pl在当前目录打开终端：sudo apt-get install nautilus-open-terminalpwntools补全gcc库(学习的时候">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/1d32aeb24f50118ff3b8cc213973f793.jpg">
 <meta property="article:published_time" content="2021-03-04T02:02:00.000Z">
-<meta property="article:modified_time" content="2021-06-12T11:32:35.424Z">
+<meta property="article:modified_time" content="2021-06-13T11:24:07.245Z">
 <meta property="article:author" content="Archer">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/1d32aeb24f50118ff3b8cc213973f793.jpg">
 
 
 
@@ -331,24 +333,24 @@
 <p>git<br>gdb(+peda)<br>git</p>
 <p>pwntools<br>remote(“一个域名或者ip地址”, 端口) 会连接到我们指定的地址及端口。 然后该函数会返回remote对象 (这里，我们将该对象保存到了变量 c). remote对象主要用来进行对远程主机的输入输出. 它有如下几个方法：<br>send(payload) 发送payload<br>sendline(payload) 发送payload，并进行换行（末尾\n）<br>sendafter(some_string, payload) 接收到 some_string 后, 发送你的 payload<br>recvn(N) 接受 N(数字) 字符<br>recvline() 接收一行输出<br>recvlines(N) 接收 N(数字) 行输出<br>recvuntil(some_string) 接收到 some_string 为止<br>在第三行中, p32() 可以让我们转换整数到小端序格式. p32 转换4字节. p64 和 p16 则分别转换 8 bit 和 2 bit 数字. c.sendline 将我们的payload发送到远程主机. “AAAA” * 14 是我们到key的偏移量. Pwntools 不能自动运算偏移量，用户需要自行计算。</p>
 <p>got表的基地址+libc.sym中对应函数的地址==got中的地址<br>elf=ELF(“./level3”)<br>libc=ELF(“./libc_32.so.6”)这两句是引入plt和got表以及symbols<br>write_plt=elf.plt[‘write’]<br>write_got=elf.got[‘write’]<br>/bin/sh的地址可以在libc_32.so.6中找，通过strings -a -t x libc_32.so.6 | grep “/bin/sh”或者libc.seach[‘/bin/sh’].next()<br>main函数plt和got表调用不了，只能通过elf.sym[‘main’]调用<br>这些为引入相应的函数<br>write=libc_base-libc.sym[‘write’]<br>关于plt表与got表的理解:<br>      1.plt与got表的原理<br>      通过调用plt表，可以跳转到got表，从而得到函数的真实地址，通过这种调用函数的方式可以提高效率，不用一次把所有函数都加载到程序中去<br>      2.elf.got得到的只是got表的表地址，通过write函数等泄露出来的got表地址才是真实地址<br>libc=addr_got-obj.dump[‘对应函数’]<br>真实地址=libc+obj.dump[‘对应函数’]或者elf.sym[‘对应函数’]</p>
-<p>关于checksec的各个保护机制<br>1.RELRO主要针对got改写的保护方式，full RELRO表示got表不可被改写，partial RELEO无plt指向的got表是只读的<br>2.stack-canary栈溢出保护(通过向栈中插入信息然后查看该信息是否被改写)<br>3.NX开启后栈中的数据没有执行权限，但是可以通过rop绕过<br>4.ASLR使运行时栈堆中的数据的加载地址以及共享库的加载地址随机化分为0，1，2三个等级，PIE则在编译时将程序编译为位置无关，即程序运行时各个段（如代码段等）加载的虚拟地址也是在装载时才确定。<br>5.FORTIFY<br>加了这个保护之后,一些敏感函数如read, fgets,memcpy, printf等等可能<br>导致漏洞出现的函数都会被替换成__read_chk,__fgets_chk, __memcpy_chk, __printf_chk等。<br>这些带了chk的函数会检查读取/复制的字节长度是否超过缓冲区长度，<br>通过检查诸如%n之类的字符串位置是否位于可能被用户修改的可写地址，<br>避免了格式化字符串跳过某些参数（如直接%7$x）等方式来避免漏洞出现。<br>开启了FORTIFY保护的程序会被checksec检出，此外，在反汇编时直接查看got表也会发现chk函数的存在</p>
+<p>关于checksec的各个保护机制<br>1.RELRO主要针对got改写的保护方式，full RELRO表示got表不可被改写，partial RELEO无plt指向的got表是只读的<br>2.stack-canary栈溢出保护(通过向栈中插入信息然后查看该信息是否被改写)<br>3.NX开启后栈中的数据没有执行权限，但是可以通过rop绕过<br>4.ASLR使运行时栈堆中的数据的加载地址以及共享库的加载地址随机化分为0，1，2三个等级，PIE则在编译时将程序编译为位置无关，即程序运行时各个段（如代码段等）加载的虚拟地址也是在装载时才确定。<br>5.FORTIFY<br>加了这个保护之后,一些敏感函数如read, fgets,memcpy, printf等等可能<br>导致漏洞出现的函数都会被替换成__read_chk,__ fgets_chk, __ memcpy_chk, __ printf_chk等。<br>这些带了chk的函数会检查读取/复制的字节长度是否超过缓冲区长度，<br>通过检查诸如%n之类的字符串位置是否位于可能被用户修改的可写地址，<br>避免了格式化字符串跳过某些参数（如直接%7$x）等方式来避免漏洞出现。<br>开启了FORTIFY保护的程序会被checksec检出，此外，在反汇编时直接查看got表也会发现chk函数的存在</p>
 <p>x86中，函数调用是直接将参数压栈，需要用的时候直接将参数放在栈上，调用的函数就能直接取得参数并运算,而x64中，参数多于6个才会用栈，依次是rdi,rsi,rdx,rcx,r8,r9</p>
 <p>ida：<br>        db表示一个字节，dw表示2个字节，dd表示4个字节<br>        unk表示未处理字节，algn表示对齐指令，stru表示结构体或者结构体数组<br>        tbyte表示浮点数，80位(或扩展精度浮点数)<br>        dbl浮点数，64位(或双精度数组)<br>        flt表示浮点数据，32位(或浮点数组)<br>        qword数据，64位数据(或4字节数组)<br>        dword数据，32位数据(或双字数组)<br>        word数据，16位数据(或字数组)<br>        byte数，字节(或字节数组)<br>        asc数据ASCII字符串<br>        seg数据，包含段地址值<br>        off数据，包含偏移量<br>        loc指令<br>        locret返回指令<br>        sub指令和子函数起点<br>        load:<br>        .init<br>        .plt<br>        .text<br>        .fini<br>        .jcr<br>        .bss:通常指用来存放程序中未初始化的全局变量的一块区域<br>        .got<br>        .rodata:只读数据段<br>        .text:分析代码段<br>        .data:数据段</p>
-<p>gdb调试：<br>r 可读 w 可写 x 可执行<br>si汇编层次的下一步，s源码层面的一步<br>b *(0x123456)给0x123456地址处的指令下断点 b+函数名字</p>
+<p>gdb调试：<br>r 可读 w 可写 x 可执行<br>si汇编层次的下一步，s源码层面的一步<br>b * (0x123456)给0x123456地址处的指令下断点 b+函数名字</p>
 <p>关于x的命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/nuf <span class="number">0x123456</span> //常用，</span><br><span class="line">x指令的格式是：x空格/nfu，nfu代表三个参数</span><br><span class="line">n代表显示几个单元（而不是显示几个字节，后面的u表示一个单元多少个字节），放在’/<span class="string">&#x27;后面</span></span><br><span class="line"><span class="string">u代表一个单元几个字节，b(一个字节)，h(俩字节)，w(四字节)，g(八字节)</span></span><br><span class="line"><span class="string">f代表显示数据的格式，f和u的顺序可以互换，也可以只有一个或者不带n，用的时候很灵活</span></span><br><span class="line"><span class="string">x 按十六进制格式显示变量。</span></span><br><span class="line"><span class="string">d 按十进制格式显示变量。</span></span><br><span class="line"><span class="string">u 按十六进制格式显示无符号整型。</span></span><br><span class="line"><span class="string">o 按八进制格式显示变量。</span></span><br><span class="line"><span class="string">t 按二进制格式显示变量。</span></span><br><span class="line"><span class="string">a 按十六进制格式显示变量。</span></span><br><span class="line"><span class="string">c 按字符格式显示变量。</span></span><br><span class="line"><span class="string">f 按浮点数格式显示变量。</span></span><br><span class="line"><span class="string">s 按字符串显示。</span></span><br><span class="line"><span class="string">b 按字符显示。</span></span><br><span class="line"><span class="string">i 显示汇编指令。</span></span><br><span class="line"><span class="string">x /10gx 0x123456 //常用，从0x123456开始每个单元八个字节，十六进制显示是个单元的数据</span></span><br><span class="line"><span class="string">x /10xd $rdi //从rdi指向的地址向后打印10个单元，每个单元4字节的十进制数</span></span><br><span class="line"><span class="string">x /10i 0x123456 //常用，从0x123456处向后显示十条汇编指令</span></span><br></pre></td></tr></table></figure>
-<p>find+”字符串”<br>stack查看栈<br>canary直接看canary的值<br>backtrace<br>show args<br>vmmap 文件名查看程序映射的情况<br>打印指令p(print)：<br>p fun_name //打印fun_name的地址，需要保留符号<br>p 0x10-0x08 //计算0x10-0x08的结果<br>p &amp;a //查看变量a的地址<br>p *(0x123456) //查看0x123456地址的值，注意和x指令的区别，x指令查看地址的值不用星号<br>p $rdi //显示rdi寄存器的值，注意和x的区别，这只是显示rdi的值，而不是rdi指向的值<br>p *($rdi) //显示rdi指向的值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/nuf <span class="number">0x123456</span> //常用，</span><br><span class="line">x指令的格式是：x空格/nfu，nfu代表三个参数</span><br><span class="line">n代表显示几个单元（而不是显示几个字节，后面的u表示一个单元多少个字节），放在<span class="string">&#x27;/&#x27;</span>后面</span><br><span class="line">u代表一个单元几个字节，b(一个字节)，h(俩字节)，w(四字节)，g(八字节)</span><br><span class="line">f代表显示数据的格式，f和u的顺序可以互换，也可以只有一个或者不带n，用的时候很灵活</span><br><span class="line">x 按十六进制格式显示变量。</span><br><span class="line">d 按十进制格式显示变量。</span><br><span class="line">u 按十六进制格式显示无符号整型。</span><br><span class="line">o 按八进制格式显示变量。</span><br><span class="line">t 按二进制格式显示变量。</span><br><span class="line">a 按十六进制格式显示变量。</span><br><span class="line">c 按字符格式显示变量。</span><br><span class="line">f 按浮点数格式显示变量。</span><br><span class="line">s 按字符串显示。</span><br><span class="line">b 按字符显示。</span><br><span class="line">i 显示汇编指令。</span><br><span class="line">x /10gx <span class="number">0x123456</span> //常用，从<span class="number">0x123456</span>开始每个单元八个字节，十六进制显示是个单元的数据</span><br><span class="line">x /10xd $rdi //从rdi指向的地址向后打印<span class="number">10</span>个单元，每个单元<span class="number">4</span>字节的十进制数</span><br><span class="line">x /10i <span class="number">0x123456</span> //常用，从<span class="number">0x123456</span>处向后显示十条汇编指令</span><br></pre></td></tr></table></figure>
+<p>find+”字符串”<br>stack查看栈<br>canary直接看canary的值<br>backtrace<br>show args<br>vmmap 文件名查看程序映射的情况<br>打印指令p(print)：<br>p fun_name //打印fun_name的地址，需要保留符号<br>p 0x10-0x08 //计算0x10-0x08的结果<br>p &amp;a //查看变量a的地址<br>p * (0x123456) //查看0x123456地址的值，注意和x指令的区别，x指令查看地址的值不用星号<br>p $rdi //显示rdi寄存器的值，注意和x的区别，这只是显示rdi的值，而不是rdi指向的值<br>p * ($rdi) //显示rdi指向的值</p>
 <p>Dynelf模板：<br>p = remote(ip, port)<br>def leak(addr):<br>       payload2leak_addr = “<strong><strong>” + pack(addr) + “</strong></strong>”<br>       p.send(payload2leak_addr)<br>       data = p.recv(4)<br>       return data<br>d = DynELF(leak, pointer = pointer_into_ELF_file, elf = ELFObject)<br>system_addr = d.lookup(‘system’, ‘libc’)<br>read_add = d.lookup(‘read’,’libc’)</p>
 <p>在 ELF 内存映射时，bss 段会被映射两次，例如bss:600D21 aCtfHereSTheFla db ‘CTF{Here’,27h,’s the flag on server}’,0 可以看到0x600D21即为flag的地址，但是这里的flag后面会被程序覆盖 此时只能另一个地址来得到flag<br>gdb命令：vmmap smashes查看程序映射的情况</p>
 <p>64位需要考虑堆栈平衡<br>关于函数指针的介绍<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/228.html">http://c.biancheng.net/view/228.html</a><br>函数的调用：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/clover-toeic/p/3755401.html%E8%BF%99%E7%AF%87blog%E8%AE%B2%E7%9A%84%E9%9D%9E%E5%B8%B8%E5%A5%BD">https://www.cnblogs.com/clover-toeic/p/3755401.html这篇blog讲的非常好</a></p>
-<p>shellcode编写：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35495684/article/details/79583232">https://blog.csdn.net/qq_35495684/article/details/79583232</a><br>“\x31\xc9\x31\xd2\x52\x68\x2f\x2f\x73\x68\x00\x68\x2f\x62\x6e\x89\xe3\x31\xc0\xb0\x0b\xcd\x80”</p>
+<p>shellcode编写：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35495684/article/details/79583232">https://blog.csdn.net/qq_35495684/article/details/79583232</a><br>“\x31\xc9\x31\xd2\x52\x68\x2f\x2f\x73\x68\x00\x68\x2f\x62\x6e\x89\xe3\x31\xc0\xb0\x0b\xcd\x80”(25)<br>“\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80”(23)</p>
 <p>当使用git clone 下载时速度慢的解决方法：使用github的镜像网站进行访问，github.com.cnpmjs.org，我们将原本的网站中的github.com 进行替换。</p>
 <p>小端与大端:<br>小端:<br>      0x00 78<br>      0x01 56<br>      0x02 34<br>      0x03 12<br>大端与小端相反</p>
 <p>ldd pwnme,查看libc文件的加载位置是否会变<br>echo 0 &gt; /proc/sys/kernel/randomize_va_space,关闭整个系统的地址随机化保护。<br>layout asm打开汇编调试窗口</p>
-<p>获得bss_addr`<br>      elf=ELF(‘./level3’) bss_addr=elf.bss()(无libc文件)<br>      strings -a -t x libc_32.so.6 | grep “/bin/sh”</p>
+<p>获得bss_addr<br>      elf=ELF(‘./level3’) bss_addr=elf.bss()(无libc文件)<br>      strings -a -t x libc_32.so.6 | grep “/bin/sh”</p>
 <p>context设置context(os=’linux’, arch=’amd64’, log_level=’debug’)</p>
-<p>read函数<br>原型<br>ssize_t read(int fd, void *buf, size_t count);<br>fd 设为0时就可以从输入端读取内容    设为0<br>buf 设为我们想要执行的内存地址      设为我们已找到的内存地址0x80EB000<br>size 适当大小就可以               只要够读入shellcode就可以，设置大点无所谓</p>
-<p>mprotect函数可以修改内存权限为可读可写可执行<br>原型<br>int mprotect(void *addr, size_t len, int prot);<br>addr 内存启始地址<br>len  修改内存的长度<br>prot 内存的权限为7可执行</p>
+<p>read函数<br>原型<br>ssize_t read(int fd, void * buf, size_t count);<br>fd 设为0时就可以从输入端读取内容    设为0<br>buf 设为我们想要执行的内存地址      设为我们已找到的内存地址0x80EB000<br>size 适当大小就可以               只要够读入shellcode就可以，设置大点无所谓</p>
+<p>mprotect函数可以修改内存权限为可读可写可执行<br>原型<br>int mprotect(void * addr, size_t len, int prot);<br>addr 内存启始地址<br>len  修改内存的长度<br>prot 内存的权限为7可执行</p>
 <p>ROPgadget使用<br>命令ROPgadget –binary 文件名 –only ‘汇编指令’ | grep ‘一定包含的内容’<br>ROPgadget 查找字符串: ROPgadget –binary pwn –string ‘sh’<br>生成ROPchain<br>ROPgadget –binary pwn –ropchain</p>
 <p>onegadget使用<br><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-261112.html">https://bbs.pediy.com/thread-261112.html</a><br>one_gadget libc-2.23.so</p>
 <p>在64位中，当参数少于6个时，优先使用rdi,rsi,rdx,rcx,r8,r9几个寄存器保存参数。</p>
@@ -371,12 +373,12 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> write(fd, buf, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对应的栈</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">00000000</span>  r              db <span class="number">4</span> dup(?)</span><br><span class="line">+<span class="number">00000004</span> fd              dd ?</span><br><span class="line">+<span class="number">00000008</span> buf             dd ?                    ; offset</span><br><span class="line">+<span class="number">0000000</span>C n               dd ?</span><br></pre></td></tr></table></figure>
-<p>fd为1时为打印*buf对应的内容</p>
+<p>fd为1时为打印* buf对应的内容</p>
 <p>read函数<br>原型</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> nbytes)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> read(fd, buf, nbytes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对应的栈和write一样<br>fd为0时向*buf处读入对应的内容</p>
-<p>system系统调用：<br>当程序中缺少write函数等可以泄露libc的函数时，这时大概率需要使用系统调用，关于system系统调用的知识如下：<br>system系统调用号：11,存放在eax中<br>参数/bin/sh的地址，存放在ebx中<br>ecx：0<br>edx：0<br>int80(11,”/bin/sh”,null,null)</p>
+<p>对应的栈和write一样<br>fd为0时向* buf处读入对应的内容<br>system系统调用：<br>当程序中缺少write函数等可以泄露libc的函数时，这时大概率需要使用系统调用，关于system系统调用的知识如下：<br>system系统调用号：11,存放在eax中<br>参数/bin/sh的地址，存放在ebx中<br>ecx：0<br>edx：0<br>int80(11,”/bin/sh”,null,null)</p>
 <p>关于peda的小技巧<br>通过pattern create + 长度 可以生成字符串<br>pattern offest + 栈顶的字符串可以显示偏移<br>不过最后4个或8个为ip<br>流程gdb ./pwn -&gt; pattern create 200 -&gt; start -&gt; c -&gt; 输入字符 -&gt;pattern offest aaaa</p>
+<h2 id="不同整数类型字节数"><a href="#不同整数类型字节数" class="headerlink" title="不同整数类型字节数"></a>不同整数类型字节数</h2><p><img src="/images/1d32aeb24f50118ff3b8cc213973f793.jpg" alt="avatar"></p>
 
       
     </div>
@@ -461,8 +463,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -517,6 +528,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E5%AD%97%E8%8A%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">不同整数类型字节数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
