@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://example.com/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE202105-10.png">
 <meta property="og:image" content="http://example.com/images/QQ%E6%88%AA%E5%9B%BE20210511112608.png">
 <meta property="article:published_time" content="2021-05-06T09:04:00.000Z">
-<meta property="article:modified_time" content="2021-07-17T08:46:44.354Z">
+<meta property="article:modified_time" content="2021-07-19T03:28:51.983Z">
 <meta property="article:author" content="Archer">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/main_arena.png">
@@ -336,7 +336,7 @@
 <p>计算main_arena于libc之间的偏移<br>libc_base=main_arena-offest<br><img src="/images/main_arena.png" alt="avatar"><br>补充main_arena-0x68处即是malloc_hook</p>
 <p>关于不同libc版本保护机制的区别：<br>    libc-2.24之后vtable多了检查<br>    libc2.26及之后，存在tcache dup</p>
 <p>堆中使用one_gadget，当不满足条件时，可以通过__realloc_hook</p>
-<p>泄露libc的相关方法：<br>    1.unsorted attack 只释放一个不属于fastbin的堆块，然后其中的内容就为main_arena的地址，然后通过libc中偏移就能得到libc<br>    2.使用mmap分配一个大内存块(&gt;=0x20000)<br>    3.堆中也可以通过泄露got表的方式泄露libc，泄露main_arena做多了。。。。。。这一点要好好注意</p>
+<p>泄露libc的相关方法：<br>    1.unsorted attack 只释放一个不属于fastbin的堆块，然后其中的内容就为main_arena的地址，然后通过libc中偏移就能得到libc<br>    2.使用mmap分配一个大内存块(&gt;=0x200000)<br>    3.堆中也可以通过泄露got表的方式泄露libc，泄露main_arena做多了。。。。。。这一点要好好注意</p>
 <p>泄露libc之后可以进行的攻击：<br>    1.修改__ malloc_hook,_ _ free_hook为onegadget<br>    2.不泄露libc可以改写free或者malloc的got表为system，不过，要自己控制参数<br>    3.realloc_hook</p>
 <h2 id="一-off-by-one"><a href="#一-off-by-one" class="headerlink" title="一.off-by-one"></a>一.off-by-one</h2><p>当程序中存在off_by_one时，应该思考的是，通过uaf可以覆盖什么造成堆块重叠，或者泄露什么重要的地址，然后再根据实际情况具体分析<br>例题:<br>1.Asis CTF 2016 b00ks<br>虽然exp思路很清晰，但是很多地方都是通过大量的调试得出来的<br>book的结构</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">book</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">char</span> *name;</span><br><span class="line">	<span class="keyword">char</span> *description;</span><br><span class="line">	<span class="keyword">char</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
