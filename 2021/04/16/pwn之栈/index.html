@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://example.com/images/QQ%E6%88%AA%E5%9B%BE20210721210638.png">
 <meta property="og:image" content="http://example.com/images/QQ%E6%88%AA%E5%9B%BE20210721210840.png">
 <meta property="article:published_time" content="2021-04-16T12:47:00.000Z">
-<meta property="article:modified_time" content="2021-07-21T13:20:03.641Z">
+<meta property="article:modified_time" content="2021-07-22T06:43:12.433Z">
 <meta property="article:author" content="Archer">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/QQ%E6%88%AA%E5%9B%BE20210718223322.png">
@@ -137,7 +137,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
@@ -183,7 +183,7 @@
       
         
         <li class="menu-item menu-item-首页">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -193,7 +193,7 @@
       
         
         <li class="menu-item menu-item-关于">
-          <a href="/about/%20" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
             
@@ -203,7 +203,7 @@
       
         
         <li class="menu-item menu-item-标签">
-          <a href="/tags/%20" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -213,7 +213,7 @@
       
         
         <li class="menu-item menu-item-分类">
-          <a href="/categories/%20" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
             
@@ -223,7 +223,7 @@
       
         
         <li class="menu-item menu-item-归档">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
             
@@ -332,6 +332,7 @@
 
       
         <h2 id="canary泄漏"><a href="#canary泄漏" class="headerlink" title="canary泄漏"></a>canary泄漏</h2><p>第1种绕过方式：<br>泄露canary的内容<br>    a.确定canary的偏移量<br>            canary位于ebp-8处<br>            当程序中存在字符串格式化漏洞时，可以通过%?$p来泄露canary的内容，?为canary的位置(当canary是程序中第23个参数时,即为%23$p,当程序为64位时,先用寄存器存参数，64位中8个bp相当于一个参数,32位中是4位)<br>            例题<br>            攻防世界MMary_Morton<br>            64位，开了nx和canary<br>            -0000000000000090 buf             db ?<br>            -0000000000000008 var_8           dq ?//canary位置<br>            +0000000000000000  s              db 8 dup(?)<br>            +0000000000000008  r              db 8 dup(?)</p>
+<span id="more"></span>
 <pre><code>        输入aaaa-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p-%p
         aaaa-0x7fff9e3ab840-0x7f-0x7f109dd50260-(nil)-(nil)-0x2d70252d61616161
         得到offest=5+(0x90-0x8)/8=23

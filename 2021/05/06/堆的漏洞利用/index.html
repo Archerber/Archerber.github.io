@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="使用calloc的特点:calloc一个堆块时，会将那个堆块清零 计算main_arena于libc之间的偏移libc_base&#x3D;main_arena-offest补充main_arena-0x68处即是malloc_hook 关于不同libc版本保护机制的区别：    libc-2.24之后vtable多了检查    libc2.26及之后，存在tcache dup 堆中使用one_gadget">
+<meta name="description" content="使用calloc的特点:calloc一个堆块时，会将那个堆块清零 计算main_arena于libc之间的偏移libc_base&#x3D;main_arena-offest补充main_arena-0x68处即是malloc_hook">
 <meta property="og:type" content="article">
 <meta property="og:title" content="堆的漏洞利用">
 <meta property="og:url" content="http://example.com/2021/05/06/%E5%A0%86%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/index.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="使用calloc的特点:calloc一个堆块时，会将那个堆块清零 计算main_arena于libc之间的偏移libc_base&#x3D;main_arena-offest补充main_arena-0x68处即是malloc_hook 关于不同libc版本保护机制的区别：    libc-2.24之后vtable多了检查    libc2.26及之后，存在tcache dup 堆中使用one_gadget">
+<meta property="og:description" content="使用calloc的特点:calloc一个堆块时，会将那个堆块清零 计算main_arena于libc之间的偏移libc_base&#x3D;main_arena-offest补充main_arena-0x68处即是malloc_hook">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/main_arena.png">
 <meta property="og:image" content="http://example.com/images/books_location.png">
 <meta property="og:image" content="http://example.com/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE202105-10.png">
 <meta property="og:image" content="http://example.com/images/QQ%E6%88%AA%E5%9B%BE20210511112608.png">
 <meta property="article:published_time" content="2021-05-06T09:04:00.000Z">
-<meta property="article:modified_time" content="2021-07-22T06:36:23.006Z">
+<meta property="article:modified_time" content="2021-07-22T06:43:42.001Z">
 <meta property="article:author" content="Archer">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/main_arena.png">
@@ -138,7 +138,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
@@ -184,7 +184,7 @@
       
         
         <li class="menu-item menu-item-首页">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -194,7 +194,7 @@
       
         
         <li class="menu-item menu-item-关于">
-          <a href="/about/%20" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
             
@@ -204,7 +204,7 @@
       
         
         <li class="menu-item menu-item-标签">
-          <a href="/tags/%20" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -214,7 +214,7 @@
       
         
         <li class="menu-item menu-item-分类">
-          <a href="/categories/%20" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
             
@@ -224,7 +224,7 @@
       
         
         <li class="menu-item menu-item-归档">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
             
@@ -334,9 +334,9 @@
       
         <p>使用calloc的特点:calloc一个堆块时，会将那个堆块清零</p>
 <p>计算main_arena于libc之间的偏移<br>libc_base=main_arena-offest<br><img src="/images/main_arena.png" alt="avatar"><br>补充main_arena-0x68处即是malloc_hook</p>
+<span id="more"></span>
 <p>关于不同libc版本保护机制的区别：<br>    libc-2.24之后vtable多了检查<br>    libc2.26及之后，存在tcache dup</p>
 <p>堆中使用one_gadget，当不满足条件时，可以通过__realloc_hook</p>
-<span id="more"></span>
 <p>泄露libc的相关方法：<br>    1.unsorted attack 只释放一个不属于fastbin的堆块，然后其中的内容就为main_arena的地址，然后通过libc中偏移就能得到libc<br>    2.使用mmap分配一个大内存块(&gt;=0x200000)<br>    3.堆中也可以通过泄露got表的方式泄露libc，泄露main_arena做多了。。。。。。这一点要好好注意</p>
 <p>泄露libc之后可以进行的攻击：<br>    1.修改__ malloc_hook,_ _ free_hook为onegadget<br>    2.不泄露libc可以改写free或者malloc的got表为system，不过，要自己控制参数<br>    3.realloc_hook</p>
 <h2 id="一-off-by-one"><a href="#一-off-by-one" class="headerlink" title="一.off-by-one"></a>一.off-by-one</h2><p>当程序中存在off_by_one时，应该思考的是，通过uaf可以覆盖什么造成堆块重叠，或者泄露什么重要的地址，然后再根据实际情况具体分析<br>例题:<br>1.Asis CTF 2016 b00ks<br>虽然exp思路很清晰，但是很多地方都是通过大量的调试得出来的<br>book的结构</p>
