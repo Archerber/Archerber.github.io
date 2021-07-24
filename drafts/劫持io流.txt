@@ -1,0 +1,12 @@
+---
+title: 利用 _IO_2_1_stdout_ 泄露信息
+date: 2021-7-23 11:14:30
+tags: _IO_2_1_stout
+categories: pwn学习
+---
+第一次做到关于 _IO_2_2_stout_ 的堆题，又能学到新技术了，原题为buu上的 roarctf_2019_realloc_magic
+反编译后，发现程序是通过realloc分配内存的，需要用到realloc的知识，如下
+*size == 0 ，这个时候等同于free
+realloc_ptr == 0 && size > 0 ， 这个时候等同于malloc
+malloc_usable_size(realloc_ptr) >= size， 这个时候等同于edit
+malloc_usable_size(realloc_ptr) < szie， 这个时候才是malloc一块更大的内存，将原来的内容复制过去，再将原来的chunk给free掉
