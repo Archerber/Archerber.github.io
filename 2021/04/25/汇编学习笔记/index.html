@@ -87,7 +87,7 @@
 <meta property="og:description" content="记录各种有趣的汇编指令与汇编知识PTR 用于指定操作数据的长度(byte、dup、word 、dword 、qword 、tbyte 、real ) 0x7f1d86976406 &lt;do_system+1094&gt;:    movaps XMMWORD PTR [rsp+0x40],xmm0 检查rsp是否与16对齐 offest操作符 OFFSET 运算符返回数据标号的偏移量。在下面的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-25T08:04:20.443Z">
-<meta property="article:modified_time" content="2021-07-22T12:12:05.808Z">
+<meta property="article:modified_time" content="2021-07-24T11:44:13.950Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="汇编">
 <meta name="twitter:card" content="summary">
@@ -353,6 +353,8 @@
         <p>记录各种有趣的汇编指令与汇编知识<br>PTR 用于指定操作数据的长度(byte、dup、word 、dword 、qword 、tbyte 、real )</p>
 <p>0x7f1d86976406 &lt;do_system+1094&gt;:    movaps XMMWORD PTR [rsp+0x40],xmm0 检查rsp是否与16对齐</p>
 <p>offest操作符 OFFSET 运算符返回数据标号的偏移量。<br>在下面的例子中，将用到如下三种类型的变量：<br>.data<br>bVal BYTE ?<br>wVal WORD ?<br>dVal DWORD ?<br>dVal2 DWORD ?<br>假设 bVal 在偏移量为 0040 4000（十六进制）的位置，则 OFFSET 运算符返回值如下：<br>纯文本复制<br>mov esi,OFFSET bVal             ; ESI = 00404000h<br>mov esi,OFFSET wVal             ; ESI = 00404001h<br>mov esi,OFFSET dVal             ; ESI = 00404003h<br>mov esi,OFFSET dVal2            ; ESI = 00404007h</p>
+<span id="more"></span>
+
 <p>LEA 指令要求原操作数必须是存储单元<br>    假设：SI=1000H , DS=5000H, (51000H)=1234H<br>    　　执行指令 LEA BX , [SI]后，BX=1000H<br>    　　执行指令 MOV BX , [SI]后，BX=1234H</p>
 <p>nop指令无操作数，pc加一</p>
 <p>Enter的作用相当==push ebp和mov ebp,esp<br>Leave的作用相当==mov esp,ebp和pop ebp</p>
