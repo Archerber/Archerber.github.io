@@ -86,13 +86,13 @@
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="工具安装关于vmtools的安装安装vmtools  进入vm disk  打开终端 cp ······.tzr.gz &#x2F;opt 然后 cd &#x2F;opt |  tar  -zxvf ····tar.gz ls cd ····disturb .&#x2F;···.pl在当前目录打开终端：sudo apt-get install nautilus-open-terminalpwntools补全gcc库(学习的时候">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/1d32aeb24f50118ff3b8cc213973f793.jpg">
+<meta property="og:image" content="http://example.com/images/173317.png">
 <meta property="article:published_time" content="2021-03-04T02:02:00.000Z">
-<meta property="article:modified_time" content="2021-07-24T11:07:37.115Z">
+<meta property="article:modified_time" content="2021-07-25T09:34:29.466Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/1d32aeb24f50118ff3b8cc213973f793.jpg">
+<meta name="twitter:image" content="http://example.com/images/173317.png">
 
 
 
@@ -427,7 +427,7 @@
 <p>对应的栈和write一样<br>fd为0时向* buf处读入对应的内容</p>
 <p>system系统调用：<br>当程序中缺少write函数等可以泄露libc的函数时，这时大概率需要使用系统调用，关于system系统调用的知识如下：<br>system系统调用号：11,存放在eax中<br>参数/bin/sh的地址，存放在ebx中<br>ecx：0<br>edx：0<br>int80(11,”/bin/sh”,null,null)</p>
 <p>dup2 用来复制文件描述符：int dup2 (int oldfd,int newfd)<br>_ fileno 是用来规定 fd 所指向的文件流的，dup2(fd,666)将flag的fd改成了666，所以我们只要想办法把 stdin 的 _ fileno 改成 666 即可，这样在之后 scanf 就会将 fd == 666 （flag）的内容输入到 &amp; v0 中，然后我们就可以输出 flag 的内容了</p>
-<h2 id="不同整数类型字节数"><a href="#不同整数类型字节数" class="headerlink" title="不同整数类型字节数"></a>不同整数类型字节数</h2><p><img src="/images/1d32aeb24f50118ff3b8cc213973f793.jpg" alt="avatar"></p>
+<h2 id="不同整数类型字节数"><a href="#不同整数类型字节数" class="headerlink" title="不同整数类型字节数"></a>不同整数类型字节数</h2><p><img src="/images/173317.png" alt="avatar"></p>
 <h2 id="alarm"><a href="#alarm" class="headerlink" title="alarm"></a>alarm</h2><p>去除程序的alarm函数，以及alarm在某些题目中的作用<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/A951860555/article/details/111214951">https://blog.csdn.net/A951860555/article/details/111214951</a></p>
 <h2 id="拟态"><a href="#拟态" class="headerlink" title="拟态"></a>拟态</h2><p>关于拟态，在pwn中拟态表示的是通过fork，同时开启32位以及64位的程序，监测输入，而要拿到权限<br>需要保证在32位和64位中都能拿到权限，并且输出也一样，例题buu 强网杯2019 拟态 STKOF</p>
 
