@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="记录各种有趣的汇编指令与汇编知识PTR 用于指定操作数据的长度(byte、dup、word 、dword 、qword 、tbyte 、real ) 0x7f1d86976406 &lt;do_system+1094&gt;:    movaps XMMWORD PTR [rsp+0x40],xmm0 检查rsp是否与16对齐 offest操作符 OFFSET 运算符返回数据标号的偏移量。在下面">
+<meta name="description" content="汇编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编学习笔记">
 <meta property="og:url" content="http://example.com/2021/04/25/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="记录各种有趣的汇编指令与汇编知识PTR 用于指定操作数据的长度(byte、dup、word 、dword 、qword 、tbyte 、real ) 0x7f1d86976406 &lt;do_system+1094&gt;:    movaps XMMWORD PTR [rsp+0x40],xmm0 检查rsp是否与16对齐 offest操作符 OFFSET 运算符返回数据标号的偏移量。在下面">
+<meta property="og:description" content="汇编">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-25T08:04:20.443Z">
-<meta property="article:modified_time" content="2021-07-28T10:32:56.037Z">
+<meta property="article:modified_time" content="2021-07-28T10:54:12.325Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="汇编">
 <meta name="twitter:card" content="summary">
@@ -332,6 +332,17 @@
 
           
           
+             <span id="/2021/04/25/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="leancloud_visitors" data-flag-title="汇编学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
             <span class="post-meta-divider">|</span>
@@ -342,6 +353,10 @@
 
           
 
+          
+              <div class="post-description">
+                  汇编
+              </div>
           
 
         </div>
@@ -357,9 +372,8 @@
       
 
       
-        <span id="more"></span>
-<p>记录各种有趣的汇编指令与汇编知识<br>PTR 用于指定操作数据的长度(byte、dup、word 、dword 、qword 、tbyte 、real )</p>
-<p>0x7f1d86976406 &lt;do_system+1094&gt;:    movaps XMMWORD PTR [rsp+0x40],xmm0 检查rsp是否与16对齐</p>
+        <p>记录各种有趣的汇编指令与汇编知识<br>PTR 用于指定操作数据的长度(byte、dup、word 、dword 、qword 、tbyte 、real )</p>
+<p>0x7f1d86976406 &lt; do_system+1094&gt;:    movaps XMMWORD PTR [rsp+0x40],xmm0 检查rsp是否与16对齐</p>
 <p>offest操作符 OFFSET 运算符返回数据标号的偏移量。<br>在下面的例子中，将用到如下三种类型的变量：<br>.data<br>bVal BYTE ?<br>wVal WORD ?<br>dVal DWORD ?<br>dVal2 DWORD ?<br>假设 bVal 在偏移量为 0040 4000（十六进制）的位置，则 OFFSET 运算符返回值如下：<br>纯文本复制<br>mov esi,OFFSET bVal             ; ESI = 00404000h<br>mov esi,OFFSET wVal             ; ESI = 00404001h<br>mov esi,OFFSET dVal             ; ESI = 00404003h<br>mov esi,OFFSET dVal2            ; ESI = 00404007h</p>
 <p>LEA 指令要求原操作数必须是存储单元<br>    假设：SI=1000H , DS=5000H, (51000H)=1234H<br>    　　执行指令 LEA BX , [SI]后，BX=1000H<br>    　　执行指令 MOV BX , [SI]后，BX=1234H</p>
 <p>nop指令无操作数，pc加一</p>
@@ -372,7 +386,7 @@
 <p>此时cs=2000，ip=0，然后地址加法器算出物理地址,20000,然后20000被送入输入输出控制电路，接着20000被传到20位的地址总线，然后找到地址为20000的内存单元，然后内存单元中的数据B8 23 01经过数据总线，输入输出电路以及指令缓存器，送到执行控制器</p>
 <p>jmp的使用<br>    1.通过解jmp 段地址：偏移地址可以直接改cs和ip<br>    2.jmp 加合法寄存器，可以将ip改为寄存器中的数据，jmp ax 近似于 mov ip，ax</p>
 <p>debug命令的使用<br>    1.-r：查看改变cpu寄存器的内容 -r ip；-r cs;……<br>    2.-d：查看内存中的内容 -d 1000:0 或 -d 1000:0 10<br>    3.-e：改写内存中的内容 -e 1000:0 第一种改写直接在后面加上改写的内容，第二种，回车，一位位的改写<br>    4.-u：将内存中的机器指令翻译为汇编指令 -u 1000:0<br>    5.-t：执行一条机器指令<br>    6.-a：以汇编指令的格式在内存中写入一条机器指令 -a 1000:0</p>
-<p>mov ax,[0]中[]中的数据存放的是ds对应的偏移地址，通过ds*16+0即可访问对应存放数据的内存单元</p>
+<p>mov ax,[0]中[]中的数据存放的是ds对应的偏移地址，通过ds* 16+0即可访问对应存放数据的内存单元</p>
 <p>mov、sub、add的使用<br>    1.mov 寄存器，寄存器<br>    2.mov 寄存器，数据<br>    3.mov 寄存器，内存单元<br>    4.mov 内存单元，寄存器<br>    5.mov 段寄存器，寄存器<br>    6.mov 寄存器，段寄存器<br>sub和add的用法与mov类似，只是不能用于算数运算如 add ds，ax或者 add ax，ds</p>
 <p>汇编中的栈<br>ss：sp时刻指向栈顶，栈由高地址，向低地址增长，入栈sp-2，出栈sp+2</p>
 <p>可以通过[]访问内存单元：段地址存放在ds寄存器中，偏移地址就是括号中的内容</p>
@@ -766,6 +780,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 

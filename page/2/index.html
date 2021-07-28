@@ -330,6 +330,17 @@
 
           
           
+             <span id="/2020/12/22/misc/" class="leancloud_visitors" data-flag-title="misc">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -351,25 +362,14 @@
 
       
         
-          
-            <span id="more"></span>
-<p>hexo更新博客命令<br>d:···cd blog····hexo clean····hexo g····hexo s····hexo d<br>做题流程：静图的话，看属性，有没有给隐藏信息，先丢到01 editor然后找flag，无结果丢到用stegsolve看看各通道的图片，然后狗rgb看看有没有其他文件的头，有的话保存为对应的文件，没有的话，丢到kali用binwalk看看有没有隐藏文件，然后用zsteg看看<br>flag格式：可以若得到的flag提交错误，可以修改flag的格式，如把大写改小写，数字替换为英文<br>工具的使用：<br>stegsolve:切到D盘然后用命令java -jar stegsolve.jar打开<br>    File Format:文件格式，这个主要是查看图片的具体信息<br>    Data Extract:数据抽取，图片中隐藏数据的抽取(lsb隐写,rgb零位勾为1，bit order勾为lsb先preview再save bin)<br>    Frame Browser:帧浏览器，主要是对GIF之类的动图进行分解，动图变成一张张图片，便于查看<br>    Image Combiner:拼图，图片拼接<br>jphswin的使用：(jpg,jepg)<br>seek是查找文件中的隐藏信息，输入密码，然后保存为txt文件，txt中的信息即为隐藏信息<br>kali中工具使用的命令<br>binwalk:<br>binwalk+文件名 binwalk -e +文件名(提取文件)<br>binwalk+-D=文件类型+文件名<br>zsteg：zsteg+文件名 zsteg -a +文件名(查看详细信息)<br>steghide：steghide  extract -sf 文件名(图片或音频)需要密码<br>做过的题目类型：<br>1.图类型a:动图：1.flag包含在图中</p>
-<pre><code>    b：静图：1.图片实际大小与展示大小不符，通过01 editor来修改(png图片改IHDR后的数据，ihdr后为宽占4位，如00 00 00 00，然后是高)
-            2.改后缀为txt，然后找flag
-            3.lsb隐写，用stegsolve找信息
-            4.图片里包含其他文件，用binwalk命令为binwalk+文件名，然后用binwalk+-e+文件名提取文件
-            5.图中包含长串2进制数、8进制数、16进制数，然后转字符串
-           2进制转字符串网址：http://www.txttool.com/wenben_binarystr.asp
-           16进制转字符串网站：https://www.bejson.com/convert/ox2str/
-            6.使用stegsolve，rgb0位勾为一，发现有其他文件的头文件，然后save bin保存为对应的文件，(当保存后的文件损坏可以丢到kali，或者使用winzip工具中的修复)然后打开对应的文件可以直接找到flag
-            7.jphs隐写使用工具jphswin
-            8.使用steghide爆破密码
-</code></pre>
-<p>2.压缩包a.真加密：1.用ARCHPR暴力破解(提示四位密码)<br>       b.伪加密，找504B(504B0304是头文件标识，504B0506是目录结束标识)然后将09 00改为00 00(位于504B0102后面一个字节，如504B0102 00000000 09)<br>       c.打开得到无类型的文件，用01editor打开，发现头文件缺失（IHDR,PNG的文件头数据块)<br>3.流量包 1.用wireshark打开找password即为flag<br>        2.追踪http流，过滤器输入http<br>4.宽带包，后缀是.bin，打开routerpassview，然后找关键词，一般密码是用户名或者密码，关键词：user,password,ctf,flag,name…….<br>5.vmdk放虚拟机上用7z解压，命令7z x flag.vmdk -o./<br>常见关键词：password，ctf，flag,user,ctf,passwd,user,name<br>base64转图片网站：<a target="_blank" rel="noopener" href="https://the-x.cn/base64">https://the-x.cn/base64</a><br>提取图片文字网站：<a target="_blank" rel="noopener" href="https://web.baimiaoapp.com/">https://web.baimiaoapp.com/</a><br>在线html生成网站：<a target="_blank" rel="noopener" href="https://repl.it/">https://repl.it/</a><br>pdf生成转换word···网站：<a target="_blank" rel="noopener" href="https://pdf4me.com/zh-hans/repair-pdf/">https://pdf4me.com/zh-hans/repair-pdf/</a><br>解密网站大全：<a target="_blank" rel="noopener" href="https://www.hackliu.com/?p=475">https://www.hackliu.com/?p=475</a><br>常见文件的头和尾<br>JPEG (jpg)，                        　　文件头：FFD8FF　　　　　　　　　　　　　　　　　　　　　　　文件尾：FF D9<br>PNG (png)，                       　　  文件头：89504E47　　　　　　　　　　　　　　　　　　　　　　文件尾：AE 42 60 82<br>GIF (gif)，                           　文件头：47494638　　　　　　　　　　　　　　　　　　　　　　文件尾：003B<br>ZIP Archive (zip)，                     文件头：504B0304　　　　　　　　　　　　　　　　　　　　　　文件尾：50 4B 05 06<br>TIFF (tif)，                            文件头：49492A00　　　　　　　　　　　　　　　　　　　　　　文件尾：<br>Windows Bitmap (bmp)，      　          文件头：424D　　　　　　　　　　　　　　　　　　　　　　　　 文件尾：<br>CAD (dwg)，                        　   文件头：41433130　　　　　　　　　　　　　　　　　　　　　　文件尾：<br>Adobe Photoshop (psd)，                 文件头：38425053　　　　　　　　　　　　　　　　　　　　　　文件尾：<br>Rich Text Format (rtf)，                文件头：7B5C727466　　　　　　　　　　　　　　　　　　　　  文件尾：<br>XML (xml)，                             文件头：3C3F786D6C　　　　　　　　　　　　　　　　　　　　 文件尾：<br>HTML (html)，                           文件头：68746D6C3E<br>Email [thorough only] (eml)，           文件头：44656C69766572792D646174653A<br>Outlook Express (dbx)，                 文件头：CFAD12FEC5FD746F<br>Outlook (pst)，                         文件头：2142444E<br>MS Word/Excel (xls.or.doc)，            文件头：D0CF11E0<br>MS Access (mdb)，                       文件头：5374616E64617264204A<br>WordPerfect (wpd)，                     文件头：FF575043<br>Adobe Acrobat (pdf)，                   文件头：255044462D312E<br>Quicken (qdf)，                         文件头：AC9EBD8F<br>Windows Password (pwl)，                文件头：E3828596<br>RAR Archive (rar)，                     文件头：52617221<br>Wave (wav)，                            文件头：57415645<br>AVI (avi)，                             文件头：41564920<br>Real Audio (ram)，                      文件头：2E7261FD<br>Real Media (rm)，                       文件头：2E524D46<br>MPEG (mpg)，                            文件头：000001BA<br>MPEG (mpg)，                            文件头：000001B3<br>Quicktime (mov)，                       文件头：6D6F6F76<br>Windows Media (asf)，                   文件头：3026B2758E66CF11<br>MIDI (mid)，                            文件头：4D546864</p>
-<hr>
-<p>strings filename | grep keyword  #在filename中查找keyword</p>
-
-          
+          misc
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/12/22/misc/">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -717,6 +717,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
