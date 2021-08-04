@@ -259,6 +259,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/02/csapplab2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/02/csapplab2/" itemprop="url">week2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-02T10:02:00+08:00">
+                2021-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/week/" itemprop="url" rel="index">
+                    <span itemprop="name">week</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/08/02/csapplab2/" class="leancloud_visitors" data-flag-title="week2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          记录2021-8-2开始一周的学习情况
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/08/02/csapplab2/">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/02/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -534,62 +691,14 @@
 
       
         
-          
-            <span id="more"></span>
-<p>csapp的实验确实有点东西，感觉学到了不少东西<br>数据实验</p>
-<h2 id="前置知识："><a href="#前置知识：" class="headerlink" title="前置知识："></a>前置知识：</h2><pre><code>~ ：非运算符 如 ~0010 = 1101
-&amp; ：与运算符 如 0010 &amp; 1110 = 0010
-| ：或运算符 如 0010 | 1110 = 1110
-^ ：异或运算符 如 1001 ^ 0110 = 1111
-! ：逻辑非运算符 如 !0 = 1 !1 = 0
-&amp;&amp;:逻辑与运算符 如 1 &amp;&amp; 1 = 1 1 &amp;&amp; 0 =0
-||：逻辑或运算符 如 1 || 0 = 1 
-&gt;&gt;: 右移运算符 逻辑右移(不考虑符号位) 如0100 &gt;&gt; 2 = 0001
-              算术右移(考虑符号位，是什么补什么) 如 1001 &gt;&gt; 2 = 1110
-&lt;&lt;: 左移运算符 如 1001 1001 &lt;&lt; = 0110 0100
-</code></pre>
-<h2 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h2><p>计算方法float=(-1)^s * M * 2^E<br>float的表示方法，1个二进制位表示符号s，8个二进制位表示阶码(e为无符号数)，23个二进制位表示小数部分(f)<br>(规格化数，即e!=0,且e!=255)E = e - Bias        Bias =2^(k-1) - 1,<br>举个栗子，e 为 1111  1110 ,此时 Bias = 127, e = 254 - 127 = 127<br>假设 M 为 1 00 0000 0000 0000 0000 0000<br>M = 1 + f ，f部分为f = 1 * 2^-1  …… + 0 = 0.5<br>用小数点表示 M 即 1.100000……000<br>(非规格化数)E = 1 - Bias, M = f = 1</p>
-<h3 id="1-xor"><a href="#1-xor" class="headerlink" title="1.xor"></a>1.xor</h3><p>题目要求只是用 ~ 和 &amp; 来实现 异或 即 ^, 本质就是相同位取1、不同位取0，而每一位又只有0或1，<br>感觉我是试出来的<br>如下<br>即</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitXor</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ~(~(~x&amp;y)&amp;~(~y&amp;x));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1111 0011 1111 x</span></span><br><span class="line"><span class="comment">// 1001 1000 0001 y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 0000 1100 0000 ~x</span></span><br><span class="line"><span class="comment">// 0110 0111 1110 ~y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 0000 1000 0000 ~x&amp;y</span></span><br><span class="line"><span class="comment">// 0110 0011 1110 ~y&amp;x</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1111 0111 1111 ~(~x&amp;y)</span></span><br><span class="line"><span class="comment">// 1001 1100 0001 ~(~y&amp;x)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1001 0100 0001</span></span><br><span class="line"><span class="comment">// 0110 1011 1110 reuslt</span></span><br><span class="line"><span class="comment">//~(~(~x&amp;y)&amp;~(~y&amp;x))</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-返回最小二进制整数"><a href="#2-返回最小二进制整数" class="headerlink" title="2.返回最小二进制整数"></a>2.返回最小二进制整数</h3><p>最小二进制整数即符号位为1，其它位都为0，int占4个byte，一个byte占8个二进制位</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmin</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>&lt;&lt;<span class="number">31</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-判断x是否位最大二进制整数"><a href="#3-判断x是否位最大二进制整数" class="headerlink" title="3.判断x是否位最大二进制整数"></a>3.判断x是否位最大二进制整数</h3><p>最大二进制整数即上一个结果取反，题目要求是返回1，否返回0<br>思路：0x7fffffff + 1 = ~ 0x7fffffff,有个特例是x为-1的时候，!(!(x^-1))这个为特判</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isTmax</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !((x+<span class="number">1</span>)^(~x))&amp;!(!(x^<span class="number">-1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-所有奇数位为1返回1，否则返回0"><a href="#4-所有奇数位为1返回1，否则返回0" class="headerlink" title="4.所有奇数位为1返回1，否则返回0"></a>4.所有奇数位为1返回1，否则返回0</h3><p>案例为：allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1<br>思路:先得到0xaaaa，然后再异或两次就可以了，一开始没注意&lt;&lt; 和 + 的优先级，一直错了</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">allOddBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp=<span class="number">0xaa</span>+(<span class="number">0xaa</span>&lt;&lt;<span class="number">8</span>);<span class="comment">//0xaaaa</span></span><br><span class="line">  <span class="keyword">return</span> !((x&amp;temp)^temp)&amp;!(((x&gt;&gt;<span class="number">16</span>)&amp;temp)^temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-返回相反数"><a href="#5-返回相反数" class="headerlink" title="5.返回相反数"></a>5.返回相反数</h3><p>1的二进制形式是0000 0001 -1的二进制形式1111 1111,从 x + -x -1 == 1111 1111(2) 可以直接看出来 -x = ~ x + 1 </p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ~x+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-若-0x30-lt-x-lt-0x39返回1，否则返回0"><a href="#6-若-0x30-lt-x-lt-0x39返回1，否则返回0" class="headerlink" title="6.若 0x30&lt;=x&lt;=0x39返回1，否则返回0"></a>6.若 0x30&lt;=x&lt;=0x39返回1，否则返回0</h3><p>9=(1001)(2)<br>3=(0011)(2)<br>思路:先判断0x30和0x39中相同的3，即0011，此然后再判断后一位，后一位有两种情况：<br>1.1xxx –&gt; !(x&gt;&gt;1&amp;1|x&gt;&gt;2&amp;1)<br>2.0xxx –&gt; !(x&gt;&gt;3&amp;1)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isAsciiDigit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !(x&gt;&gt;<span class="number">4</span>^<span class="number">3</span>)&amp;(!(x&gt;&gt;<span class="number">3</span>&amp;<span class="number">1</span>)|!(x&gt;&gt;<span class="number">1</span>&amp;<span class="number">1</span>|x&gt;&gt;<span class="number">2</span>&amp;<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-使用运算符表示？："><a href="#7-使用运算符表示？：" class="headerlink" title="7.使用运算符表示？："></a>7.使用运算符表示？：</h3><p>例子：conditional(2,4,5) = 4<br>思路:突然想到一个特别关键的点，然后就做出来了，1往左移31位，得到最小整数，再往右移，此时因为<br>符号位为1，再往右移31位得到的就是-1,而先往左移，再往右移0，还是0，这样就可以很好的表示* 0 和* 1<br>如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">conditional</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">  x=!x;</span><br><span class="line">  x=x&lt;&lt;<span class="number">31</span>;</span><br><span class="line">  x=x&gt;&gt;<span class="number">31</span>;</span><br><span class="line">  <span class="keyword">return</span> (y&amp;~x)+(z&amp;x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="8-x-lt-y返回1，否则返回0"><a href="#8-x-lt-y返回1，否则返回0" class="headerlink" title="8.x&lt;=y返回1，否则返回0"></a>8.x&lt;=y返回1，否则返回0</h3><p>两种情况：<br>    1.x==y<br>    2.x!=y 这种情况有好几种判断，最开始是总的1判断，用y-x判断符号位(理论上y&gt;x,y-x,的符号位为1，但是0-0x80000000符号位为1，所以要加一个判断正负)<br>    此时还有一种情况没考虑到，就是y&lt;0,x&gt;0时，再加一个判断条件就可以了</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isLessOrEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">int</span> temp=!(x^y)&amp;<span class="number">1</span>;<span class="comment">//判断相等 </span></span><br><span class="line">   	<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,temp);</span><br><span class="line">    temp=temp | !((y+(~x)+<span class="number">1</span>)&gt;&gt;<span class="number">31</span>);<span class="comment">//判断大小</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,temp);</span><br><span class="line">    temp=temp | ((x&gt;&gt;<span class="number">31</span>)&amp;~y&gt;&gt;<span class="number">31</span>);<span class="comment">//判断正负</span></span><br><span class="line">   	<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,temp);</span><br><span class="line">	temp=temp &amp; !(y&gt;&gt;<span class="number">31</span>&amp;~(x&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,temp);</span><br><span class="line">   <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="9-实现-运算符"><a href="#9-实现-运算符" class="headerlink" title="9.实现!运算符"></a>9.实现!运算符</h3><p>原理是~ 0 + 1 = 0,0取相反数还是0，符号位还是0，而别的数符号位为1，0或1，1的组合</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">logicalNeg</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> ((x&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>|((~x+<span class="number">1</span>)&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>)^<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="10-返回x用补码表示的最小位数"><a href="#10-返回x用补码表示的最小位数" class="headerlink" title="10.返回x用补码表示的最小位数"></a>10.返回x用补码表示的最小位数</h3><p>这个题我初步的思路是有了，但是怎么不超过Max ops，我没想到……<br>看c部分就很容易理解了</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">howManyBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> s,c1,c2,c3,c4,c5,c6;</span><br><span class="line">	<span class="keyword">int</span> cnt = <span class="number">0</span>;	<span class="comment">// 	计数</span></span><br><span class="line">	s = (x&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>;	<span class="comment">//	符号位</span></span><br><span class="line">	x = ((s&lt;&lt;<span class="number">31</span>)&gt;&gt;<span class="number">31</span>) ^ x; <span class="comment">// 取反x</span></span><br><span class="line">	s = !!(x&gt;&gt;<span class="number">16</span>);	<span class="comment">// 判断高16位是否有1，有则s为1</span></span><br><span class="line">	c1 = s&lt;&lt;<span class="number">4</span>;		<span class="comment">// 若高16位有1，则低16位可以计数16</span></span><br><span class="line">	x &gt;&gt;= c1;		<span class="comment">// 右移将已经计数的位移除，c1若为0，则用折半的长度判断</span></span><br><span class="line">	s = !!(x&gt;&gt;<span class="number">8</span>);	<span class="comment">// 用8位的长度去判断，有效位的个数计入c2</span></span><br><span class="line">	c2 = s&lt;&lt;<span class="number">3</span>;</span><br><span class="line">	x &gt;&gt;= c2;</span><br><span class="line">	s = !!(x&gt;&gt;<span class="number">4</span>);	<span class="comment">// 用4位的长度去判断，有效位的个数计入c3</span></span><br><span class="line">	c3 = s&lt;&lt;<span class="number">2</span>;</span><br><span class="line">	x &gt;&gt;= c3;</span><br><span class="line">	s = !!(x&gt;&gt;<span class="number">2</span>);	<span class="comment">// 用2位的长度去判断，有效位的个数计入c4</span></span><br><span class="line">	c4 = s&lt;&lt;<span class="number">1</span>;</span><br><span class="line">	x &gt;&gt;= c4;</span><br><span class="line">	s = !!(x&gt;&gt;<span class="number">1</span>);	<span class="comment">// 用1位的长度去判断，有效位的个数计入c5</span></span><br><span class="line">	c5 = s;</span><br><span class="line">	x &gt;&gt;= c5;</span><br><span class="line">	c6 = !!x;		<span class="comment">// 判断最低位是否为1</span></span><br><span class="line">	cnt = c1+c2+c3+c4+c5+c6+<span class="number">1</span>;	<span class="comment">// 将每次获得的低位有效位相加，再加1位符号位</span></span><br><span class="line">	<span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="11-返回2-f-浮点数"><a href="#11-返回2-f-浮点数" class="headerlink" title="11.返回2* f(浮点数)"></a>11.返回2* f(浮点数)</h3><p>这个题写了一两天人麻了，<br>关于浮点数，float的话，1位表正负(s)，8位表示阶码(e)，还有23位表示小数位(f)</p>
-<ul>
-<li>2有三种情况:<br>  1.返回它本身，如NaN,0,1&lt;&lt;31……<br>  2.是e部分* 2<br>  3.小数位* 2(e部分为0)<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">floatScale2</span><span class="params">(<span class="keyword">unsigned</span> uf)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> s=((uf&gt;&gt;<span class="number">31</span>)&lt;&lt;<span class="number">31</span>);</span><br><span class="line">  <span class="keyword">unsigned</span> v=(<span class="number">0x1ff</span>)&lt;&lt;<span class="number">23</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> temp=uf&lt;&lt;<span class="number">1</span>;</span><br><span class="line">  temp=temp&gt;&gt;<span class="number">24</span>;<span class="comment">//temp 表示 e</span></span><br><span class="line">  <span class="keyword">unsigned</span> var=uf&lt;&lt;<span class="number">9</span>;<span class="comment">//var 表示 小数位</span></span><br><span class="line">  <span class="keyword">if</span>((temp==<span class="number">255</span>&amp;&amp;(((var&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>)==<span class="number">1</span>||var==<span class="number">0</span>)))&#123;</span><br><span class="line">  		<span class="keyword">return</span> uf;<span class="comment">//判断NaN的情况，以及0x7f800000</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">	  <span class="keyword">if</span>(var==<span class="number">0</span>)&#123;<span class="comment">//小数位为0</span></span><br><span class="line">	  	  <span class="keyword">if</span>(temp==<span class="number">0</span>) <span class="comment">//判断1000   0000 …… 0000</span></span><br><span class="line">			<span class="keyword">return</span> uf;  </span><br><span class="line">	  	  temp+=<span class="number">1</span>;<span class="comment">//*2</span></span><br><span class="line">		  temp=temp&lt;&lt;<span class="number">23</span>;</span><br><span class="line">		  <span class="keyword">return</span> temp|s;<span class="comment">//符号位</span></span><br><span class="line">      &#125;</span><br><span class="line">  	  <span class="keyword">else</span>&#123;</span><br><span class="line">  	  	<span class="keyword">if</span>(temp==<span class="number">0</span>)&#123;<span class="comment">//exp为0</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">2</span>*uf|s;<span class="comment">//82</span></span><br><span class="line">		&#125;</span><br><span class="line">  	  	<span class="keyword">return</span> (((temp+<span class="number">1</span>)&lt;&lt;<span class="number">23</span>)+(var&gt;&gt;<span class="number">9</span>))|s;<span class="comment">//exp不为0,小数位不变</span></span><br><span class="line">		&#125;</span><br><span class="line">  	  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="12-返回int-float"><a href="#12-返回int-float" class="headerlink" title="12.返回int(float)"></a>12.返回int(float)</h3><p>感觉上面那个题能写出来，这个也能写出来<br>float返回int，主要就是超出范围，还有NaN，返回0x80000000,然后根据exp部分的大小计算就可以了<br>并且exp部分最大为(规范化数)，511，当 511 - 256 ( 2 * 7 - 1 ) &gt;= 32 时，int就无法表达了，这时<br>需要返回0x80000000,而属于int范围中的数直接将temp转化成整数，大于127再算2^temp就可以了</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">floatScale2</span><span class="params">(<span class="keyword">unsigned</span> uf)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> s=uf&gt;&gt;<span class="number">31</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> v=(<span class="number">0x1ff</span>)&lt;&lt;<span class="number">23</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> temp=uf&lt;&lt;<span class="number">1</span>;</span><br><span class="line">  temp=temp&gt;&gt;<span class="number">24</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> var=uf&lt;&lt;<span class="number">9</span>;</span><br><span class="line">  <span class="keyword">int</span> re=temp;</span><br><span class="line">  <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> result=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span>(re==<span class="number">0</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(re==<span class="number">255</span>)</span><br><span class="line">  		<span class="keyword">return</span> <span class="number">1</span>&lt;&lt;<span class="number">31</span>;</span><br><span class="line">  	<span class="keyword">else</span>&#123;</span><br><span class="line">  		re-=<span class="number">127</span>;</span><br><span class="line">  		<span class="keyword">if</span>(re&lt;<span class="number">0</span>)</span><br><span class="line">  		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(re&gt;=<span class="number">32</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>&lt;&lt;<span class="number">31</span>;</span><br><span class="line">  		<span class="keyword">while</span>(re&gt;<span class="number">0</span>)&#123;</span><br><span class="line">  			result*=<span class="number">2</span>;</span><br><span class="line">  			re--;</span><br><span class="line">		  &#125;</span><br><span class="line">		  <span class="keyword">if</span>(s==<span class="number">1</span>)&#123;</span><br><span class="line">		  	<span class="keyword">return</span> result*<span class="number">-1</span>;</span><br><span class="line">		  &#125;</span><br><span class="line">		  <span class="keyword">else</span> <span class="keyword">return</span> result;</span><br><span class="line">  		</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="13-返回x的x次方"><a href="#13-返回x的x次方" class="headerlink" title="13.返回x的x次方"></a>13.返回x的x次方</h3><p>我理解的题目的意思是通过exp部分来实现2的x次方，但是x为负数返回0，感觉很奇怪，而且我本地还打不通，不能返回0<br>，太离谱了，思路很简单</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">floatPower2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> INF = <span class="number">0xff</span> &lt;&lt; <span class="number">23</span>;</span><br><span class="line">	<span class="keyword">int</span> e = <span class="number">127</span> + x;</span><br><span class="line">	<span class="keyword">if</span> (x &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (e &gt;= <span class="number">255</span>)</span><br><span class="line">		<span class="keyword">return</span> INF;</span><br><span class="line">	<span class="keyword">return</span> e &lt;&lt; <span class="number">23</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后得分28分，就差两个题……</p>
-
-          
+          csapp实验1 datalab
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/07/26/csapplab1/">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1722,163 +1831,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Archerの博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">pwn学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-04T10:02:00+08:00">
-                2021-03-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="leancloud_visitors" data-flag-title="pwn学习笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          学习笔记
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1933,7 +1885,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
