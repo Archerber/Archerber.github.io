@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="感觉看csapp真的能学到不少东西，因此特别写一篇博客来记录csapp中学习内容 1.信息的表示和处理1.2进制与16进制信息在计算机中以2进制的形式表达，不过16进制更直观，很多例子都是通过16进制展示(二进制太长了)关于2进制与16进制，每4位二进制可以表达一位16进制，如1111 &#x3D;&#x3D; 0xf 2.不同整数类型所占字节数1byte表示1个字节，word &#x3D;&#x3D; 2byte，dword &#x3D; 4">
+<meta name="description" content="学习csapp过程中的笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="csapp学习笔记">
 <meta property="og:url" content="http://example.com/2021/08/02/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="感觉看csapp真的能学到不少东西，因此特别写一篇博客来记录csapp中学习内容 1.信息的表示和处理1.2进制与16进制信息在计算机中以2进制的形式表达，不过16进制更直观，很多例子都是通过16进制展示(二进制太长了)关于2进制与16进制，每4位二进制可以表达一位16进制，如1111 &#x3D;&#x3D; 0xf 2.不同整数类型所占字节数1byte表示1个字节，word &#x3D;&#x3D; 2byte，dword &#x3D; 4">
+<meta property="og:description" content="学习csapp过程中的笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/20210802092622.png">
 <meta property="og:image" content="http://example.com/images/2021-08-02101042.png">
@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://example.com/images/2021-08-02172717.png">
 <meta property="og:image" content="http://example.com/images/2021-08-02173034.png">
 <meta property="article:published_time" content="2021-08-02T00:32:30.000Z">
-<meta property="article:modified_time" content="2021-08-02T10:05:51.008Z">
+<meta property="article:modified_time" content="2021-08-05T01:09:14.327Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="csapp">
 <meta name="twitter:card" content="summary">
@@ -367,6 +367,10 @@
           
 
           
+              <div class="post-description">
+                  学习csapp过程中的笔记
+              </div>
+          
 
         </div>
       </header>
@@ -381,8 +385,7 @@
       
 
       
-        <span id="more"></span>
-<p>感觉看csapp真的能学到不少东西，因此特别写一篇博客来记录csapp中学习内容</p>
+        <p>感觉看csapp真的能学到不少东西，因此特别写一篇博客来记录csapp中学习内容</p>
 <h2 id="1-信息的表示和处理"><a href="#1-信息的表示和处理" class="headerlink" title="1.信息的表示和处理"></a>1.信息的表示和处理</h2><h3 id="1-2进制与16进制"><a href="#1-2进制与16进制" class="headerlink" title="1.2进制与16进制"></a>1.2进制与16进制</h3><p>信息在计算机中以2进制的形式表达，不过16进制更直观，很多例子都是通过16进制展示(二进制太长了)<br>关于2进制与16进制，每4位二进制可以表达一位16进制，如1111 == 0xf</p>
 <h3 id="2-不同整数类型所占字节数"><a href="#2-不同整数类型所占字节数" class="headerlink" title="2.不同整数类型所占字节数"></a>2.不同整数类型所占字节数</h3><p>1byte表示1个字节，word == 2byte，dword = 4byte，qword = 8byte<br>unsigned表示无符号，当使用unsigned后，符号位变成数值位，对应的范围* 2 + 1<br>char 占 1byte，范围位 -128，127<br>short 2byte<br>int 4<br>long 4 (64位中为8)<br>int32_t 4<br>int64_t 8</p>
 <p>大端与小端表示法<br>例子0x123456<br>在小端中56 34 12<br>大端中 12 34 56</p>
