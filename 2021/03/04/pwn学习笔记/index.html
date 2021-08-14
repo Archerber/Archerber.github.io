@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="学习笔记">
+<meta name="description" content="pwn学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pwn学习笔记">
 <meta property="og:url" content="http://example.com/2021/03/04/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="学习笔记">
+<meta property="og:description" content="pwn学习笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/173317.png">
 <meta property="article:published_time" content="2021-03-04T02:02:00.000Z">
-<meta property="article:modified_time" content="2021-08-06T02:37:53.292Z">
+<meta property="article:modified_time" content="2021-08-13T01:07:06.337Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="笔记">
 <meta name="twitter:card" content="summary">
@@ -317,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/pwn%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn学习笔记</span>
                   </a>
                 </span>
 
@@ -357,7 +357,7 @@
 
           
               <div class="post-description">
-                  学习笔记
+                  pwn学习笔记
               </div>
           
 
@@ -378,6 +378,8 @@
 <h2 id="libc"><a href="#libc" class="headerlink" title="libc"></a>libc</h2><p>got表的基地址+libc.sym中对应函数的地址==got中的地址<br>elf=ELF(“./level3”)<br>libc=ELF(“./libc_32.so.6”)这两句是引入plt和got表以及symbols<br>write_plt=elf.plt[‘write’]<br>write_got=elf.got[‘write’]<br>/bin/sh的地址可以在libc_32.so.6中找，通过strings -a -t x libc_32.so.6 | grep “/bin/sh”或者libc.seach[‘/bin/sh’].next()<br>main函数plt和got表调用不了，只能通过elf.sym[‘main’]调用<br>这些为引入相应的函数<br>write=libc_base-libc.sym[‘write’]<br>关于plt表与got表的理解:<br>      1.plt与got表的原理<br>      通过调用plt表，可以跳转到got表，从而得到函数的真实地址，通过这种调用函数的方式可以提高效率，不用一次把所有函数都加载到程序中去<br>      2.elf.got得到的只是got表的表地址，通过write函数等泄露出来的got表地址才是真实地址<br>libc=addr_got-obj.dump[‘对应函数’]<br>真实地址=libc+obj.dump[‘对应函数’]或者elf.sym[‘对应函数’]</p>
 <h2 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h2><p>关于checksec的各个保护机制<br>1.RELRO主要针对got改写的保护方式，full RELRO表示got表不可被改写，partial RELEO无plt指向的got表是只读的<br>2.stack-canary栈溢出保护(通过向栈中插入信息然后查看该信息是否被改写)<br>3.NX开启后栈中的数据没有执行权限，但是可以通过rop绕过<br>4.ASLR使运行时栈堆中的数据的加载地址以及共享库的加载地址随机化分为0，1，2三个等级，PIE则在编译时将程序编译为位置无关，即程序运行时各个段（如代码段等）加载的虚拟地址也是在装载时才确定。<br>5.FORTIFY<br>加了这个保护之后,一些敏感函数如read, fgets,memcpy, printf等等可能<br>导致漏洞出现的函数都会被替换成__read_chk,__ fgets_chk, __ memcpy_chk, __ printf_chk等。<br>这些带了chk的函数会检查读取/复制的字节长度是否超过缓冲区长度，<br>通过检查诸如%n之类的字符串位置是否位于可能被用户修改的可写地址，<br>避免了格式化字符串跳过某些参数（如直接%7$x）等方式来避免漏洞出现。<br>开启了FORTIFY保护的程序会被checksec检出，此外，在反汇编时直接查看got表也会发现chk函数的存在</p>
 <p>x86中，函数调用是直接将参数压栈，需要用的时候直接将参数放在栈上，调用的函数就能直接取得参数并运算,而x64中，参数多于6个才会用栈，依次是rdi,rsi,rdx,rcx,r8,r9</p>
+<h2 id="RELEO"><a href="#RELEO" class="headerlink" title="RELEO"></a>RELEO</h2><p>为NO RELRO的时候，init.array、fini.array、got.plt均可读可写<br>为PARTIAL RELRO的时候，ini.array、fini.array可读不可写，got.plt可读可写<br>为FULL RELRO时，init.array、fini.array、got.plt均可读不可写。</p>
+<h2 id="ini-array与fini-array"><a href="#ini-array与fini-array" class="headerlink" title="ini.array与fini.array"></a>ini.array与fini.array</h2><p>当程序加载是会调用ini.array，结束时，调用fini.array，当fini.array可写时，可以通过改写成system、main等函数，<br>来劫持程序</p>
 <h2 id="ida"><a href="#ida" class="headerlink" title="ida"></a>ida</h2><pre><code>    db表示一个字节，dw表示2个字节，dd表示4个字节
     unk表示未处理字节，algn表示对齐指令，stru表示结构体或者结构体数组
     tbyte表示浮点数，80位(或扩展精度浮点数)
@@ -573,7 +575,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -584,7 +586,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -595,7 +597,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -619,6 +621,36 @@
 
           
           
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
 
           
 
@@ -635,7 +667,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">工具安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libc"><span class="nav-number">2.</span> <span class="nav-text">libc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checksec"><span class="nav-number">3.</span> <span class="nav-text">checksec</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida"><span class="nav-number">4.</span> <span class="nav-text">ida</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">gdb调试：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynelf%E6%A8%A1%E6%9D%BF%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">Dynelf模板：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="nav-number">7.</span> <span class="nav-text">内存映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%9C%AC%E8%B4%A8"><span class="nav-number">8.</span> <span class="nav-text">函数调用本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF"><span class="nav-number">9.</span> <span class="nav-text">大小端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shellcode"><span class="nav-number">10.</span> <span class="nav-text">shellcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bss-bin-ad"><span class="nav-number">11.</span> <span class="nav-text">bss&#x2F;bin_ad</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#context"><span class="nav-number">12.</span> <span class="nav-text">context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#read%E5%87%BD%E6%95%B0"><span class="nav-number">13.</span> <span class="nav-text">read函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mprotect"><span class="nav-number">14.</span> <span class="nav-text">mprotect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">15.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">16.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E5%AD%97%E8%8A%82%E6%95%B0"><span class="nav-number">17.</span> <span class="nav-text">不同整数类型字节数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alarm"><span class="nav-number">18.</span> <span class="nav-text">alarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%9F%E6%80%81"><span class="nav-number">19.</span> <span class="nav-text">拟态</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">工具安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libc"><span class="nav-number">2.</span> <span class="nav-text">libc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checksec"><span class="nav-number">3.</span> <span class="nav-text">checksec</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELEO"><span class="nav-number">4.</span> <span class="nav-text">RELEO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ini-array%E4%B8%8Efini-array"><span class="nav-number">5.</span> <span class="nav-text">ini.array与fini.array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida"><span class="nav-number">6.</span> <span class="nav-text">ida</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">gdb调试：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynelf%E6%A8%A1%E6%9D%BF%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">Dynelf模板：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="nav-number">9.</span> <span class="nav-text">内存映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%9C%AC%E8%B4%A8"><span class="nav-number">10.</span> <span class="nav-text">函数调用本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF"><span class="nav-number">11.</span> <span class="nav-text">大小端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shellcode"><span class="nav-number">12.</span> <span class="nav-text">shellcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bss-bin-ad"><span class="nav-number">13.</span> <span class="nav-text">bss&#x2F;bin_ad</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#context"><span class="nav-number">14.</span> <span class="nav-text">context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#read%E5%87%BD%E6%95%B0"><span class="nav-number">15.</span> <span class="nav-text">read函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mprotect"><span class="nav-number">16.</span> <span class="nav-text">mprotect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">17.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">18.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E5%AD%97%E8%8A%82%E6%95%B0"><span class="nav-number">19.</span> <span class="nav-text">不同整数类型字节数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alarm"><span class="nav-number">20.</span> <span class="nav-text">alarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%9F%E6%80%81"><span class="nav-number">21.</span> <span class="nav-text">拟态</span></a></li></ol></div>
             
 
           </div>

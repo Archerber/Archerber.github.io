@@ -81,15 +81,13 @@
 
 
 
-<meta name="description" content="2021&#x2F;7&#x2F;10暑假记日记看看自己到底干了什么，并激励自己继续努力,暑假已经过去两天了，但是什么没学什么东西，总之就是非常后悔，buu一定要在两个月内上pwn前60!!!!!!!!!!!!!!今天写了5道题。其中最有印象的是orw和unlink，之前学会了，又忘了，难受，接触到的知识点还有格式化字符串漏洞以及rop加上uaf，睡了睡了 23:142021&#x2F;7&#x2F;11今天做了一个格式化字符串漏洞的">
 <meta property="og:type" content="website">
 <meta property="og:title" content="日记">
 <meta property="og:url" content="http://example.com/drafts/%E6%97%A5%E8%AE%B0.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="2021&#x2F;7&#x2F;10暑假记日记看看自己到底干了什么，并激励自己继续努力,暑假已经过去两天了，但是什么没学什么东西，总之就是非常后悔，buu一定要在两个月内上pwn前60!!!!!!!!!!!!!!今天写了5道题。其中最有印象的是orw和unlink，之前学会了，又忘了，难受，接触到的知识点还有格式化字符串漏洞以及rop加上uaf，睡了睡了 23:142021&#x2F;7&#x2F;11今天做了一个格式化字符串漏洞的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-18T02:02:00.000Z">
-<meta property="article:modified_time" content="2021-07-28T10:33:15.375Z">
+<meta property="article:published_time" content="2021-08-12T02:35:30.000Z">
+<meta property="article:modified_time" content="2021-08-13T01:08:44.379Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="杂记">
 <meta name="twitter:card" content="summary">
@@ -259,6 +257,10 @@
 	<h1 class="post-title" itemprop="name headline">日记</h1>
 
 
+	<div class="post-meta">
+		<div class="post-description">Fri Aug 13 2021 00:00:00 GMT+0800 (中国标准时间)</div>
+	</div>
+
 
 </header>
 
@@ -268,8 +270,7 @@
       <div class="post-body">
         
         
-          <span id="more"></span>
-<p>2021/7/10<br>暑假记日记看看自己到底干了什么，并激励自己继续努力,暑假已经过去两天了，但是什么没学什么东西，总之就是非常后悔，buu一定要在两个月内上pwn前60!!!!!!!!!!!!!!<br>今天写了5道题。其中最有印象的是orw和unlink，之前学会了，又忘了，难受，接触到的知识点还有格式化字符串漏洞以及rop加上uaf，睡了睡了 23:14<br>2021/7/11<br>今天做了一个格式化字符串漏洞的题目，包含的知识有格式化字符串漏洞泄露libc，使用%s,格式化字符串漏洞改got表，通过’hhn’以及’hn’，还有最值得注意的一点是32位系统中地址可以放最前面，而64位中地址中含有’\x00’不能放前面,感觉今天被字符串格式化漏洞折磨死了，做个堆题都能遇上格式化字符串漏洞，off-by-one+unlink挺简单的<br>三个题，一个格式化字符串漏洞，一个格式化字符串漏洞+unlink，还有一个格式化字符串漏洞(用fmtstr能打通，自己打不通，还在尝试)<br>fmtstr是真的好用，能用fmtstr为什么要自己写<br>2021/7/12<br>写了五道题，感觉都挺简单的，主要是rop，以及shellcode，还有格式化字符串漏洞，感觉时间主要花在调试部分，还有一些细节。<br>2021/7/13<br>做到了一道感觉很难的题,ciscn_2019_final_2，内容是tcache attack+dup2，看了好久都没看明白，感觉又点<br>累了就干脆休息一天算了。明天继续努力。<br>2021/7/14-7/16<br>又摸了三天的鱼，太离谱了。原神太可怕了。一定要控制住自己。<br>2021/7/17<br>学了下house of force， 感觉挺简单的，并且回顾了一下之前学过的realloc，以及main_arena<br>2021/7/18<br>做gyctf_2020_force做了好久，一直都是用的ubuntu11.3的libc-2.23,结果题目环境是11.2,幸好在buu上找到了<br>并且知道了一个工具all_in_one 可以下载libc，非常好用,学会了stack smash，感觉学完堆之后<br>再看这些栈里面的东西确实简单不少<br>2021/7/19<br>今天写了六道题还行，一个关于unlink的经典题，从中学到了unsigned int于 signed int的比较与绕过<br>，还有关于unlink的一个小知识，一个题靠的时小数的内存表示，收获了一个工具，<br>一个tcache dup，一个初始化漏洞，一个简单的思维题，还有一个ssh题<br>2021/7/20<br>写了7个题，3个堆题，4个栈题，其中堆题是关于uaf以及tcache bin和fastbin，其他的栈题有shellcode，格式化字符串漏洞，收获了一些<br>小的知识点以及一个工具alpha3，今天还是挺有收获的<br>2021/7/21<br>做了两个题，太摸鱼了，不过pwn的一分题总算写完了，写的两个题分别是，actf_2019_babyheap 和 xman_2019_format<br>前一个题是tcache + uaf 后一个是堆上的格式化字符串漏洞，主要是堆上的格式化字符串漏洞花了点时间，特意写了下笔记<br>感觉确实学会了，先看星盟的教程，然后再自己看WP，边看边调就会了<br>2021/7/22<br>今天真的摸鱼，就写了一道题，强网杯2019 拟态 STKOF 第一次接触拟态，学到了，不写日记完全发现不了，自己这么摸鱼，这个题最关键的一点是<br>通过add esp将32位和64位的shellcode分开，其实还好<br>2021/7/23<br>今天总算弄到了一个可以tcache dup 动态调试的pwn虚拟机，太感谢分享的人了，于是去做了下之前不会的ciscn_2019_final_3，感觉技术日益增长<br>，在写一个关于stout的题，还是不太会，希望明天上午能会，太摸了、太摸了<br>2021/7/24<br>在学io流中的_2_1_stout泄露libc，感觉摸鱼还是太多了，不过今天面过了nepnep确实挺意外的<br>2021/7/25<br>进了nepnep的群看到了每周的学习任务，csapp lab一周一个实验，感觉还不错，还有一个积分系统，有点意思，希望能跟nepnep一起进步，今天的话<br>主要看了lab1，感觉可以一边学一边写题。</p>
+          <h3 id="2021-08-13"><a href="#2021-08-13" class="headerlink" title="2021-08-13"></a>2021-08-13</h3><p>1.学ret2dl，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51868336/article/details/114644569">https://blog.csdn.net/qq_51868336/article/details/114644569</a> 在跟着做一个小实验<br>2.</p>
 
         
       </div>
@@ -312,8 +313,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -332,7 +342,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -343,7 +353,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -354,7 +364,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -378,12 +388,58 @@
 
           
           
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
 
           
 
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2021-08-13"><span class="nav-number">1.</span> <span class="nav-text">2021-08-13</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
