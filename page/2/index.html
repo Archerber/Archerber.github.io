@@ -259,6 +259,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/25/pwn%E4%B9%8B%E5%A0%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/25/pwn%E4%B9%8B%E5%A0%86/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-25T16:04:21+08:00">
+                2021-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/04/25/pwn%E4%B9%8B%E5%A0%86/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>title: pwn中堆的学习<br>date: 2021-4-16 20:52<br>tags: 堆<br>categories: heap<br>description: 堆<br>与堆真正相关的函数(s)brk函数和 mmap, munmap 函数。<br>linux内存结构如图<br><img src="/images/200501092691998.png" alt="avatar"></p>
+<h2 id="主分配区-mian-arena"><a href="#主分配区-mian-arena" class="headerlink" title="主分配区(mian_arena)"></a>主分配区(mian_arena)</h2><p>当申请空间时，如果能分配到空间，则会创建主分配区，主分配区的空间可以来自mmp和heap，每次分配内存必须对该空间加锁，分配完成释放锁</p>
+<h2 id="非主分配区-non-mian-arena"><a href="#非主分配区-non-mian-arena" class="headerlink" title="非主分配区(non_mian_arena)"></a>非主分配区(non_mian_arena)</h2><p>由mmap分配</p>
+<h2 id="空闲内存块chunk的结构"><a href="#空闲内存块chunk的结构" class="headerlink" title="空闲内存块chunk的结构"></a>空闲内存块chunk的结构</h2><p>直接贴一张图就能明白了<br><img src="/images/chunk.png" alt="avatar"><br>mem是给用户写数据的地址<br>需要注意的是，chunk间存在空间复用(为了提高空间的利用率？？？)，原理：当一个chunk正在使用中(被free掉了)，他的后一个chunk的pre_size无效，因此这个chunk可以使用后一个chunk的pre_size存数据</p>
+<h2 id="brk-sbrk"><a href="#brk-sbrk" class="headerlink" title="brk(sbrk)"></a>brk(sbrk)</h2><p>当malloc申请的内存小于128k时，使用brk(系统调用)，<br>sbrk(c库函数，主要被realloc，calloc使用)</p>
+<h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include &lt;unistd.h&gt;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sbrk</span><span class="params">(<span class="keyword">intptr_t</span> increment)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="用法示例"><a href="#用法示例" class="headerlink" title="用法示例"></a>用法示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;alloc.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> *ptr;</span><br><span class="line"></span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;Changing allocation with brk()\n&quot;</span>);</span><br><span class="line">   ptr = <span class="built_in">malloc</span>(<span class="number">1</span>);</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;Before brk() call: %lu bytes free\n&quot;</span>, coreleft());</span><br><span class="line">   brk(ptr+<span class="number">1000</span>);</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot; After brk() call: %lu bytes free\n&quot;</span>, coreleft());</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的例子可以看出，brk的作用是抬高对应的地址，即扩充空间,比如malloc(0x30)，此时对应的控制heap的大小的指针就会抬高<br>如图<br><img src="/images/200501092691998.png" alt="avatar"><br>可参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/huxiao-tee/p/4660352.html">https://www.cnblogs.com/huxiao-tee/p/4660352.html</a></p>
+<h2 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h2><p>mmap主要作用将文件或者其他对象映射进内存，或者当分配的内存大于128k时就需要使用mmap了，mmap的实际操作是在虚拟地址部分<br>寻找空闲区，然后与文件物理地址建立映射联系<br>如图<br><img src="/images/200501092691998.png" alt="avatar"><br>其实还有各种结构体来进行映射文件等的管理<br>mmap函数原型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start, <span class="keyword">size_t</span> length, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>详情见：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/huxiao-tee/p/4660352.html">https://www.cnblogs.com/huxiao-tee/p/4660352.html</a></p>
+<h2 id="bins"><a href="#bins" class="headerlink" title="bins"></a>bins</h2><p>ptmalloc通过bins将chunk联系起来，并通过不同的索引使用不同的chunk，bins中包括 unsorted bins、small bins，largebins，这些bins中储存的chunk都是通过双向链表联系起来的</p>
+<h2 id="fastbins"><a href="#fastbins" class="headerlink" title="fastbins"></a>fastbins</h2><p>当malloc申请的内存小于64B(32位)，128B(64位)时，会使用fastbin，fastbin通过单向链表将bins连起来，fastbins最多支持10个bins，从8B到80B，fastbins中的chunk的p位始终为1，保证不回被合并，只有当某个特定的时候才会被合并<br>fastbin中堆的大小范围为0x10-0x80，并通过单向链表连接</p>
+<h2 id="smallbins"><a href="#smallbins" class="headerlink" title="smallbins"></a>smallbins</h2><p>索引从2到63，共62个bin，为循环双向链表，chunk的大小从16B-63B，每个bins中存放的chunk大小固定，64位最大为0x400</p>
+<h2 id="largebins"><a href="#largebins" class="headerlink" title="largebins"></a>largebins</h2><p>32位大于512b,64位大于1024b，属于largebin，largebin总共包括63个bin，每组bin的数量依次为32、16、8、4、2、1<br>每组bin的公差为64b、512b、4096b、32768b、262144b，<br>chunk_size = 512 + 64 * index(第一个bin的大小)<br>chunk_size = 512 + 64 * 32 + 512 * index(第二个bin的大小，要算上前一个bin，后面依次类推)<br>见下图<br><img src="/images/largebins.png" alt="avatar"><br>largebin的结构中包含fd_nextchunk以及bk_nextsize(指向别的堆头的指针，不是大小)<br>fd_nextchunk和bk_nextsize的作用是连接同一个bin中不同大小的bin<br>largebin的连接方式如下<br><img src="/images/1078447-20170326133441799-18505470.jpg" alt="avatar"></p>
+<h2 id="unsortbins"><a href="#unsortbins" class="headerlink" title="unsortbins"></a>unsortbins</h2><p>unsortedbins只有一个bin，chunk为乱序，chunk被分割之后如果剩下的部分大于64B就被放到这里(当释放一个不属于fastbins的chunk，chunk会先到这里)，可以理解为回收chunk的缓存区，当unsortbin中只有一个bin时，他的fd以及bk会指向main_arena，如果未从fastbin中找到合适的chunk，会从unsorted bin中找起</p>
+<h2 id="top-chunk"><a href="#top-chunk" class="headerlink" title="top chunk"></a>top chunk</h2><p>当free的chunk大于64B时，如果与topchunk相邻，该chunk会与topchunk合并(释放fastbin不用担心，必不可能与topchunk相邻)</p>
+<h2 id="堆块合并"><a href="#堆块合并" class="headerlink" title="堆块合并"></a>堆块合并</h2><p>当free掉两个空闲且相邻的chunk(非fastbin)之后，这两个chunk会合并成一个大chunk，然后放入unsorted bin中，fastbin中的pre_in_use始终为1，不会发生堆块合并</p>
+<h2 id="关于free时chunk的去向："><a href="#关于free时chunk的去向：" class="headerlink" title="关于free时chunk的去向："></a>关于free时chunk的去向：</h2><p>当我们free掉一个chunk时，系统会根据这个chunk的大小来判断属于哪种类型的chunk，如果属于fastbin，则将它放入fastbin中，不属于则触发unlink，先合并物理低地址块再合并物理高地址块，然后放入unsorted bin中</p>
+<h2 id="unlink操作："><a href="#unlink操作：" class="headerlink" title="unlink操作："></a>unlink操作：</h2><p>如图<img src="/images/unlink_smallbin_intro.png" alt="avatar"><br>操作为：<br>    <strong>FD=P-&gt;FD,BK=P-&gt;BK,FD-&gt;BK=BK,BK-&gt;FD=FD</strong><br>    如果我们可以通过堆溢出修改p中的fd以及bk，则我们可以通过unlink来实现任意地址写<br>fd修改为 P -&gt; fd = target - 0x12 , P -&gt;bk = expect value , 在没有保护的情况下，有<br>FD = P -&gt; fd = target - 0x12 , BK = P -&gt; bk = expect value </p>
+<ul>
+<li>( target - 0x12 + 0x12 ) = BK = expect value<br>如果 target 设置为 free 的 got表，expect value 设置为system，这样就可以将<br>free的got表改为system  </li>
+<li>( expect value + 0x8 ) = target - 0x12<br>expect value + 0x8 需要设置为可写地址<br>上面的情况只适用于没有保护的情况，当有保护之后，情况就要复杂一些<br>保护为：</li>
+</ul>
+<p> 1.检查大小<br>     检查可以合并的chunk大小，第一处是，当前chunk的presize(包括head)与被合并<br>     chunk的大小是否对应，第二处，是被合并的chunk的next chunk’s presize<br> 2.检查链表完整性<br> 即 FD -&gt; bk == P 以及 BK -&gt; fd == p</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 由于 P 已经在双向链表中，所以有两个地方记录其大小，所以检查一下其大小是否一致(size检查)</span></span><br><span class="line"><span class="keyword">if</span> (__builtin_expect (chunksize(P) != prev_size (next_chunk(P)), <span class="number">0</span>))      \</span><br><span class="line">      malloc_printerr (<span class="string">&quot;corrupted size vs. prev_size&quot;</span>);               \</span><br><span class="line"><span class="comment">// 检查 fd 和 bk 指针(双向链表完整性检查)</span></span><br><span class="line"><span class="keyword">if</span> (__builtin_expect (FD-&gt;bk != P || BK-&gt;fd != P, <span class="number">0</span>))                      \</span><br><span class="line">  malloc_printerr (check_action, <span class="string">&quot;corrupted double-linked list&quot;</span>, P, AV);  \</span><br><span class="line"></span><br><span class="line">  <span class="comment">// largebin 中 next_size 双向链表完整性检查 </span></span><br><span class="line">              <span class="keyword">if</span> (__builtin_expect (P-&gt;fd_nextsize-&gt;bk_nextsize != P, <span class="number">0</span>)              \</span><br><span class="line">                || __builtin_expect (P-&gt;bk_nextsize-&gt;fd_nextsize != P, <span class="number">0</span>))    \</span><br><span class="line">              malloc_printerr (check_action,                                      \</span><br><span class="line">                               <span class="string">&quot;corrupted double-linked list (not small)&quot;</span>,    \</span><br><span class="line">                               P, AV);</span><br></pre></td></tr></table></figure>
+<h3 id="检查的绕过："><a href="#检查的绕过：" class="headerlink" title="检查的绕过："></a>检查的绕过：</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//unlink中的检查(32位)</span></span><br><span class="line"></span><br><span class="line">FD -&gt; bk == P , Bk -&gt; fd == P</span><br><span class="line"></span><br><span class="line"><span class="comment">//如需绕过检查有，</span></span><br><span class="line"></span><br><span class="line">fakeFD -&gt; bk == P , fakeBK -&gt; fd == P</span><br><span class="line"><span class="comment">//即</span></span><br><span class="line"> * (fakeFD + <span class="number">0x12</span> ) == P , * ( fakeBK + <span class="number">0x8</span> ) == p</span><br><span class="line"></span><br><span class="line"><span class="comment">//绕过检查后有，</span></span><br><span class="line"></span><br><span class="line">fakeFD -&gt; bk == fakeBK , fakeBK -&gt; fd == fakeFD</span><br><span class="line"><span class="comment">//即</span></span><br><span class="line"> * ( fakeFD + <span class="number">0x12</span> ) == fakeBK , * ( fakeBK + <span class="number">0x8</span> ) ==  fakeFD  </span><br></pre></td></tr></table></figure>
+<p>当用户申请chunk的流程：<br>先在fastbin中寻找chunk，如果没找到则从small bin(判断大小是不是小于512B)中寻找，这时再没找到就会从unsorted bin中寻找，此时，unsorted bin中有属于smallbin中的chunk时，就会将chunk切割，然后用户就能得到chunk，并且得到的chunk的fd是切割前大chunk的fd</p>
+<h2 id="tcache机制介绍"><a href="#tcache机制介绍" class="headerlink" title="tcache机制介绍"></a>tcache机制介绍</h2><p>libc-2.26及以后加入了tcache，用以加快chunk的分配速度，free一个chunk时，会先尝试放入tcachebins中，也因此要使chunk到<br>fastbin中，应先free7个同样大小的chunk，bin每一个tcache最多包含7个块，<br>tcache中chunk在32位从12-512bytes,64位是24-1024bytes需要超过0x400才能进unsortbin<br>libc-2.26 - libc-2.27 关于tcache的检查很少，可以任意的doublefree，malloc，此外tcache的表头有一个小小的漏洞，<br>当一个chunk被free两次之后，此时bins里的下标为2，此时再malloc 3个对应大小的堆，下标就会为-1，而此时再free掉这个堆就会放到<br>unsortedbin中<br>libc-2.29中增加了对tcache doublefree 以及unsorted bin attack 的检测<br>tcache 的 entry处添加了一个key</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">tcache_entry</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">tcache_entry</span> *<span class="title">next</span>;</span></span><br><span class="line">  <span class="comment">/* This field exists to detect double frees.  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">tcache_perthread_struct</span> *<span class="title">key</span>;</span></span><br><span class="line">&#125; tcache_entry; </span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/25/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,163 +526,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2021/04/25/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/16/pwn%E4%B9%8B%E5%A0%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Archerの博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/16/pwn%E4%B9%8B%E5%A0%86/" itemprop="url">pwn中堆的学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-16T20:52:00+08:00">
-                2021-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/heap/" itemprop="url" rel="index">
-                    <span itemprop="name">heap</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2021/04/16/pwn%E4%B9%8B%E5%A0%86/" class="leancloud_visitors" data-flag-title="pwn中堆的学习">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          堆
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/04/16/pwn%E4%B9%8B%E5%A0%86/">
               Read more &raquo;
             </a>
           </div>
@@ -1724,7 +1727,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
