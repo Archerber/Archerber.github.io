@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="STL六大组件功能和运用STL的六大组件分为容器(containers)、算法(algorithms)、迭代器(iterators)、仿函数(functors)、配接器(adapters)、配置器(allocators)容器：可以理解为各种数据结构，例如stack、queue、list、map、vector、deque等等，可以用来存放各种数据，并且以各种形式(比如int，char……)算法：算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Archerの博客">
+<meta property="og:url" content="http://example.com/2022/03/06/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="STL六大组件功能和运用STL的六大组件分为容器(containers)、算法(algorithms)、迭代器(iterators)、仿函数(functors)、配接器(adapters)、配置器(allocators)容器：可以理解为各种数据结构，例如stack、queue、list、map、vector、deque等等，可以用来存放各种数据，并且以各种形式(比如int，char……)算法：算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2021-12-06010046.png">
+<meta property="og:image" content="http://example.com/images/2021-12-06010240.png">
+<meta property="og:image" content="http://example.com/images/2021-12-06010433.png">
+<meta property="og:image" content="http://example.com/images/2021-12-06010523.png">
+<meta property="article:published_time" content="2022-03-06T11:20:14.037Z">
+<meta property="article:modified_time" content="2022-03-06T11:19:44.045Z">
+<meta property="article:author" content="Archer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2021-12-06010046.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录一个菜鸡的成长之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/06/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-03-06T19:20:14+08:00">
+                2022-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/03/06/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E7%AC%94%E8%AE%B0/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="STL六大组件功能和运用"><a href="#STL六大组件功能和运用" class="headerlink" title="STL六大组件功能和运用"></a>STL六大组件功能和运用</h2><p>STL的六大组件分为容器(containers)、算法(algorithms)、迭代器(iterators)、仿函数(functors)、配接器(adapters)、配置器(allocators)<br>容器：可以理解为各种数据结构，例如stack、queue、list、map、vector、deque等等，可以用来存放各种数据，<br>并且以各种形式(比如int，char……)<br>算法：算法就比较好理解了，比如sort、搜索等<br>迭代器：迭代器字如其名，作用是将算法与容器联系起来，为了方便理解可以初步理解为遍历(正向、反向、随机、双<br>向等等)。当我们向容器中存入数据后，需要使用算法来操作容器内的数据时，此时就需要迭代器，比如定义一个<br>stack，这时如果我们需要从栈顶遍历到栈底，肯定不能直接int temp = stack…这时就需要用到迭代器<br>关于迭代器的例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	vector&lt;<span class="keyword">int</span>&gt; v;<span class="comment">//vector是可变长度的数组</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> n = <span class="number">0</span>;n &lt; <span class="number">5</span>; ++n)</span><br><span class="line">		v.<span class="built_in">push_back</span>(n);<span class="comment">//尾部添加元素</span></span><br><span class="line">	vector&lt;<span class="keyword">int</span>&gt;::iterator i;</span><br><span class="line">	<span class="keyword">for</span>(i = v.<span class="built_in">begin</span>();i != v.<span class="built_in">end</span>(); ++i)&#123;<span class="comment">//使用迭代器遍历元素</span></span><br><span class="line">		cout &lt;&lt; *i &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		*i *= <span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">for</span>(vector&lt;<span class="keyword">int</span>&gt;::reverse_iterator j = v.<span class="built_in">rbegin</span>(); j != v.<span class="built_in">rend</span>(); ++j)</span><br><span class="line">		cout &lt;&lt; *j &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仿函数:仿函数（Functor）又称为函数对象（Function Object）是一个能行使函数功能的类。仿函数的语法几乎<br>和我们普通的函数调用一样，不过作为仿函数的类，都必须重载 operator()运算符。因为调用仿函数，实际上就<br>是通过类对象调用重载后的 operator() 运算符。例子<br>当不使用仿函数时，使用count_if时代码一般是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> maxLength;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">LengthIsLessThan</span><span class="params">(<span class="keyword">const</span> string&amp; str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="built_in">length</span>() &lt; maxLength;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> res = <span class="built_in">count_if</span>(vec.<span class="built_in">begiin</span>(), vec.<span class="built_in">end</span>(), LengthIsLessThan);</span><br></pre></td></tr></table></figure>
+<p>但是使用全局变量或者常量时，复用性不高，而且会消耗很多时间<br>而使用仿函数时</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShorterThan</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="keyword">explicit</span> <span class="title">ShorterThan</span><span class="params">(<span class="keyword">int</span> maxLength)</span> : length(maxLength) &#123;</span>&#125;<span class="comment">//length赋值</span></span><br><span class="line">        <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> string&amp; str)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> str.<span class="built_in">length</span>() &lt; length;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> length;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">count_if</span>(myVector.<span class="built_in">begin</span>(), myVector.<span class="built_in">end</span>(), <span class="built_in">ShorterThan</span>(length));</span><br></pre></td></tr></table></figure>
+<p>配接器:可以通过修改现有类的接口，形成新的类，使原本由于接口不兼容而不能合作的类可以一起运作(感觉还<br>是有点不明白，代补充)<br>配置器:负责空间管理与配置。</p>
+<h3 id="SGI-STL-文件分布与简介"><a href="#SGI-STL-文件分布与简介" class="headerlink" title="SGI STL 文件分布与简介"></a>SGI STL 文件分布与简介</h3><p>c++标准规范下的c头文件(无扩展名)，例如cstdio，cstdlib，cstring……<br>c++标准程序库中不属于STL范围的，例如stream,string……<br>STL标准头文件(无扩展名)，例如vector,deque,list,map,algorithm,functional…..<br>c++ STandard定案前，HP所规范的STL头文件，例如vector.h,deque.h,list.h,map.h,algo.h.function.h…<br>SGI STL内部文件(STL真正实现的地方),例如stl_vector.h,stl_deque.h,stl_list.h,stl_map.h,stl_algo.h,stl_function.h…</p>
+<h4 id="STL标准头文件-无扩展名"><a href="#STL标准头文件-无扩展名" class="headerlink" title="STL标准头文件(无扩展名)"></a>STL标准头文件(无扩展名)</h4><p><img src="/images/2021-12-06010046.png" alt="avatar"></p>
+<h4 id="C-Standard-定案前，HP规范的STL头文件-扩展名-h"><a href="#C-Standard-定案前，HP规范的STL头文件-扩展名-h" class="headerlink" title="C++ Standard 定案前，HP规范的STL头文件(扩展名.h)"></a>C++ Standard 定案前，HP规范的STL头文件(扩展名.h)</h4><p><img src="/images/2021-12-06010240.png" alt="avatar"></p>
+<h4 id="SGI-STL-内部私用文件-SGI-STL真正实现的地方"><a href="#SGI-STL-内部私用文件-SGI-STL真正实现的地方" class="headerlink" title="SGI STL 内部私用文件(SGI STL真正实现的地方)"></a>SGI STL 内部私用文件(SGI STL真正实现的地方)</h4><p><img src="/images/2021-12-06010433.png" alt="avatar"><br><img src="/images/2021-12-06010523.png" alt="avatar"></p>
+<h3 id="STL——config-h"><a href="#STL——config-h" class="headerlink" title="STL——config.h"></a>STL——config.h</h3><p>这个文件的作用是为了提高c++的可移植性，列举一些常用的设置</p>
+<h4 id="1-1-模板类静态成员"><a href="#1-1-模板类静态成员" class="headerlink" title="1.1.模板类静态成员"></a>1.1.模板类静态成员</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__STL_STATIC_TEMPLATE_MEMBER_BUG</span><br><span class="line"><span class="comment">// 如果编译器不支持static members of template classes(模板类静态成员)就定义</span></span><br><span class="line"><span class="comment">// 关于模板类静态成员可以看这篇文章</span></span><br><span class="line"><span class="comment">// https://www.cnblogs.com/dongling/p/5732586.html</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-模板类偏特化"><a href="#1-2-模板类偏特化" class="headerlink" title="1.2.模板类偏特化"></a>1.2.模板类偏特化</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">__STL_CLASS_PARTIAL_SPECIALIZATION</span><br><span class="line"><span class="comment">// 编译器支持模板类偏特化就定义</span></span><br><span class="line"><span class="comment">//一般化设计，非特化情况均使用这个</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">I</span>,<span class="keyword">class</span> <span class="title">O</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">test</span>&#123;</span></span><br><span class="line">	test() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;I, O&quot;</span> &lt;&lt;<span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//特殊化设计1（偏特化1）</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">test</span> &lt;</span>T* ,T*&gt; &#123;</span><br><span class="line">	test() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;T* ,T*&quot;</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//特殊化设计2（偏特化2）</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">test</span> &lt;</span><span class="keyword">const</span> T* ,T*&gt; &#123;</span><br><span class="line">	test() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;const T* ,T*&quot;</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//测试</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	test&lt;<span class="keyword">int</span>, <span class="keyword">char</span>&gt; obj1;         <span class="comment">//I, O</span></span><br><span class="line">	test&lt;<span class="keyword">int</span>*, <span class="keyword">int</span>*&gt; obj2;        <span class="comment">//T*, T*</span></span><br><span class="line">	test&lt;<span class="keyword">const</span> <span class="keyword">int</span>*, <span class="keyword">int</span>*&gt; obj3;  <span class="comment">//const T*, T*</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 参考https://blog.csdn.net/RaKiRaKiRa/article/details/82997891</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-部分排序函数模板"><a href="#1-3-部分排序函数模板" class="headerlink" title="1.3.部分排序函数模板"></a>1.3.部分排序函数模板</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">__STL_FUNCTION_TMPL_PARTIAL_ORDER</span><br><span class="line"><span class="comment">// 如果编译器支持部分排序函数模板，就定义</span></span><br><span class="line"><span class="comment">// 参考https://msdn.microsoft.com/en-us/library/zaycz069.aspx</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-模板类内嵌套模板"><a href="#1-4-模板类内嵌套模板" class="headerlink" title="1.4.模板类内嵌套模板"></a>1.4.模板类内嵌套模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">__STL_MEMBER_TEMPLATES</span><br><span class="line"><span class="comment">// 这个很容易理解就是模板里嵌套模板</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;typeinfo&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">alloc</span>&#123;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//类模板</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,<span class="keyword">typename</span> Alloc=alloc&gt;</span><br><span class="line">class vector&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type* iterator;</span><br><span class="line"><span class="comment">//函数模板</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> I&gt;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(iterator position,I first,I last)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;insert()&quot;</span>&lt;&lt;endl;</span><br><span class="line">        cout&lt;&lt;<span class="built_in"><span class="keyword">typeid</span></span>(I).<span class="built_in">name</span>()&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ia[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; x;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt;::iterator ite;</span><br><span class="line">    x.<span class="built_in">insert</span>(ite,*ia,*(ia+<span class="number">5</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//参考https://www.cnblogs.com/wuchanming/p/4059602.html</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5-根据前一个模板用的什么参数就用什么参数"><a href="#1-5-根据前一个模板用的什么参数就用什么参数" class="headerlink" title="1.5.根据前一个模板用的什么参数就用什么参数"></a>1.5.根据前一个模板用的什么参数就用什么参数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">__STL_LIMITED_DEFAULT_TEMPLATES</span><br><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">alloc</span>&#123;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Alloc</span> =</span> alloc, <span class="keyword">size_t</span> BufSiz = <span class="number">0</span>&gt;</span><br><span class="line">class deque &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">deque</span>() &#123; cout &lt;&lt; <span class="string">&quot;deque&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Sequence</span> =</span> deque&lt;T&gt; &gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">stack</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">stack</span>() &#123; cout &lt;&lt; <span class="string">&quot;stack&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Sequence c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	stack&lt;<span class="keyword">int</span>&gt; x;<span class="comment">//deque</span></span><br><span class="line">	<span class="comment">//stack</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-non-type-template参数"><a href="#1-6-non-type-template参数" class="headerlink" title="1.6.non-type template参数"></a>1.6.non-type template参数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// __STL_NON_TYPE_TMPL_PARAM_BUG</span></span><br><span class="line"><span class="comment">// 测试函数是否使用非类型模板参数</span></span><br><span class="line"><span class="comment">// 当以类型(type)作为模板参数的时候，代码中未决定的是类型；</span></span><br><span class="line"><span class="comment">// 当以一般的数字(non-type)作为模板参数的时候，代码中待定的内容便是某些数值。使用者这种模板必须要显示指定数值，模板才能实例化。</span></span><br><span class="line"><span class="comment">// 通常它们只能是常数整数（constant integral values ）包括枚举，或者是指向外部链接的指针。</span></span><br><span class="line"><span class="comment">// 不能把float，class-type类型的对象，内部链接(internal linkage )对象,作为非类型模板参数。</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Alloc</span> =</span> alloc, <span class="keyword">size_t</span> BufSiz = <span class="number">0</span>&gt;  <span class="comment">//BufSiz即为非类型模板。</span></span><br><span class="line">class deque &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">deque</span>() &#123; cout &lt;&lt; <span class="built_in">deque</span>() &lt;&lt; endl; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//参考RaKiRaKiRa/article/details/82997891</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-7-约束模板友元函数"><a href="#1-7-约束模板友元函数" class="headerlink" title="1.7.约束模板友元函数"></a>1.7.约束模板友元函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原定义</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">ifdef</span> __STL_EXPLTCIT_FUNCTION_TMPL_ARGS</span></span><br><span class="line"><span class="meta">#	<span class="meta-keyword">define</span> __STL_NULL_TMPL_ARGS <span class="meta-string">&lt;&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> __STL_NULL_TMPL_ARGS </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">直接理解为若允许**bound friend template(约束模板友元)**则定义为 &lt;&gt; ，否则为空。</span><br><span class="line">(友元类型取决于类被初始化时的类型，但程序必须在类外为友元提供模板定义。)</span><br><span class="line">友元函数可以看菜鸟教程，可以简单理解为一个在类定义的模板函数可以访问类的成员</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="keyword">class</span> <span class="title">Sequence</span>=</span>deque&lt;T&gt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">stack</span> &#123;</span></span><br><span class="line">	<span class="comment">//最标准的写法</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>== &lt;T&gt;(<span class="keyword">const</span> stack&lt;T&gt;&amp;, <span class="keyword">const</span> stack&lt;T&gt;&amp;);</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt; &lt;T&gt;(<span class="keyword">const</span> stack&lt;T&gt;&amp;, <span class="keyword">const</span> stack&lt;T&gt;&amp;);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//参数列表中的&lt;T&gt;实际上可以忽略</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>== &lt;T&gt;(<span class="keyword">const</span> stack&amp;, <span class="keyword">const</span> stack&amp;);</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt; &lt;T&gt;(<span class="keyword">const</span> stack&amp;, <span class="keyword">const</span> stack&amp;);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//当可以从参数中推断出模板类型时，可以改用&lt;&gt;</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>== &lt;&gt;(<span class="keyword">const</span> stack&amp;, <span class="keyword">const</span> stack&amp;);</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt; &lt;&gt;(<span class="keyword">const</span> stack&amp;, <span class="keyword">const</span> stack&amp;);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//下面用法是错误的！</span></span><br><span class="line">	<span class="comment">//friend bool operator== (const stack&amp;, const stack&amp;);</span></span><br><span class="line">	<span class="comment">//friend bool operator&lt; (const stack&amp;, const stack&amp;);</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">stack</span>() &#123; cout &lt;&lt; <span class="string">&quot;Stack&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Sequence c;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-8-模板特化"><a href="#1-8-模板特化" class="headerlink" title="1.8.模板特化"></a>1.8.模板特化</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __STL_CLASS_PARTIAL_SPECIALIZATION</span></span><br><span class="line"><span class="meta">#	 <span class="meta-keyword">define</span> __STL_TEMPLATE_NULL template<span class="meta-string">&lt;&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#	 <span class="meta-keyword">define</span> __STL_TEMPLATE_NULL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">// 非常简洁明了</span></span><br><span class="line"><span class="comment">// 模板特化即指定一种或多种模板形参的实际值或实际类型，作为特殊情况。(与模板偏特化不同，这个是具体的)</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>&gt;</span> <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&#123;</span> ...&#125;;<span class="comment">//非特化情况均使用这个</span></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;</span><span class="keyword">char</span>&gt; &#123; ... &#125;;<span class="comment">//特化char情况</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Key</span>&gt;</span> <span class="class"><span class="keyword">struct</span> <span class="title">hash</span> &#123;</span> &#125;;<span class="comment">//非特化情况均使用这个</span></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> <span class="title">hash</span>&lt;</span><span class="keyword">char</span>&gt; &#123; ... &#125;;<span class="comment">//特化char情况</span></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> <span class="title">hash</span>&lt;</span>unsgned <span class="keyword">char</span>&gt; &#123; ... &#125;;<span class="comment">//特化unsigned char情况</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 展开后</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">type</span>&gt;</span> <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&#123;</span> ...&#125;;<span class="comment">//非特化情况均使用这个</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;</span><span class="keyword">char</span>&gt; &#123; ... &#125;;<span class="comment">//特化char情况</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Key</span>&gt;</span> <span class="class"><span class="keyword">struct</span> <span class="title">hash</span> &#123;</span> &#125;;<span class="comment">//非特化情况均使用这个</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">hash</span>&lt;</span><span class="keyword">char</span>&gt; &#123; ... &#125;;<span class="comment">//特化char情况</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">struct</span> <span class="title">hash</span>&lt;</span>unsgned <span class="keyword">char</span>&gt; &#123; ... &#125;;<span class="comment">//特化unsigned char情况</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-9-function-call操作符与仿函数"><a href="#1-9-function-call操作符与仿函数" class="headerlink" title="1.9.function call操作符与仿函数"></a>1.9.function call操作符与仿函数</h4><p>c语言中，一般是通过函数指针，来实现将函数当参数传递<br>例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">void</span> (*fun_ptr)(<span class="keyword">int</span> data);</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Hellow World&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fun_ptr = print;</span><br><span class="line">	(*fun_ptr)();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>c++中使用仿函数来实现将函数当参数传递</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">myprint</span>&#123;</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> T&amp; tmp)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		cout &lt;&lt; tmp &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">6</span>] = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">1</span>&#125;;</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">b</span><span class="params">(a,a + <span class="number">6</span>)</span></span>;</span><br><span class="line">	for_each(b.<span class="built_in">begin</span>(),b.<span class="built_in">end</span>(),myprint&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-0-临时对象的产生与运用"><a href="#2-0-临时对象的产生与运用" class="headerlink" title="2.0.临时对象的产生与运用"></a>2.0.临时对象的产生与运用</h4><p>在上面一个例子中就用到了临时对象，临时对象字如其名，通过临时对象可以简化程序，在型别名称之后加&lt;&gt;<br>，并指定初值，就相当于调用了里面的constructor，并且不指定对象名。STL中常用于仿函数于算法的结合。<br>例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myprint</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> T&amp; tmp)</span></span>&#123;</span><br><span class="line">		cout &lt;&lt; tmp &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">b</span><span class="params">(a,a+<span class="number">10</span>)</span></span>;</span><br><span class="line">	for_each(b.<span class="built_in">begin</span>(),b.<span class="built_in">end</span>(),myprint&lt;<span class="keyword">int</span>&gt;());<span class="comment">//创建临时对象，不是仿函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-静态常量整数成员在class内部直接初始化"><a href="#2-1-静态常量整数成员在class内部直接初始化" class="headerlink" title="2.1.静态常量整数成员在class内部直接初始化"></a>2.1.静态常量整数成员在class内部直接初始化</h4><p>当类中有静态常量整数成员时，可以在class中进行初始化，静态常量整数成员即const static integral data<br>member，并且integral泛指所有整数级别，<br>例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">testClass</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:  <span class="comment">// expedient</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> _datai = <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">long</span> _datal = <span class="number">3L</span>;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> _datac = <span class="string">&quot;c&quot;</span>;</span><br><span class="line">&#125;；</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	cout &lt;&lt; testClass&lt;<span class="keyword">int</span>&gt;::_datai &lt;&lt; endl;<span class="comment">//5</span></span><br><span class="line">	cout &lt;&lt; testClass&lt;<span class="keyword">int</span>&gt;::_datal &lt;&lt; endl;<span class="comment">//3</span></span><br><span class="line">	cout &lt;&lt; testClass&lt;<span class="keyword">int</span>&gt;::_datac &lt;&lt; endl;<span class="comment">//c</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-increment-decrement-dereference-操作符"><a href="#2-2-increment-decrement-dereference-操作符" class="headerlink" title="2.2.increment/decrement/dereference 操作符"></a>2.2.increment/decrement/dereference 操作符</h4><p>这里书中给的例子说的很清楚,increment/decrement等操作符，与迭代器的实现密不可分，任何一个<br>迭代器都必须实现前进(increment)和取值(dereference)功能，前进分为前置式(prefix)和<br>后置式(postfix)两种。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">INT</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="keyword">const</span> INT&amp;  i);<span class="comment">//友元函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">INT</span>(<span class="keyword">int</span> i) : m_i &#123;&#125;；</span><br><span class="line">	INT&amp; <span class="keyword">operator</span>++()</span><br><span class="line">	&#123;</span><br><span class="line">		++(<span class="keyword">this</span>-&gt;m_i);</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> INT <span class="keyword">operator</span>++(<span class="keyword">int</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		INT temp = *<span class="keyword">this</span>;</span><br><span class="line">		++(*<span class="keyword">this</span>);</span><br><span class="line">		<span class="keyword">return</span> temp;</span><br><span class="line">	&#125;</span><br><span class="line">	INT&amp; <span class="keyword">operator</span>--()</span><br><span class="line">	&#123;</span><br><span class="line">		--(<span class="keyword">this</span>-&gt;m_i);</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> INT <span class="keyword">operator</span>--(<span class="keyword">int</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		INT temp = *<span class="keyword">this</span>;</span><br><span class="line">		--(*<span class="keyword">this</span>);</span><br><span class="line">		<span class="keyword">return</span> temp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span>&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> (<span class="keyword">int</span>&amp;)m_i;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> m_i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="keyword">const</span> INT&amp; i)</span><br><span class="line">&#123;</span><br><span class="line">	os &lt;&lt; <span class="string">&#x27;[&#x27;</span> &lt;&lt; i.m_i &lt;&lt; <span class="string">&#x27;]&#x27;</span>;</span><br><span class="line">	<span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">INT <span class="title">I</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">	cout &lt;&lt; I++; <span class="comment">//[5]</span></span><br><span class="line">	cout &lt;&lt; ++I; <span class="comment">//[7]</span></span><br><span class="line">	cout &lt;&lt; I--; <span class="comment">//[7]</span></span><br><span class="line">	cout &lt;&lt; --I; <span class="comment">//[5]</span></span><br><span class="line">	cout &lt;&lt; *I;  <span class="comment">//5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-前闭后开表示法"><a href="#2-3-前闭后开表示法" class="headerlink" title="2.3.前闭后开表示法[)"></a>2.3.前闭后开表示法[)</h4><p>前闭后开表示法是表示迭代器的一种迭代区间，遍历数组时，从数组下标为0处，遍历至n - 1，在c++中，很多<br>遍历都是通过迭代器进行遍历，比如栈，从栈顶遍历到栈底<br>例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="function">InputIterator <span class="title">find</span><span class="params">(InputIterator first, InputIterator last, <span class="keyword">const</span> T&amp;</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">while</span> (first != last &amp;&amp; *first != value) ++first;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">return</span> first;</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span></span></span><br><span class="line">template &lt;class InputIterator, class Function&gt;</span><br><span class="line"><span class="function">Function <span class="title">for_each</span><span class="params">(InputIterator first, InputIterator last, Function</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">for</span> ( ; first != last; ++ first)</span></span></span><br><span class="line"><span class="function"><span class="params">		f(*first);</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">return</span> f;</span></span></span><br><span class="line"><span class="function"><span class="params">	)</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="空间配置器allocator"><a href="#空间配置器allocator" class="headerlink" title="空间配置器allocator"></a>空间配置器allocator</h2><h3 id="空间配置器的标准接口"><a href="#空间配置器的标准接口" class="headerlink" title="空间配置器的标准接口"></a>空间配置器的标准接口</h3><p>allocator的必要接口如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">allocator::value_type</span><br><span class="line">allocator::pointer</span><br><span class="line">allocator::const_pointer</span><br><span class="line">allocator::reference</span><br><span class="line">allocator::const_reference</span><br><span class="line">allocator::size_type</span><br><span class="line">allocator::difference_type</span><br><span class="line">allocator::rebind</span><br><span class="line">	一个嵌套的(nestd) <span class="class"><span class="keyword">class</span> <span class="title">template</span>。<span class="keyword">class</span> <span class="title">rebind</span>&lt;</span>U&gt;拥有唯一成员other，那是一个<span class="keyword">typedef</span>，</span><br><span class="line">代表allocator&lt;U&gt;</span><br><span class="line">allocator::allocator()</span><br><span class="line">	<span class="keyword">default</span> constructor</span><br><span class="line">allocator::allocator(<span class="keyword">const</span> allocator&amp;)</span><br><span class="line">	copy constructor</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">U</span>&gt;</span>allocator::allocator(<span class="keyword">const</span> allocator&lt;U&gt;&amp;)</span><br><span class="line">	泛化的copy constructor</span><br><span class="line">allocator::~allocator()</span><br><span class="line">	<span class="keyword">default</span> constructor</span><br><span class="line"><span class="function">pointer <span class="title">allocator::address</span><span class="params">(reference x)</span> <span class="keyword">const</span></span></span><br><span class="line">	返回某个对象的地址。算式a.address(x)等同于&amp;x</span><br><span class="line"><span class="function">const_pointer <span class="title">allocator::address</span><span class="params">(const_reference x)</span> <span class="keyword">const</span></span></span><br><span class="line">	返回某个const对象的地址。算式a.address(x)等同于&amp;x</span><br><span class="line"><span class="function">pointer <span class="title">allocator::allocator</span><span class="params">(size_type n, <span class="keyword">const</span> <span class="keyword">void</span>* = <span class="number">0</span>)</span></span></span><br><span class="line">	配置空间，足以储存n个T对象。第二个参数是个提示。实际上可能会利用它来增加区域性，或完全忽略</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">allocator::deallocator</span><span class="params">(pointer p, size_type n)</span></span></span><br><span class="line">	归回先前配置的空间</span><br><span class="line"><span class="function">size_type <span class="title">allocator::max_size</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line">	返回可成功配置的最大量</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">allocator::construct</span><span class="params">(pointer p, <span class="keyword">const</span> T&amp; x)</span></span></span><br><span class="line">	等同于new(const void*) p T(x)</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">allocator::destroy</span><span class="params">(pointer p)</span></span></span><br><span class="line">	等同于 p-&gt;~T()</span><br></pre></td></tr></table></figure>
+
+<h4 id="设计allocator"><a href="#设计allocator" class="headerlink" title="设计allocator"></a>设计allocator</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: archeralloc.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _ARCHERALLOC_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _ARCHERALLOC_ </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;new&gt;</span> <span class="comment">//for placement new</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstddef&gt;</span> <span class="comment">//for ptrdiff_t,size_t</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdlib&gt;</span> <span class="comment">// for exit()</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;climits&gt;</span> <span class="comment">// for UINT_MAX</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span> <span class="comment">// for cerr</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> Archer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> T* _allocate(<span class="keyword">ptrdiff_t</span> size, T *)&#123;</span><br><span class="line"><span class="comment">//ptrdiff_t通常用于保存两个指针减法的操作，long int类型</span></span><br><span class="line">	<span class="built_in">set_new_handle</span>(<span class="number">0</span>);<span class="comment">//这里设为0是为了在分配内存失败时，直接抛出std::bad_alloc异常</span></span><br><span class="line">	T* temp = (T*)(::<span class="keyword">operator</span> <span class="built_in"><span class="keyword">new</span></span>((<span class="keyword">size_t</span>)(size * <span class="built_in"><span class="keyword">sizeof</span></span>(T))));</span><br><span class="line">	<span class="keyword">if</span>(temp == <span class="number">0</span>)&#123;</span><br><span class="line">		cerr &lt;&lt; <span class="string">&quot;out of memory&quot;</span> &lt;&lt; endl;<span class="comment">//cerr函数对应标准错误流，用于程序出错时，输出错误信息</span></span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> _deallocate(T* buffer) &#123;</span><br><span class="line"> 	::<span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(buffer)</span></span>;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="keyword">class</span> <span class="title">T2</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> _construct(T1* p, <span class="keyword">const</span> T2&amp; value) &#123;</span><br><span class="line">	<span class="keyword">new</span>(p) <span class="built_in">T1</span>(value);<span class="comment">//第三种new的方式，即利用p的空间存value</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> _destroy(T* ptr) &#123;</span><br><span class="line">	ptr-&gt;~<span class="built_in">T</span>();<span class="comment">//对应construct，由于用的时placement所以需要调用析构函数释放空间</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">allocator</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> T value_type;</span><br><span class="line">	<span class="keyword">typedef</span> T* pointer;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">const</span> T* const_pointer;</span><br><span class="line">	<span class="keyword">typedef</span> T&amp; reference;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">const</span> T&amp; const_reference;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//rebind allocator of type U</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">U</span>&gt;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">rebind</span> &#123;</span></span><br><span class="line">		<span class="keyword">typedef</span> allocator&lt;U&gt; other;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="function">pointer <span class="title">allocate</span><span class="params">(size_type n, <span class="keyword">const</span> <span class="keyword">void</span> * hint=<span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _allocate((difference_type)n, (pointer)<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(pointer p, size_type n)</span> </span>&#123; _deallocate(p); &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(pointer p, <span class="keyword">const</span> T&amp; value)</span> </span>&#123;</span><br><span class="line">		_construct(p, value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">void</span> _destroy(pointer p) &#123; _destroy(p); &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">pointer <span class="title">address</span><span class="params">(reference x)</span> </span>&#123; <span class="keyword">return</span> (pointer)&amp;x; &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">const_pointer <span class="title">const_address</span><span class="params">(const_reference x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> (const_pointer)&amp;x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">size_type</span>(UINT_MAX/<span class="built_in"><span class="keyword">sizeof</span></span>(T));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>上面这个版本不太完全，与PJ STL(需要非标准的空间配置器接口)与RW STL(运用了缓冲区)的适配不太行，而且也<br>完全无法用于SGI STL</p>
+<h2 id="具备次配置力的SGI空间配置器"><a href="#具备次配置力的SGI空间配置器" class="headerlink" title="具备次配置力的SGI空间配置器"></a>具备次配置力的SGI空间配置器</h2><p>SGI的配置器比较特别，名称是alloc不是allocator，而且不接受任何参数。<br>用法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="keyword">int</span>, std::allocator&lt;<span class="keyword">int</span>&gt; &gt; iv;<span class="comment">//标准写法</span></span><br><span class="line">vector&lt;<span class="keyword">int</span>, std::alloc&gt; iv;<span class="comment">//SGI的写法</span></span><br><span class="line"><span class="comment">//SGI的容器基本默认将空间配置器设为alloc</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Alloc</span> =</span> alloc&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vector</span> &#123;</span> ... &#125;;</span><br></pre></td></tr></table></figure>
+<p>关于c++内存操作一般如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">foo</span> &#123;</span> ... &#125;;</span><br><span class="line">foo * p = <span class="keyword">new</span> foo;</span><br><span class="line"><span class="keyword">delete</span> p;</span><br><span class="line"><span class="comment">//调用new分配内存，然后调用foo::foo()构造，</span></span><br><span class="line"><span class="comment">//调用foo::~foo()将对象析构，然后调用delete释放内存</span></span><br></pre></td></tr></table></figure>
+<p>在SGI中则分别由alloc:allocate()，::construct()，alloc::deallocate()，::destroy()负责上述四个功能<br>头文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stl_construct.h&gt;</span><span class="comment">//这里定义了全局函数construct()和destory()负责对象的构造和析构</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stl_alloc.h&gt;</span><span class="comment">//这里定义了一、二级配置器，称作alloc</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stl_uninitialized.h&gt;</span><span class="comment">//这里定义了一些全局函数，用来填充或复制大块内存数据，有</span></span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">un_uninitialized_copy()</span></span><br><span class="line"><span class="comment">un_uninitialized_fill()</span></span><br><span class="line"><span class="comment">un_uninitialized_fill_n()</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//这三个函数与对象以及容器元素初始值等的设定相关。此外这些函数也考虑到了效率，最差调用construct()，最佳</span></span><br><span class="line"><span class="comment">//情况调用c标准函数memmove()直接进行内存数据的移动</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="construct-与destory"><a href="#construct-与destory" class="headerlink" title="construct()与destory()"></a>construct()与destory()</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;new.h&gt;</span>		<span class="comment">//为了使用placement new(需要指针作为new的参数)</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="keyword">class</span> <span class="title">T2</span>&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">construct</span><span class="params">(T1* p, <span class="keyword">const</span> T2&amp; value)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">new</span> (p) <span class="built_in">T1</span>(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//destroy()第一版本，接受一个指针</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">(T* pointer)</span> </span>&#123;</span><br><span class="line">	pointer-&gt;~<span class="built_in">T</span>(); 		<span class="comment">//调用析构函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//destroy()第二版，接受两个迭代器，这个函数的作用是设法找出元素的数值型别</span></span><br><span class="line"><span class="comment">//进而利用_type_traits&lt;&gt;求取最适当的措施</span></span><br><span class="line"><span class="comment">//type_traits可以根据不同参数的特性，优化代码</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">destory</span><span class="params">(ForwardIterator first, ForwardIterator last)</span> </span>&#123;</span><br><span class="line">	_destroy(forst, last , <span class="built_in">value_type</span>(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断元素的数值型别是否有trivial destructor</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> _destroy(ForwardIterator first, ForwardIterator last, T*)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> _tyupe_traits&lt;T&gt;::has_trivial_destructor trivial_de</span><br><span class="line">	__destroy_aux(first, last, <span class="built_in">trivial_destructor</span>());</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果元素的数值型别(value type)有non-trivial destructor</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">__destroy_aux(ForwardIterator first, ForwardIterator last, __false_type) &#123;</span><br><span class="line">	<span class="keyword">for</span> ( ; first &lt; last; ++first)</span><br><span class="line">		<span class="built_in">destroy</span>(&amp;first);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果元素的数值型别(value type)有trivial destructor...</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> __destroy_aux(ForwardIterator, ForwardIterator, __true_type) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//destroy()第二版本针对迭代器 char* 和 wchar_t *的特化版</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">(<span class="keyword">char</span>*，<span class="keyword">char</span>*)</span> </span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">(<span class="keyword">wchar_t</span>*, <span class="keyword">wchar_t</span>* )</span> </span>&#123;&#125; </span><br></pre></td></tr></table></figure>
+
+<h3 id="alloc"><a href="#alloc" class="headerlink" title="alloc"></a>alloc</h3><p>SGI有两级配置器分别处理不同的情况，当分配的区块大于    128bytes时，由第一级配置器处理，否则由第二级配置器<br>处理(memory pool方式)(为了解决内存碎片问题)<br>SGI关于空间的设计思路:<br>    1.向system heap要求空间<br>    2.考虑多线程状态<br>    3.考虑内存不足时的应变措施<br>    4.考虑过多”小型区块”可能造成的内存碎片问题</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">ifdef</span> __USE_MALLOC</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">typedef</span> __malloc_alloc_template&lt;<span class="number">0</span>&gt; malloc_alloc;</span><br><span class="line"><span class="keyword">typedef</span> malloc_alloc alloc;<span class="comment">//令 alloc 为第一级配置器</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">...</span><br><span class="line"><span class="comment">//令 alloc 为第二级配置器</span></span><br><span class="line"><span class="keyword">typedef</span> __default_alloc_template&lt;__NODE_ALLOCATOR_THREADS, <span class="number">0</span>&gt; alloc;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，–malloc-alloc-template是第一级配置器，–default-alloc-te<br>mplate是第二级配置器(alloc不接受任何template型别参数)<br>不管alloc被定义为第一级或者第二级配置器，SGI为其包装了一个simple_alloc接口<br>使配置器的接口符合STL规范</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">simple_alloc</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> T *<span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function">		</span>&#123; <span class="keyword">return</span> <span class="number">0</span> == n? <span class="number">0</span> : (T*) Alloc::<span class="built_in">allocate</span>(n * <span class="built_in"><span class="keyword">sizeof</span></span> (T)); &#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> T *<span class="title">allocate</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">		</span>&#123; <span class="keyword">return</span> (T*) Alloc::<span class="built_in">allocate</span>(<span class="built_in"><span class="keyword">sizeof</span></span> (T)); &#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(T *p, <span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function">		</span>&#123; <span class="keyword">if</span> (<span class="number">0</span> != n) Alloc::<span class="built_in">deallocate</span>(p, n * <span class="built_in"><span class="keyword">sizeof</span></span> (T)); &#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(T *p)</span></span></span><br><span class="line"><span class="function">		</span>&#123; Alloc::<span class="built_in">deallocate</span>(p, <span class="built_in"><span class="keyword">sizeof</span></span> (T)); &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">Alloc</span> =</span> alloc&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">vector</span> &#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="comment">//专属空间配置器</span></span><br><span class="line">	<span class="keyword">typedef</span> simple_alloc&lt;value_type, Alloc&gt; date_allocator;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (...)</span><br><span class="line">			date_allocator::<span class="built_in">deallocate</span>(start, end_of_storage - start);</span><br><span class="line">	&#125;</span><br><span class="line">...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>SGI STL第一级配置器:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> __<span class="title">malloc_alloc_template</span> &#123;</span>...&#125;;</span><br></pre></td></tr></table></figure>
+<p>allocate()使用malloc()，deallocate使用free()，模拟了c++中set_<br>new_handler()处理内存不足的状况<br>SGI STL第二级配置器:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> __<span class="title">deafault_alloc_template</span> &#123;</span>...&#125;;</span><br></pre></td></tr></table></figure>
+<p>存在16个自由链表，负责16种小型区块的次配置能力，memory pool由malloc()配置<br>当内存不足时(或者需求区块大于128bytes)，转到第一级配置器</p>
+<h3 id="第一级配置器malloc-alloc-template分析"><a href="#第一级配置器malloc-alloc-template分析" class="headerlink" title="第一级配置器malloc_alloc_template分析"></a>第一级配置器malloc_alloc_template分析</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line"><span class="meta">#	<span class="meta-keyword">include</span> <span class="meta-string">&lt;new&gt;</span></span></span><br><span class="line"><span class="meta">#	<span class="meta-keyword">define</span> __THROW_BAD_ALLOC throw bad_alloc</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> !defined(__THROW_BAD_ALLOC)</span></span><br><span class="line"><span class="meta">#	<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream.h&gt;</span></span></span><br><span class="line"><span class="meta">#	<span class="meta-keyword">define</span> __THROW_BAD_ALLOC cerr &lt;&lt; <span class="meta-string">&quot;out of memory&quot;</span> &lt;&lt; endl; exit(1)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第一级配置器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> __<span class="title">malloc_alloc_template</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">oom_malloc</span><span class="params">(<span class="keyword">size_t</span>)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">oom_realloc</span><span class="params">(<span class="keyword">void</span> *, <span class="keyword">size_t</span>)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="title">void</span> <span class="params">(* __malloc_alloc_oom_handler)</span> <span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">void</span> *result = <span class="built_in">malloc</span>(n);<span class="comment">//直接使用malloc</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="number">0</span> == result) result = <span class="built_in">oom_malloc</span>(n);<span class="comment">//分配失败使用oom_malloc</span></span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> <span class="comment">/* n */</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);<span class="comment">//直接free</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">reallocate</span><span class="params">(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> <span class="comment">/* old_sz */</span>, <span class="keyword">size_t</span> new_sz)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">void</span> * reasult = <span class="built_in">realloc</span>(p, new_sz);<span class="comment">//使用realloc</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="number">0</span> == result) result = <span class="built_in">oom_realloc</span>(p, new_sz);<span class="comment">//分配失败使用oom_realloc</span></span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//设计自己的out-of-memory handler</span></span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="title">void</span> <span class="params">(* set_malloc_handler(<span class="keyword">void</span> (*f)()))</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in"><span class="keyword">void</span></span> (* old) () = __malloc_alloc_oom_handler;</span><br><span class="line">		__malloc_alloc_oom_handler = f;</span><br><span class="line">		<span class="keyword">return</span> (old);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//将__malloc_alloc_oom_handler初值设为0</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">int</span> inst&gt;</span><br><span class="line">	<span class="built_in"><span class="keyword">void</span></span> (* __malloc_alloc_template&lt;inst&gt;::__malloc_alloc_oom_handler)() = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//不断调用malloc分配</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">int</span> inst&gt;</span><br><span class="line">	<span class="keyword">void</span> * __malloc_alloc_template&lt;inst&gt;::<span class="built_in">oom_malloc</span>(<span class="keyword">size_t</span> n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in"><span class="keyword">void</span></span> (* my_malloc_handler) ();</span><br><span class="line">		<span class="keyword">void</span> *result;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (;;) &#123;</span><br><span class="line">			my_malloc_handler = __malloc_alloc_oom_handler;</span><br><span class="line">			<span class="keyword">if</span> (<span class="number">0</span> == my_malloc_handler) &#123; __THROW_BAD_ALLOC; &#125; <span class="comment">//这里是判断是否设置my_malloc_handler</span></span><br><span class="line">			(*my_malloc_handler) ();<span class="comment">//调用自己的malloc_handler</span></span><br><span class="line">			result = <span class="built_in">malloc</span>(n);</span><br><span class="line">			<span class="keyword">if</span> (result) <span class="keyword">return</span>(result);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//类似与oom_malloc</span></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">int</span> inst&gt;</span><br><span class="line">	<span class="keyword">void</span> * __malloc_alloc_template&lt;inst&gt;::<span class="built_in">oom_realloc</span>(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in"><span class="keyword">void</span></span> (* my_malloc_handler) ();</span><br><span class="line">		<span class="keyword">void</span> *result;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (;;) &#123;</span><br><span class="line">			my_malloc_handler = __malloc_alloc_oom_handler;</span><br><span class="line">			<span class="keyword">if</span> (<span class="number">0</span> == my_malloc_handler) &#123; __THROW_BAD_ALLOC; &#125;</span><br><span class="line">			(*my_malloc_handler) ();</span><br><span class="line">			result = <span class="built_in">realloc</span>(p, n);</span><br><span class="line">			<span class="keyword">if</span> (result) <span class="keyword">return</span>(result);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二级配置器default-alloc-template-分析"><a href="#第二级配置器default-alloc-template-分析" class="headerlink" title="第二级配置器default_alloc_template 分析"></a>第二级配置器default_alloc_template 分析</h3><p>SGI第二级配置器使用memory pool管理内存的分配与回收，使用free-lists进行内存的管理，一共维护了16个<br>free-lists，空间从8,16,24,32,40,48,56,64,72,80,88,96,104,112,120,128bytes，此外当分配的空间不是8的整数时，会补至8的整数，比如10补至16(补充:16个free_lists链表，其中每一个free_list节点都可以组成一条对应size的链表，简单来说)<br>free-lists的节点结构</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">union obj &#123;</span><br><span class="line">	union obj * free_list_link;</span><br><span class="line">	char client_data[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span>__ALIGN = <span class="number">8</span>&#125;;<span class="comment">//最小区块的上界</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span>__MAX_BYTES = <span class="number">128</span>&#125;;<span class="comment">//最大区块的下界</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span>__NFREELISTS = __MAX_BYTES/__AGIGN&#125;;<span class="comment">//free-lists个数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> __<span class="title">default_alloc_template</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">size_t</span> <span class="title">ROUND_UP</span><span class="params">(<span class="keyword">size_t</span> bytes)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> ((bytes + __ALIGN<span class="number">-1</span>) * ~(__ALIGN - <span class="number">1</span>))；<span class="comment">//使参数为8的倍数</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">union</span> obj &#123;</span><br><span class="line">		<span class="keyword">union</span> obj * free_list_link;</span><br><span class="line">		<span class="keyword">char</span> client_data[<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">static</span> obj * <span class="keyword">volatile</span> free_list[__NFREELISTS];<span class="comment">//16个链表</span></span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">size_t</span> <span class="title">FREELIST_INDEX</span><span class="params">(<span class="keyword">size_t</span> bytes)</span> </span>&#123;<span class="comment">//根据大小获取对应链表的位置</span></span><br><span class="line">		<span class="keyword">return</span> (((bytes) + __ALIGN<span class="number">-1</span>)/__ALIGN - <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">refill</span><span class="params">(<span class="keyword">size_t</span> n)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">char</span> *<span class="title">chunk_alloc</span><span class="params">(<span class="keyword">size_t</span> size, <span class="keyword">int</span> &amp;nobjs)</span></span>;<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">char</span> *start_free;<span class="comment">//内存池开始位置，与chunk_alloc有关</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">char</span> *end_free;;<span class="comment">//内存池结束位置</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">size_t</span> heap_size;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> n)</span> </span>&#123; <span class="comment">/*后面介绍 */</span> &#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> n)</span> </span>&#123; <span class="comment">/*后面介绍*/</span> &#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">reallocate</span><span class="params">(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> old_sz, <span class="keyword">size_t</span> new_sz)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//设置初始值</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="keyword">char</span> *__default_alloc_template&lt;threads, inst&gt;::start_free = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="keyword">char</span> *__deafult_alloc_template&lt;threads, inst&gt;::end_free = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="keyword">size_t</span> __default_alloc_template&lt;threads, inst&gt;::heap_size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line">__default_alloc_template&lt;threads, inst&gt;::obj * <span class="keyword">volatile</span></span><br><span class="line">__default_alloc_template&lt;threads, inst&gt;::free_list[__NFREELISTS] = </span><br><span class="line">&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, &#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="allocate-函数"><a href="#allocate-函数" class="headerlink" title="allocate()函数"></a>allocate()函数</h3><p>分配区块时，首先根据区块的大小判断使用第几级配置器，当使用第二级配置器时，若free_lists中有空闲空间，<br>则直接分配，若无，则将区块大小上调至8倍数边界，然后调用refill，为free_lists重新分配空间<br>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">allocate</span><span class="params">(<span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	obj * <span class="keyword">volatile</span> * my_free_list;<span class="comment">//free_list链头</span></span><br><span class="line">	obj * result;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//调用第一级配置器</span></span><br><span class="line">	<span class="keyword">if</span>(n &gt; (<span class="keyword">size_t</span>) __MAX_BYTES) &#123;</span><br><span class="line">		<span class="keyword">return</span>(malloc_alloc::<span class="built_in">allocate</span>(n));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//定位位置</span></span><br><span class="line">	my_free_list = free_list + <span class="built_in">FREELIST_INDEX</span>(n);</span><br><span class="line">	result  = *my_free_list;</span><br><span class="line">	<span class="keyword">if</span> (result == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">void</span> *r = <span class="built_in">refill</span>(<span class="built_in">ROUND_UP</span>(n));</span><br><span class="line">		<span class="keyword">return</span> r;</span><br><span class="line">	&#125;</span><br><span class="line">	*my_free_list = result -&gt; free_list_link;</span><br><span class="line">	<span class="keyword">return</span> (result);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="空间释放函数deallocate函数"><a href="#空间释放函数deallocate函数" class="headerlink" title="空间释放函数deallocate函数"></a>空间释放函数deallocate函数</h3><p>这里和allocate一样也有两种情况，大于128bytes调用第一级，否则调用第二级</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(<span class="keyword">void</span> *p, <span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	obj *q = (obj *)p;</span><br><span class="line">	obj * <span class="keyword">volatile</span> * my_free_list;</span><br><span class="line">	<span class="comment">//调用第一级配置器</span></span><br><span class="line">	<span class="keyword">if</span> (n &gt; (<span class="keyword">size_t</span>) __MAX_BYTES) &#123;</span><br><span class="line">		malloc_alloc::<span class="built_in">deallocate</span>(p, n);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//定位</span></span><br><span class="line">	my_free_list = free_list + <span class="built_in">FREELIST_INDEX</span>(n);</span><br><span class="line">	<span class="comment">//设置</span></span><br><span class="line">	q -&gt; free_list_link = *my_free_list;</span><br><span class="line">	*my_free_list = q;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="refill-函数"><a href="#refill-函数" class="headerlink" title="refill()函数"></a>refill()函数</h3><p>refill()函数作用为:当free_lists没有空间时，为其配置空间<br>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="keyword">void</span>* __default_alloc_template&lt;threads, inst&gt;::<span class="built_in">refill</span>(<span class="keyword">size_t</span> n)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> nobjs = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> * chunk = <span class="built_in">chunk_alloc</span>(n, nobjs);<span class="comment">//这里把nobjs传进去了</span></span><br><span class="line">	obj * <span class="keyword">volatile</span> * my_free_list;</span><br><span class="line">	obj * result;</span><br><span class="line">	obj * current_obj, * next_obj;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">if</span> (<span class="number">1</span> == nobjs) <span class="keyword">return</span>(chunk);</span><br><span class="line">	<span class="comment">//将free_list中对应的部分进行设置</span></span><br><span class="line">	my_free_list = free_list + <span class="built_in">FREELIST_INDEX</span>(n);</span><br><span class="line">	result = (obj *)chunk;</span><br><span class="line">	*my_free_list = next_obj = (obj *)(chunk + n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; ; i++) &#123;</span><br><span class="line">		current_obj = next_obj;</span><br><span class="line">		next_obj = (obj *)((<span class="keyword">char</span> *)next_obj + n);</span><br><span class="line">		<span class="keyword">if</span> (nobjs - <span class="number">1</span> == i) &#123;</span><br><span class="line">			current_obj -&gt; free_list_link = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			current_obj -&gt; free_list_link = next_obj;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内存池-chunk-alloc函数"><a href="#内存池-chunk-alloc函数" class="headerlink" title="内存池(chunk_alloc函数)"></a>内存池(chunk_alloc函数)</h3><p>chunk_alloc负责从内存池中取内存提供给free_list<br>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">bool</span> threads, <span class="keyword">int</span> inst&gt;</span><br><span class="line"><span class="keyword">char</span>*</span><br><span class="line">__default_alloc_template&lt;threads, inst&gt;::</span><br><span class="line"><span class="built_in">chunk_alloc</span>(<span class="keyword">size_t</span> size, <span class="keyword">int</span>&amp; nobjs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">char</span> * result;</span><br><span class="line">	<span class="keyword">size_t</span> total_bytes = size * nobjs;<span class="comment">//需要的空间</span></span><br><span class="line">	<span class="keyword">size_t</span> bytes_left = end_free - start_free;<span class="comment">//剩余的空间</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(bytes_left &gt;= total_bytes) &#123;<span class="comment">//大于内存池开始位置增加</span></span><br><span class="line">		result = start_free;</span><br><span class="line">		start_free += total_bytes;</span><br><span class="line">		<span class="keyword">return</span>(result);</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (bytes_left &gt;= size) &#123;<span class="comment">//显然bytes_left &lt; total_bytes然后只能尽量分配空间</span></span><br><span class="line">		nobjs = bytes_left/size;<span class="comment">//个数</span></span><br><span class="line">		total_bytes = size * nobjs;</span><br><span class="line">		result = start_free;</span><br><span class="line">		start_free += total_bytes;</span><br><span class="line">		<span class="keyword">return</span>(result);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;<span class="comment">//将剩余的空间加入到free_list中</span></span><br><span class="line">		<span class="keyword">size_t</span> bytes_to_get = <span class="number">2</span> * total_bytes + <span class="built_in">ROUND_UP</span>(heap_size &gt;&gt; <span class="number">4</span>);</span><br><span class="line">		<span class="keyword">if</span> (bytes_left &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			obj * <span class="keyword">volatile</span> * my_free_list = </span><br><span class="line">				free_list + <span class="built_in">FREELIST_INDEX</span>(bytes_left);</span><br><span class="line">				((obj *)start_free) -&gt; free_list_link = *my_free_list;</span><br><span class="line">				*my_free_list = (obj *)start_free;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	start_free = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(bytes_to_get);<span class="comment">//补充内存池</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="number">0</span> == start_free) &#123;<span class="comment">//从free_list中寻找空闲的空间</span></span><br><span class="line">		<span class="keyword">int</span> i;</span><br><span class="line">		obj * <span class="keyword">volatile</span> * my_free_list, *p;</span><br><span class="line">		<span class="keyword">for</span> (i = size; i &lt;= __MAX_BYTES; i += __ALIGN) &#123;</span><br><span class="line">			my_free_list = free_list + <span class="built_in">FREELIST_INDEX</span>(i);</span><br><span class="line">			p = *my_free_list;</span><br><span class="line">			<span class="keyword">if</span> (<span class="number">0</span> != p) &#123;</span><br><span class="line">				*my_free_list = p -&gt; free_list_link;</span><br><span class="line">				start_free = (<span class="keyword">char</span> *)p;</span><br><span class="line">				end_free = start_free + i;</span><br><span class="line">				<span class="keyword">return</span>(<span class="built_in">chunk_alloc</span>(size, nobjs));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	end_free = <span class="number">0</span>;</span><br><span class="line">		start_free = (<span class="keyword">char</span> *)malloc_alloc::<span class="built_in">allocate</span>(bytes_to_get);</span><br><span class="line">	&#125;</span><br><span class="line">	heap_size += bytes_to_get;</span><br><span class="line">	end_free = start_free + bytes_to_get;</span><br><span class="line">	<span class="keyword">return</span>(<span class="built_in">chunk_alloc</span>(size, nobjs));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="uninitialized-fill-n"><a href="#uninitialized-fill-n" class="headerlink" title="uninitialized_fill_n"></a>uninitialized_fill_n</h3><p>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="keyword">class</span> <span class="title">Size</span>, <span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ForwardIterator <span class="title">uninitialized_fill_n</span><span class="params">(ForwardIterator first, </span></span></span><br><span class="line"><span class="function"><span class="params">	Size n, <span class="keyword">const</span> T&amp; x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> __uninitialized_fill_n(first, n, x, <span class="built_in">value_type</span>(first));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="keyword">class</span> <span class="title">Size</span>, <span class="keyword">class</span> <span class="title">T</span>, <span class="keyword">class</span> <span class="title">T1</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> ForwardIterator __uninitialized_fill_n(ForwardIterator first,</span><br><span class="line">	Size N, <span class="keyword">const</span> T&amp;X, T1*)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> __type_traits&lt;T1&gt;::is_POD_type is_POD;</span><br><span class="line">	<span class="keyword">return</span> __uninitialized_fill_n_aux(first, n, x, <span class="built_in">is_POD</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="keyword">class</span> <span class="title">Size</span>, <span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> ForwardIterator</span><br><span class="line">__uninitialized_fill_n_aux(ForwardIterator first, Size n,</span><br><span class="line">	<span class="keyword">const</span> T&amp; x, __true_type) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">fill_n</span>(first, n, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="keyword">class</span> <span class="title">Size</span>, <span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line">ForwardIterator</span><br><span class="line">__uninitialized_fil_n_aux(ForwardIterator first, Size n,</span><br><span class="line">	<span class="keyword">const</span> T&amp; X, __false_type) &#123;</span><br><span class="line">	ForwardIterator cur = first;</span><br><span class="line">	<span class="keyword">for</span> ( ; n &gt; <span class="number">0</span>; --n, ++cur)</span><br><span class="line">		<span class="built_in">construct</span>(&amp;*cur, x);</span><br><span class="line">	<span class="keyword">return</span> cur;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="uninitialized-copy"><a href="#uninitialized-copy" class="headerlink" title="uninitialized_copy"></a>uninitialized_copy</h3><p>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="keyword">class</span> <span class="title">ForwardIterator</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> ForwardIterator</span><br><span class="line">	<span class="built_in">uninitialized_copy</span>(InputIterator first, InputIterator last,</span><br><span class="line">			ForwardIterator result) &#123;</span><br><span class="line">		<span class="keyword">return</span> __uninitialized_copy(first, last, result, <span class="built_in">value_type</span>(result));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> ForwardIterator</span><br><span class="line">__uninitialized_copy(InputIterator first, InputIterator last,</span><br><span class="line">			ForwardIterator result, T*) &#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> __type_traits&lt;T&gt;::is_POD_type is_POD;</span><br><span class="line">	<span class="keyword">return</span> __uninitialized_copy_aux(first, last, result, <span class="built_in">is_POD</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="keyword">class</span> <span class="title">ForwardIterator</span>&gt;</span></span><br><span class="line"><span class="keyword">inline</span> ForwardIterator</span><br><span class="line">__uninitialized_copy_aux(InputIterator first, InputIterator last,</span><br><span class="line">					ForwardIterator result,</span><br><span class="line">					__true_type) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">copy</span>(first, last, result);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="keyword">class</span> <span class="title">ForwardIterator</span>&gt;</span></span><br><span class="line">ForwardIterator</span><br><span class="line">__uninitialized_copy_aux(InputIterator first, InputIterator last,</span><br><span class="line">						ForwardIterator result,</span><br><span class="line">						__false_type) &#123;</span><br><span class="line">	ForwardIterator cur = result;</span><br><span class="line">	<span class="keyword">for</span>( ; first != last; ++first, ++cur)</span><br><span class="line">		<span class="built_in">construct</span>(&amp;*cur, *first);</span><br><span class="line">	<span class="keyword">return</span> cur;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">char</span>* <span class="title">uninitialized_copy</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* first, <span class="keyword">const</span> <span class="keyword">char</span>* last,</span></span></span><br><span class="line"><span class="function"><span class="params">								<span class="keyword">char</span>* result)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">mommove</span>(result, first, last - first);</span><br><span class="line">	<span class="keyword">return</span> result + (last - first);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">wchar_t</span>* <span class="title">uninitialized_copy</span><span class="params">(<span class="keyword">const</span> <span class="keyword">wchar_t</span>* first, <span class="keyword">const</span> <span class="keyword">wchar_t</span>* last</span></span></span><br><span class="line"><span class="function"><span class="params">									<span class="keyword">wchar_t</span>* result)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">mommove</span>(result, first, <span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">wchar_t</span>) * (last - first));</span><br><span class="line">	<span class="keyword">return</span> result + (last - first);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/26/%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81-writeup/" rel="next" title="强网拟态 wp">
+                <i class="fa fa-chevron-left"></i> 强网拟态 wp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#STL%E5%85%AD%E5%A4%A7%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%92%8C%E8%BF%90%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">STL六大组件功能和运用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SGI-STL-%E6%96%87%E4%BB%B6%E5%88%86%E5%B8%83%E4%B8%8E%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">SGI STL 文件分布与简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#STL%E6%A0%87%E5%87%86%E5%A4%B4%E6%96%87%E4%BB%B6-%E6%97%A0%E6%89%A9%E5%B1%95%E5%90%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">STL标准头文件(无扩展名)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-Standard-%E5%AE%9A%E6%A1%88%E5%89%8D%EF%BC%8CHP%E8%A7%84%E8%8C%83%E7%9A%84STL%E5%A4%B4%E6%96%87%E4%BB%B6-%E6%89%A9%E5%B1%95%E5%90%8D-h"><span class="nav-number">1.1.2.</span> <span class="nav-text">C++ Standard 定案前，HP规范的STL头文件(扩展名.h)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SGI-STL-%E5%86%85%E9%83%A8%E7%A7%81%E7%94%A8%E6%96%87%E4%BB%B6-SGI-STL%E7%9C%9F%E6%AD%A3%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">SGI STL 内部私用文件(SGI STL真正实现的地方)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STL%E2%80%94%E2%80%94config-h"><span class="nav-number">1.2.</span> <span class="nav-text">STL——config.h</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E6%A8%A1%E6%9D%BF%E7%B1%BB%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1.模板类静态成员</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%81%8F%E7%89%B9%E5%8C%96"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.模板类偏特化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E9%83%A8%E5%88%86%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.3.部分排序函数模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%86%85%E5%B5%8C%E5%A5%97%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.4.模板类内嵌套模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-%E6%A0%B9%E6%8D%AE%E5%89%8D%E4%B8%80%E4%B8%AA%E6%A8%A1%E6%9D%BF%E7%94%A8%E7%9A%84%E4%BB%80%E4%B9%88%E5%8F%82%E6%95%B0%E5%B0%B1%E7%94%A8%E4%BB%80%E4%B9%88%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.5.</span> <span class="nav-text">1.5.根据前一个模板用的什么参数就用什么参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-non-type-template%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.6.</span> <span class="nav-text">1.6.non-type template参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-%E7%BA%A6%E6%9D%9F%E6%A8%A1%E6%9D%BF%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.7.</span> <span class="nav-text">1.7.约束模板友元函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-%E6%A8%A1%E6%9D%BF%E7%89%B9%E5%8C%96"><span class="nav-number">1.2.8.</span> <span class="nav-text">1.8.模板特化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-function-call%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B8%8E%E4%BB%BF%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.9.</span> <span class="nav-text">1.9.function call操作符与仿函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-0-%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BA%A7%E7%94%9F%E4%B8%8E%E8%BF%90%E7%94%A8"><span class="nav-number">1.2.10.</span> <span class="nav-text">2.0.临时对象的产生与运用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E6%95%B4%E6%95%B0%E6%88%90%E5%91%98%E5%9C%A8class%E5%86%85%E9%83%A8%E7%9B%B4%E6%8E%A5%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.2.11.</span> <span class="nav-text">2.1.静态常量整数成员在class内部直接初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-increment-decrement-dereference-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">1.2.12.</span> <span class="nav-text">2.2.increment&#x2F;decrement&#x2F;dereference 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E5%89%8D%E9%97%AD%E5%90%8E%E5%BC%80%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="nav-number">1.2.13.</span> <span class="nav-text">2.3.前闭后开表示法[)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8allocator"><span class="nav-number">2.</span> <span class="nav-text">空间配置器allocator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">空间配置器的标准接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1allocator"><span class="nav-number">2.1.1.</span> <span class="nav-text">设计allocator</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E5%A4%87%E6%AC%A1%E9%85%8D%E7%BD%AE%E5%8A%9B%E7%9A%84SGI%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">具备次配置力的SGI空间配置器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#construct-%E4%B8%8Edestory"><span class="nav-number">3.1.</span> <span class="nav-text">construct()与destory()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alloc"><span class="nav-number">3.2.</span> <span class="nav-text">alloc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%BA%A7%E9%85%8D%E7%BD%AE%E5%99%A8malloc-alloc-template%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">第一级配置器malloc_alloc_template分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%BA%A7%E9%85%8D%E7%BD%AE%E5%99%A8default-alloc-template-%E5%88%86%E6%9E%90"><span class="nav-number">3.4.</span> <span class="nav-text">第二级配置器default_alloc_template 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allocate-%E5%87%BD%E6%95%B0"><span class="nav-number">3.5.</span> <span class="nav-text">allocate()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%87%8A%E6%94%BE%E5%87%BD%E6%95%B0deallocate%E5%87%BD%E6%95%B0"><span class="nav-number">3.6.</span> <span class="nav-text">空间释放函数deallocate函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#refill-%E5%87%BD%E6%95%B0"><span class="nav-number">3.7.</span> <span class="nav-text">refill()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0-chunk-alloc%E5%87%BD%E6%95%B0"><span class="nav-number">3.8.</span> <span class="nav-text">内存池(chunk_alloc函数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uninitialized-fill-n"><span class="nav-number">3.9.</span> <span class="nav-text">uninitialized_fill_n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uninitialized-copy"><span class="nav-number">3.10.</span> <span class="nav-text">uninitialized_copy</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
