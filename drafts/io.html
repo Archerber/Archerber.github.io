@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="第一次做到关于 _ IO_2_2_stout_ 的堆题，又能学到新技术了，这里先介绍做题中遇到的利用 _ IO_2_1_stdout_ 泄露信息,原题为buu上的 roarctf_2019_realloc_magic反编译后，发现程序是通过realloc分配内存的，需要用到realloc的知识，如下size &#x3D;&#x3D; 0 ，这个时候等同于freerealloc_ptr &#x3D;&#x3D; 0 &amp;&amp;">
+<meta name="description" content="IO流">
 <meta property="og:type" content="website">
-<meta property="og:title" content="IO流">
+<meta property="og:title" content="IO流学习及相关利用方法">
 <meta property="og:url" content="http://example.com/drafts/io.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="第一次做到关于 _ IO_2_2_stout_ 的堆题，又能学到新技术了，这里先介绍做题中遇到的利用 _ IO_2_1_stdout_ 泄露信息,原题为buu上的 roarctf_2019_realloc_magic反编译后，发现程序是通过realloc分配内存的，需要用到realloc的知识，如下size &#x3D;&#x3D; 0 ，这个时候等同于freerealloc_ptr &#x3D;&#x3D; 0 &amp;&amp;">
+<meta property="og:description" content="IO流">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-23T03:14:30.000Z">
-<meta property="article:modified_time" content="2021-07-23T06:36:56.012Z">
+<meta property="article:published_time" content="2022-04-14T12:22:10.000Z">
+<meta property="article:modified_time" content="2022-04-14T13:53:40.297Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="IO">
 <meta name="twitter:card" content="summary">
@@ -126,7 +126,7 @@
 
 
 
-  <title>IO流 | Archerの博客</title>
+  <title>IO流学习及相关利用方法 | Archerの博客</title>
   
 
 
@@ -256,8 +256,12 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">IO流</h1>
+	<h1 class="post-title" itemprop="name headline">IO流学习及相关利用方法</h1>
 
+
+	<div class="post-meta">
+		<div class="post-description">IO流</div>
+	</div>
 
 
 </header>
@@ -268,8 +272,13 @@
       <div class="post-body">
         
         
-          <p>第一次做到关于 _ IO_2_2_stout_ 的堆题，又能学到新技术了，这里先介绍做题中遇到的利用 _ IO_2_1_stdout_ 泄露信息,原题为buu上的 roarctf_2019_realloc_magic<br>反编译后，发现程序是通过realloc分配内存的，需要用到realloc的知识，如下<br><em>size == 0 ，这个时候等同于free<br>realloc_ptr == 0 &amp;&amp; size &gt; 0 ， 这个时候等同于malloc<br>malloc_usable_size(realloc_ptr) &gt;= size， 这个时候等同于edit<br>malloc_usable_size(realloc_ptr) &lt; szie， 这个时候才是malloc一块更大的内存，将原来的内容复制过去，再将原来的chunk给free掉</em><br>题中没有函数可以泄露libc，而且保护全开，64位，不过可以知道libc是2.27，需要用到tcache中的相关知识 </p>
+          <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h3 id="struct-IO-FILE"><a href="#struct-IO-FILE" class="headerlink" title="struct _ IO _ FILE"></a>struct _ IO _ FILE</h3><p>内容如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> _flags;<span class="comment">//描述文件类型，并且高两位字节与libc相关</span></span><br><span class="line">    <span class="keyword">char</span> *_IO_read_ptr;</span><br><span class="line">    <span class="keyword">char</span> *_IO_read_end;</span><br><span class="line">    <span class="keyword">char</span> *_IO_read_base;</span><br><span class="line">    <span class="keyword">char</span> *_IO_write_base;</span><br><span class="line">    <span class="keyword">char</span> *_IO_write_ptr;</span><br><span class="line">    <span class="keyword">char</span> *_IO_write_end;</span><br><span class="line">    <span class="keyword">char</span> *_IO_buf_base;</span><br><span class="line">    <span class="keyword">char</span> *_IO_buf_end;</span><br><span class="line">    <span class="keyword">char</span> *_IO_save_base;</span><br><span class="line">    <span class="keyword">char</span> *_IO_backup_base;</span><br><span class="line">    <span class="keyword">char</span> *_IO_save_end;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">IO_marker</span> *_<span class="title">markers</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">chain</span>;</span><span class="comment">//指向下一个_io_file文件</span></span><br><span class="line">    <span class="keyword">int</span> _fileno;<span class="comment">//文件描述符</span></span><br><span class="line">    <span class="keyword">int</span> _flags2;</span><br><span class="line">    <span class="keyword">__off_t</span> _old_offset;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> _cur_column;</span><br><span class="line">    <span class="keyword">signed</span> <span class="keyword">char</span> _vtable_offset;</span><br><span class="line">    <span class="keyword">char</span> _shortbuf[<span class="number">1</span>];</span><br><span class="line">    _IO_lock_t *_lock;</span><br><span class="line">    <span class="keyword">__off64_t</span> _offset;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">IO_codecvt</span> *_<span class="title">codecvt</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">IO_wide_data</span> *_<span class="title">wide_data</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">freeres_list</span>;</span></span><br><span class="line">    <span class="keyword">void</span> *_freeres_buf;</span><br><span class="line">    <span class="keyword">size_t</span> __pad5;</span><br><span class="line">    <span class="keyword">int</span> _mode;</span><br><span class="line">    <span class="keyword">char</span> _unused2[<span class="number">20</span>];</span><br><span class="line">&#125; *</span><br></pre></td></tr></table></figure>
 
+<h3 id="struct-IO-FILE-plus"><a href="#struct-IO-FILE-plus" class="headerlink" title="struct _ IO _ FILE _ plus"></a>struct _ IO _ FILE _ plus</h3><p>所有的io流文件都被包括在plus中，如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE_plus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  _IO_FILE file;</span><br><span class="line">  <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IO_jump_t</span> *<span class="title">vtable</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="IO-jump-t"><a href="#IO-jump-t" class="headerlink" title="_ IO _ jump _ t"></a>_ IO _ jump _ t</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_jump_t</span><br><span class="line">&#123;</span><br><span class="line">    JUMP_FIELD(size_t, __dummy);</span><br><span class="line">    JUMP_FIELD(size_t, __dummy2);</span><br><span class="line">    JUMP_FIELD(_IO_finish_t, __finish);</span><br><span class="line">    JUMP_FIELD(_IO_overflow_t, __overflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __underflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __uflow);</span><br><span class="line">    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);</span><br><span class="line">    /* showmany */</span><br><span class="line">    JUMP_FIELD(_IO_xsputn_t, __xsputn);</span><br><span class="line">    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);</span><br><span class="line">    JUMP_FIELD(_IO_seekoff_t, __seekoff);</span><br><span class="line">    JUMP_FIELD(_IO_seekpos_t, __seekpos);</span><br><span class="line">    JUMP_FIELD(_IO_setbuf_t, __setbuf);</span><br><span class="line">    JUMP_FIELD(_IO_sync_t, __sync);</span><br><span class="line">    JUMP_FIELD(_IO_doallocate_t, __doallocate);</span><br><span class="line">    JUMP_FIELD(_IO_read_t, __read);</span><br><span class="line">    JUMP_FIELD(_IO_write_t, __write);</span><br><span class="line">    JUMP_FIELD(_IO_seek_t, __seek);</span><br><span class="line">    JUMP_FIELD(_IO_close_t, __close);</span><br><span class="line">    JUMP_FIELD(_IO_stat_t, __stat);</span><br><span class="line">    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);</span><br><span class="line">    JUMP_FIELD(_IO_imbue_t, __imbue);</span><br><span class="line"><span class="comment">#if 0</span></span><br><span class="line">    get_column;</span><br><span class="line">    set_column;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
         
       </div>
       
@@ -311,8 +320,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -331,7 +349,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -413,6 +431,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struct-IO-FILE"><span class="nav-number">2.</span> <span class="nav-text">struct _ IO _ FILE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struct-IO-FILE-plus"><span class="nav-number">3.</span> <span class="nav-text">struct _ IO _ FILE _ plus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO-jump-t"><span class="nav-number">4.</span> <span class="nav-text">_ IO _ jump _ t</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
