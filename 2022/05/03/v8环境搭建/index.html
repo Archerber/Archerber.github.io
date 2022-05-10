@@ -90,7 +90,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/2022-05-03195540.png">
 <meta property="article:published_time" content="2022-05-03T08:39:30.000Z">
-<meta property="article:modified_time" content="2022-05-03T13:44:55.872Z">
+<meta property="article:modified_time" content="2022-05-09T11:12:20.649Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="v8">
 <meta name="twitter:card" content="summary">
@@ -377,9 +377,11 @@
         <p>搭建v8的环境有以下两种方式:<br>    1.官方的搭建方式可以参考:<a target="_blank" rel="noopener" href="https://v8.dev/docs/build">https://v8.dev/docs/build</a><br>    2.使用github action将v8 source下载下来自己编译(也可以在远程编译好)<br>  3.使用docker(docker是真的方便</p>
 <h2 id="官方的搭建方式"><a href="#官方的搭建方式" class="headerlink" title="官方的搭建方式"></a>官方的搭建方式</h2><h3 id="安装depot-tools"><a href="#安装depot-tools" class="headerlink" title="安装depot_tools"></a>安装depot_tools</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#需要代理</span></span><br><span class="line">git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:&quot;$HOME/depot_tools&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line">bash</span><br></pre></td></tr></table></figure>
 
-<h3 id="ninja"><a href="#ninja" class="headerlink" title="ninja"></a>ninja</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装ninja 之前需要安装相关的配置文件re2c + libtool autoconf</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/skvadrik/re2c.git re2c</span><br><span class="line"><span class="built_in">cd</span> re2c</span><br><span class="line">mkdri -p m4</span><br><span class="line">./autogen.sh &amp;&amp; ./configure --prefix=/usr &amp;&amp; make</span><br><span class="line">sudo make install</span><br><span class="line">re2c -v <span class="comment">#验证结果</span></span><br><span class="line"><span class="comment">#现在就可以安装ninja了</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/ninja-build/ninja.git &amp;&amp; <span class="built_in">cd</span> ninja</span><br><span class="line">./configure.py --bootstrap</span><br><span class="line">sudo cp ninja /usr/bin/</span><br><span class="line">ninja --version</span><br><span class="line"><span class="comment">#验证结果</span></span><br></pre></td></tr></table></figure>
+<h3 id="ninja"><a href="#ninja" class="headerlink" title="ninja"></a>ninja</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装ninja 之前需要安装相关的配置文件re2c + libtool autoconf</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/skvadrik/re2c.git re2c</span><br><span class="line"><span class="built_in">cd</span> re2c</span><br><span class="line">mkdir -p m4</span><br><span class="line">./autogen.sh &amp;&amp; ./configure --prefix=/usr &amp;&amp; make</span><br><span class="line">sudo make install</span><br><span class="line">re2c -v <span class="comment">#验证结果</span></span><br><span class="line"><span class="comment">#现在就可以安装ninja了</span></span><br><span class="line">git <span class="built_in">clone</span> git://github.com/ninja-build/ninja.git &amp;&amp; <span class="built_in">cd</span> ninja</span><br><span class="line">./configure.py --bootstrap</span><br><span class="line">sudo cp ninja /usr/bin/</span><br><span class="line">ninja --version</span><br><span class="line"><span class="comment">#验证结果</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="编译v8"><a href="#编译v8" class="headerlink" title="编译v8"></a>编译v8</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">fetch v8 <span class="comment">#这里我两天两夜没下载成功......</span></span><br><span class="line"><span class="built_in">cd</span> v8</span><br><span class="line">gclient sync <span class="comment">#下载依赖，这里也很容易出问题</span></span><br><span class="line"><span class="comment"># 设置编译参数</span></span><br><span class="line">tools/dev/v8gen.py x64.debug</span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line">ninja -C out.gn/x64.debug</span><br><span class="line">./out.gn/x64.debug/d8 <span class="comment">#能调用v8就可以了</span></span><br></pre></td></tr></table></figure>
+<p>使用tools/dev/v8gen.py x64.debug 报错时可试试安装如下依赖</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libpango1.0-dev</span><br><span class="line">sudo apt install libcogl-pango-dev</span><br><span class="line">sudo apt install libjpeg-dev</span><br><span class="line">sudo apt install xz-utils</span><br><span class="line">sudo apt install subversion</span><br></pre></td></tr></table></figure>
 
 <h2 id="使用github-action"><a href="#使用github-action" class="headerlink" title="使用github action"></a>使用github action</h2><p>项目地址:<a target="_blank" rel="noopener" href="https://github.com/StarCross-Tech/v8-action">https://github.com/StarCross-Tech/v8-action</a><br>这上面的方法不久前，还可以用，现在用会出一点小问题(upload失败，不过只要稍微改一下yml文件就可以了<br>相关配置说明:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">env:</span><br><span class="line">  PATCH_FLAG: <span class="literal">false</span> <span class="comment">#默认下载最新的版本，</span></span><br><span class="line">  COMMIT: 0 <span class="comment">#版本号，PATCH_FLAG为true时，修改为对应的版本号</span></span><br><span class="line">  DEPOT_UPLOAD: <span class="literal">false</span> <span class="comment">#需要depot_tools就填true</span></span><br><span class="line">  SRC_UPLOAD: <span class="literal">true</span> <span class="comment">#需要v8 源码就填true</span></span><br><span class="line">  BINARY_UPLOAD: <span class="literal">false</span> <span class="comment">#暂时不支持</span></span><br></pre></td></tr></table></figure>
@@ -519,7 +521,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -530,7 +532,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -541,7 +543,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
