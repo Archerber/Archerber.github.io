@@ -102,8 +102,11 @@
 <meta property="og:image" content="http://example.com/images/2021-08-02173034.png">
 <meta property="og:image" content="http://example.com/images/2022-05-10153852.png">
 <meta property="og:image" content="http://example.com/images/2022-05-10155045.png">
+<meta property="og:image" content="http://example.com/images/2022-05-11194441.png">
+<meta property="og:image" content="http://example.com/images/2022-05-11194544.png">
+<meta property="og:image" content="http://example.com/images/2022-05-11194736.png">
 <meta property="article:published_time" content="2021-08-02T00:32:30.000Z">
-<meta property="article:modified_time" content="2022-05-10T08:14:23.310Z">
+<meta property="article:modified_time" content="2022-05-11T12:02:59.876Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="csapp">
 <meta name="twitter:card" content="summary">
@@ -406,9 +409,7 @@
 <h3 id="媒体寄存器"><a href="#媒体寄存器" class="headerlink" title="媒体寄存器"></a>媒体寄存器</h3><p><img src="/images/2021-08-02172607.png"></p>
 <h3 id="浮点传送指令"><a href="#浮点传送指令" class="headerlink" title="浮点传送指令"></a>浮点传送指令</h3><p><img src="/images/2021-08-02172717.png"></p>
 <h3 id="浮点数运算指令"><a href="#浮点数运算指令" class="headerlink" title="浮点数运算指令"></a>浮点数运算指令</h3><p><img src="/images/2021-08-02173034.png"></p>
-<h2 id="处理器体系架构"><a href="#处理器体系架构" class="headerlink" title="处理器体系架构"></a>处理器体系架构</h2><h3 id="处理指令操作"><a href="#处理指令操作" class="headerlink" title="处理指令操作"></a>处理指令操作</h3><p>处理指令操作大致流程如下:<br>1.取指:<br>    地址为PC的值，将从指令中去除指令指示符的四位部分，成为icode(指令代码)和ifun(指令功能)，<br>可能继续取出一个寄存器指示符字节，指明一个或者两个寄存器操作数指令符号rA和rB，还有可能再继续取出一个四字节<br>常数字valC，它按顺序方式计算当前指令的下一条指令的地址valP,即valP=PC + len(opcode)<br>2.译码:<br>    译码阶段从寄存器文件读入最多两个操作数，得到值valA或valB,通过，它读入指令rA和rB字段指明的寄存器。<br>3.执行:<br>    在执行阶段，，ALU要么执行指令指明的操作(根据ifun的值)，计算内存引用的有效地址，要么增加或者减少栈指针<br>。得到的值我们称为valE。在此也可能设置条件码。对于一条条件传送指令来说，这个阶段会检查条件码和传送条件(<br>由ifun给出)，如果条件成立，则更新目标寄存器。同样对于一条跳转指令来说，这个阶段也会决定是否选择分支。<br>4.访存:<br>    访存阶段可以将数据写入内存，或者从内存中读出数据。读出的值为valM。<br>5.写回:<br>    写回阶段最多可以写两个结果到寄存器文件。<br>6.更新PC:<br>    将PC设置为下一条指令的地址</p>
-<p>1.seq取指阶段，如图<br><img src="/images/2022-05-10153852.png" alt="avatar"><br>icode计算指令，ifun计算功能码，instr_valid用来发现不合法的指令。信号instr_valid 和 immem_error在访<br>存阶段用来产生状态码。</p>
-<p>2.译码和写回阶段<br>如图<br><img src="/images/2022-05-10155045.png" alt="avatar"><br>寄存器文件有四个端口。支持同时进行两个读(A和B上)和两个写(在端口E和M上)。每个端口都有一个地址连接和<br>一个数据连接，地址连接是一个寄存器ID，而数据连接是一组64根线路，既可以作为寄存器文件的输出字(对读端口)<br>，也可以作为它的输入字(对写端口来说)。两个读端口的地址输入为srcA和srcB，而两个写端口的地址输入为destE和<br>destM。如果某个地址端口上的值为特殊标识符0xF，则表明不需要访问寄存器。</p>
+<h2 id="处理器体系架构"><a href="#处理器体系架构" class="headerlink" title="处理器体系架构"></a>处理器体系架构</h2><h3 id="处理指令操作"><a href="#处理指令操作" class="headerlink" title="处理指令操作"></a>处理指令操作</h3><p>处理指令操作大致流程如下:<br>1.取指:<br>    地址为PC的值，将从指令中去除指令指示符的四位部分，成为icode(指令代码)和ifun(指令功能)，<br>可能继续取出一个寄存器指示符字节，指明一个或者两个寄存器操作数指令符号rA和rB，还有可能再继续取出一个四字节<br>常数字valC，它按顺序方式计算当前指令的下一条指令的地址valP,即valP=PC + len(opcode)<br>2.译码:<br>    译码阶段从寄存器文件读入最多两个操作数，得到值valA或valB,通过，它读入指令rA和rB字段指明的寄存器。<br>3.执行:<br>    在执行阶段，，ALU要么执行指令指明的操作(根据ifun的值)，计算内存引用的有效地址，要么增加或者减少栈指针<br>。得到的值我们称为valE。在此也可能设置条件码。对于一条条件传送指令来说，这个阶段会检查条件码和传送条件(<br>由ifun给出)，如果条件成立，则更新目标寄存器。同样对于一条跳转指令来说，这个阶段也会决定是否选择分支。<br>4.访存:<br>    访存阶段可以将数据写入内存，或者从内存中读出数据。读出的值为valM。<br>5.写回:<br>    写回阶段最多可以写两个结果到寄存器文件。<br>6.更新PC:<br>    将PC设置为下一条指令的地址<br>1.seq取指阶段，如图<br><img src="/images/2022-05-10153852.png" alt="avatar"><br>icode计算指令，ifun计算功能码，instr_valid用来发现不合法的指令。信号instr_valid 和 immem_error在访<br>存阶段用来产生状态码。<br>2.译码和写回阶段<br>如图(寄存器示意图)<br><img src="/images/2022-05-10155045.png" alt="avatar"><br>寄存器文件有四个端口。支持同时进行两个读(A和B上)和两个写(在端口E和M上)。每个端口都有一个地址连接和<br>一个数据连接，地址连接是一个寄存器ID，而数据连接是一组64根线路，既可以作为寄存器文件的输出字(对读端口)<br>，也可以作为它的输入字(对写端口来说)。两个读端口的地址输入为srcA和srcB，而两个写端口的地址输入为destE和<br>destM。如果某个地址端口上的值为特殊标识符0xF，则表明不需要访问寄存器。<br>irmovq 指令 和 rrmovq指令实现如图<br><img src="/images/2022-05-11194441.png" alt="avatar"><br>seq硬件实现抽象图<br><img src="/images/2022-05-11194544.png" alt="avatar"><br>更加详细一点的<br><img src="/images/2022-05-11194736.png" alt="avatar"></p>
 
       
     </div>
