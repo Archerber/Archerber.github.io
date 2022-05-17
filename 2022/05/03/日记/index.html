@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-03T13:41:30.000Z">
-<meta property="article:modified_time" content="2022-05-14T15:45:30.681Z">
+<meta property="article:modified_time" content="2022-05-17T03:35:02.448Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="杂记">
 <meta name="twitter:card" content="summary">
@@ -380,6 +380,9 @@
 <h3 id="2022-5-12"><a href="#2022-5-12" class="headerlink" title="2022.5.12"></a>2022.5.12</h3><p>主要看来了csapp的SRAM和RAM相关知识cachelab感觉还是要先把csapp高速缓存那里看懂 + pwnhub-vheap程序分析完了，只要找到洞就行了，不过一开始没注意<br>到snprintf那里有格式化字符传漏洞。。。</p>
 <h3 id="2022-5-13"><a href="#2022-5-13" class="headerlink" title="2022.5.13"></a>2022.5.13</h3><p>vheap - solved + 看csapp高速缓存部分</p>
 <h3 id="2022-5-14"><a href="#2022-5-14" class="headerlink" title="2022.5.14"></a>2022.5.14</h3><p>高速缓存感觉看的差不多了+配置staroob环境+v8对象那里还剩下一点没总结</p>
+<h3 id="2022-5-15"><a href="#2022-5-15" class="headerlink" title="2022.5.15"></a>2022.5.15</h3><p>startctf - oob 复现 ，感觉复现可以学到很多，比如map、array等的结构，还有很多v8的调试和环境配置技巧</p>
+<h3 id="2022-5-16"><a href="#2022-5-16" class="headerlink" title="2022.5.16"></a>2022.5.16</h3><p>startctf - oob 还差一点就可以复现完成了，主要是有一些细节方面没注意，还有v8最后getshell的两种方式</p>
+<h3 id="2022-5-17"><a href="#2022-5-17" class="headerlink" title="2022.5.17"></a>2022.5.17</h3><p>startctf - oob 复现完成，受startctf - oob 启发，有了一个出题思路，准备实现一下</p>
 
       
     </div>
@@ -503,7 +506,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -595,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-3"><span class="nav-number">1.</span> <span class="nav-text">2022.5.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-4-2022-5-6"><span class="nav-number">2.</span> <span class="nav-text">2022.5.4 - 2022.5.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-7"><span class="nav-number">3.</span> <span class="nav-text">2022.5.7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-8"><span class="nav-number">4.</span> <span class="nav-text">2022.5.8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-9"><span class="nav-number">5.</span> <span class="nav-text">2022.5.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-10"><span class="nav-number">6.</span> <span class="nav-text">2022.5.10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-11"><span class="nav-number">7.</span> <span class="nav-text">2022.5.11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-12"><span class="nav-number">8.</span> <span class="nav-text">2022.5.12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-13"><span class="nav-number">9.</span> <span class="nav-text">2022.5.13</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-14"><span class="nav-number">10.</span> <span class="nav-text">2022.5.14</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-3"><span class="nav-number">1.</span> <span class="nav-text">2022.5.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-4-2022-5-6"><span class="nav-number">2.</span> <span class="nav-text">2022.5.4 - 2022.5.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-7"><span class="nav-number">3.</span> <span class="nav-text">2022.5.7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-8"><span class="nav-number">4.</span> <span class="nav-text">2022.5.8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-9"><span class="nav-number">5.</span> <span class="nav-text">2022.5.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-10"><span class="nav-number">6.</span> <span class="nav-text">2022.5.10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-11"><span class="nav-number">7.</span> <span class="nav-text">2022.5.11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-12"><span class="nav-number">8.</span> <span class="nav-text">2022.5.12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-13"><span class="nav-number">9.</span> <span class="nav-text">2022.5.13</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-14"><span class="nav-number">10.</span> <span class="nav-text">2022.5.14</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-15"><span class="nav-number">11.</span> <span class="nav-text">2022.5.15</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-16"><span class="nav-number">12.</span> <span class="nav-text">2022.5.16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2022-5-17"><span class="nav-number">13.</span> <span class="nav-text">2022.5.17</span></a></li></ol></div>
             
 
           </div>

