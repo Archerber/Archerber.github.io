@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://example.com/images/173317.png">
 <meta property="og:image" content="http://example.com/images/2022-03-16210937.png">
 <meta property="article:published_time" content="2021-03-04T02:02:30.000Z">
-<meta property="article:modified_time" content="2022-05-10T05:41:17.455Z">
+<meta property="article:modified_time" content="2022-07-05T06:43:13.750Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="笔记">
 <meta name="twitter:card" content="summary">
@@ -389,6 +389,7 @@
 <h3 id="qemu通网-系统模式"><a href="#qemu通网-系统模式" class="headerlink" title="qemu通网(系统模式)"></a>qemu通网(系统模式)</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install uml-utilities </span><br><span class="line">sudo apt-get install bridge-utils</span><br><span class="line">sudo ifconfig ens33 down  </span><br><span class="line">sudo brctl addbr virbr0 </span><br><span class="line">sudo brctl addif virbr0 ens33</span><br><span class="line">sudo brctl stp virbr0 off </span><br><span class="line">sudo brctl setfd virbr0 1</span><br><span class="line">sudo brctl sethello virbr0 1</span><br><span class="line">sudo ifconfig virbr0 0.0.0.0 promisc up</span><br><span class="line">sudo ifconfig ens33 0.0.0.0 promisc up</span><br><span class="line">sudo dhclient virbr0</span><br><span class="line"></span><br><span class="line">sudo tunctl -t tap0</span><br><span class="line">sudo brctl addif virbr0 tap0</span><br><span class="line">sudo ifconfig tap0 0.0.0.0 promisc up</span><br></pre></td></tr></table></figure>
 <p>安装镜像与内核(根据文件大小端):<a target="_blank" rel="noopener" href="https://people.debian.org/~aurel32/qemu/mipsel/">https://people.debian.org/~aurel32/qemu/mipsel/</a><br>启动镜像</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo qemu-system-mipsel -M malta -kernel vmlinux-3.2.0-4-4kc-malta -hda debian_wheezy_mipsel_standard.qcow2 -append <span class="string">&quot;root=/dev/sda1 console=tty0&quot;</span> -net nic -net tap,ifname=tap0,script=no,downscript=no -nographic</span><br><span class="line"><span class="comment">#上面最好用console = ttyS0</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="修改绑定连接"><a href="#修改绑定连接" class="headerlink" title="修改绑定连接"></a>修改绑定连接</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chroot . ./pwn2 <span class="comment">#.表示当前目录，需要新建lib并把相关libc文件放到lib中</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="qemu用户模式-gdb-multiarch"><a href="#qemu用户模式-gdb-multiarch" class="headerlink" title="qemu用户模式+gdb-multiarch"></a>qemu用户模式+gdb-multiarch</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cp $(<span class="built_in">which</span> qemu-mipsel-static) /home/archer/pwn2/</span><br><span class="line">sudo chroot . ./qemu-mipsel-static ./pwn2</span><br><span class="line">sudo chroot . ./qemu-mipsel-static -g 54321 ./pwn2</span><br><span class="line"></span><br><span class="line">gdb-multiarch pwn2</span><br><span class="line"><span class="built_in">set</span> arch mips</span><br><span class="line"><span class="built_in">set</span> endian little</span><br><span class="line">target remote 127.0.0.1:54321</span><br></pre></td></tr></table></figure>
@@ -617,7 +618,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
