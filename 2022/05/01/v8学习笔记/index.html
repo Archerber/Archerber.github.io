@@ -88,6 +88,7 @@
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="v8">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/classv8_1_1internal_1_1_j_s_receiver__inherit__graph.png">
 <meta property="og:image" content="http://example.com/images/v2-0ffcb4074415763e2db61c6f1fee3c29_r.jpg">
 <meta property="og:image" content="http://example.com/images/v2-40dac6ddd93313ebef2a78a29965c19b_r.png">
 <meta property="og:image" content="http://example.com/images/v2-be187174241caaa89d2f8f9bef6465fb_r.jpg">
@@ -97,11 +98,11 @@
 <meta property="og:image" content="http://example.com/images/v2-0ea3aecfeccad2a110397d6c181c8126_r.png">
 <meta property="og:image" content="http://example.com/iamges/v2-98e331a37430b9187ff03c09cc4daff6_r.png">
 <meta property="article:published_time" content="2022-05-01T02:02:30.000Z">
-<meta property="article:modified_time" content="2022-07-14T08:33:15.374Z">
+<meta property="article:modified_time" content="2022-07-19T13:00:41.436Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="v8">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/v2-0ffcb4074415763e2db61c6f1fee3c29_r.jpg">
+<meta name="twitter:image" content="http://example.com/images/classv8_1_1internal_1_1_j_s_receiver__inherit__graph.png">
 
 
 
@@ -403,7 +404,7 @@
 <h2 id="TurboFan"><a href="#TurboFan" class="headerlink" title="TurboFan"></a>TurboFan</h2><p>TODO</p>
 <h2 id="object"><a href="#object" class="headerlink" title="object"></a>object</h2><p>关于V8对象的部分继承关系如下</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TaggedImpl ------&gt; Object -----&gt; Smi</span><br><span class="line">                     |</span><br><span class="line">                     |</span><br><span class="line">                     -----&gt; HeapObject ------&gt; JsReceiver ------&gt; JSOBJECT</span><br><span class="line">                                                    |</span><br><span class="line">                                                    |</span><br><span class="line">                                                    -----&gt; JSProxy</span><br></pre></td></tr></table></figure>
-
+<p><img src="/images/classv8_1_1internal_1_1_j_s_receiver__inherit__graph.png" alt="avatar"><br>这个图非常的直观</p>
 <h3 id="TaggedImpl"><a href="#TaggedImpl" class="headerlink" title="TaggedImpl"></a>TaggedImpl</h3><p>TaggedImpl的作用是识别Pointer和Smi(为了GC的准确垃圾回收+节省空间)，通过利用地址按字长对齐的特性，v8中相关处理如下:<br>    1.整数往左移1位，最后一位为0，则表示数值<br>    2.指针由于最后一位本来就是0不用改变，即设置为1</p>
 <h3 id="HeapObject"><a href="#HeapObject" class="headerlink" title="HeapObject"></a>HeapObject</h3><p>heapobject 的编码方式如下<br><img src="/images/v2-0ffcb4074415763e2db61c6f1fee3c29_r.jpg" alt="avatar"><br>其中Object包括的内容有:<br>        Object::KHeaderSize = 0<br>HeapObject:<br>        增加了kMapOfset、此时kHeaderSize=8<br>JSReceiver:<br>        增加了KProperiesOrHashOffset，此时KHeaderSize = 16<br>JSObject:<br>        增加了KElementsOffset，此时KeaderSize = 24<br>此时JSObject拥有三个内置的属性:<br>        1.map<br>        2.propertiesOrHash<br>        3.elements</p>
 <h3 id="JSReceiver"><a href="#JSReceiver" class="headerlink" title="JSReceiver"></a>JSReceiver</h3><p>JSReceiver在堆上的形式，如下<br><img src="/images/v2-40dac6ddd93313ebef2a78a29965c19b_r.png" alt="avatar"><br>JS中数组和字典在使用上区别不大，当时根据v8实现的角度，在其内部位数组和字典选择不同的数据结构可以优化它们<br>的访问速度，所以分别使用propertiesOrHash和elements这两个属性，这两个都是指针，v8会根据实际情况将它们<br>连接到堆上的不同的数据结构</p>
