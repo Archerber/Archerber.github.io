@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://example.com/images/v2-0ea3aecfeccad2a110397d6c181c8126_r.png">
 <meta property="og:image" content="http://example.com/iamges/v2-98e331a37430b9187ff03c09cc4daff6_r.png">
 <meta property="article:published_time" content="2022-05-01T02:02:30.000Z">
-<meta property="article:modified_time" content="2022-07-19T13:00:41.436Z">
+<meta property="article:modified_time" content="2022-07-20T12:56:36.050Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="v8">
 <meta name="twitter:card" content="summary">
@@ -401,7 +401,7 @@
 <h2 id="Ignition"><a href="#Ignition" class="headerlink" title="Ignition"></a>Ignition</h2><p>Ignition 解释器本身由一系列字节码处理程序代码片段组成，每个片段都处理一个特定的字节码，然后调度给下一个字节码的处理程序。这些字节码处理程序使用高<br>层级的、机器架构无关的汇编代码写成，由 CodeStubAssembler 类实现，并由 TurboFan 编译。<br>在2017之前v8使用full-codegen+Crankshaft  生成machine code，不生成bytecode，之后设计了Ignition，通过生成bytecode的方式节省空间与时间<br>AST到bytecode的流程大致如下:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Parser --&gt; AST --&gt; Bytecode Generator --&gt; Register Optimizer --&gt; Peephole Optimizer</span><br><span class="line">--&gt; Dead-code Elimination --&gt; Bytecode Array Writer --&gt; Bytecode --&gt; Interpreter</span><br></pre></td></tr></table></figure>
 <p>1.Bytecode Generator:作用是遍历AST，并为每个子节点生成Bytecode<br>补充：Bytecode Generator本质是一系列字节码处理片段，是用与机器架构无关的高级别的汇编代码写成的，由CodeStubAssembler 实现并由Turbofan编译<br>更多细节参考:<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=r5OWCtuKiAk&amp;t=1062s">https://www.youtube.com/watch?v=r5OWCtuKiAk&amp;t=1062s</a> 以及<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41496446">https://zhuanlan.zhihu.com/p/41496446</a></p>
-<h2 id="TurboFan"><a href="#TurboFan" class="headerlink" title="TurboFan"></a>TurboFan</h2><p>TODO</p>
+<h2 id="TurboFan"><a href="#TurboFan" class="headerlink" title="TurboFan"></a>TurboFan</h2><p>TODO:<a target="_blank" rel="noopener" href="https://paper.seebug.org/1936/">https://paper.seebug.org/1936/</a> (简单理解)</p>
 <h2 id="object"><a href="#object" class="headerlink" title="object"></a>object</h2><p>关于V8对象的部分继承关系如下</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TaggedImpl ------&gt; Object -----&gt; Smi</span><br><span class="line">                     |</span><br><span class="line">                     |</span><br><span class="line">                     -----&gt; HeapObject ------&gt; JsReceiver ------&gt; JSOBJECT</span><br><span class="line">                                                    |</span><br><span class="line">                                                    |</span><br><span class="line">                                                    -----&gt; JSProxy</span><br></pre></td></tr></table></figure>
 <p><img src="/images/classv8_1_1internal_1_1_j_s_receiver__inherit__graph.png" alt="avatar"><br>这个图非常的直观</p>
@@ -542,7 +542,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
