@@ -109,13 +109,14 @@
 <meta property="og:image" content="http://example.com/images/2022-07-23151622.png">
 <meta property="og:image" content="http://example.com/images/2022-07-23203514.png">
 <meta property="og:image" content="http://example.com/images/2022-07-23203643.png">
+<meta property="og:image" content="http://example.com/images/2022-07-23203725.png">
 <meta property="og:image" content="http://example.com/images/2022-07-23211501.png">
 <meta property="og:image" content="http://example.com/images/2022-07-23211953.png">
 <meta property="og:image" content="http://example.com/images/2022-07-23212110.png">
 <meta property="og:image" content="http://example.com/images/2022-07-25190028.png">
 <meta property="og:image" content="http://example.com/images/2022-07-25190122.png">
 <meta property="article:published_time" content="2021-08-02T00:32:30.000Z">
-<meta property="article:modified_time" content="2022-07-26T03:09:47.734Z">
+<meta property="article:modified_time" content="2022-07-26T03:16:21.209Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="csapp">
 <meta name="twitter:card" content="summary">
@@ -399,8 +400,7 @@
       
 
       
-        <p>感觉看csapp真的能学到不少东西，因此特别写一篇博客来记录csapp中学习内容</p>
-<h2 id="信息的表示和处理"><a href="#信息的表示和处理" class="headerlink" title="信息的表示和处理"></a>信息的表示和处理</h2><h3 id="2进制与16进制"><a href="#2进制与16进制" class="headerlink" title="2进制与16进制"></a>2进制与16进制</h3><p>信息在计算机中以2进制的形式表达，不过16进制更直观，很多例子都是通过16进制展示(二进制太长了)<br>关于2进制与16进制，每4位二进制可以表达一位16进制，如1111 == 0xf</p>
+        <h2 id="信息的表示和处理"><a href="#信息的表示和处理" class="headerlink" title="信息的表示和处理"></a>信息的表示和处理</h2><h3 id="2进制与16进制"><a href="#2进制与16进制" class="headerlink" title="2进制与16进制"></a>2进制与16进制</h3><p>信息在计算机中以2进制的形式表达，不过16进制更直观，很多例子都是通过16进制展示(二进制太长了)<br>关于2进制与16进制，每4位二进制可以表达一位16进制，如1111 == 0xf</p>
 <h3 id="不同整数类型所占字节数"><a href="#不同整数类型所占字节数" class="headerlink" title="不同整数类型所占字节数"></a>不同整数类型所占字节数</h3><p>1byte表示1个字节，word == 2byte，dword = 4byte，qword = 8byte<br>unsigned表示无符号，当使用unsigned后，符号位变成数值位，对应的范围* 2 + 1<br>char 占 1byte，范围位 -128，127<br>short 2byte<br>int 4<br>long 4 (64位中为8)<br>int32_t 4<br>int64_t 8</p>
 <p>大端与小端表示法<br>例子0x123456<br>在小端中56 34 12<br>大端中 12 34 56</p>
 <h3 id="补码、反码和原码"><a href="#补码、反码和原码" class="headerlink" title="补码、反码和原码"></a>补码、反码和原码</h3><p>如图<br><img src="/images/20210802092622.png"></p>
@@ -422,7 +422,7 @@
 <h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><h3 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h3><p>如图<br>![avatar](/images/2022-07-23 142256.png)</p>
 <h3 id="存储器层次结构中的缓存"><a href="#存储器层次结构中的缓存" class="headerlink" title="存储器层次结构中的缓存"></a>存储器层次结构中的缓存</h3><p>如图<br><img src="/images/2022-07-23143710.png" alt="avatar"><br>假设程序需要读取第k+1层的对象d，首先会在存储在第k层的一个块中寻找，若k中缓存了d，则缓存命中，否则缓存不命中，当发生缓存不命中<br>时，k层的缓存将从k+1层缓存取出包含d块，如果k层满了，则替换现存的块，至于替换哪个块，由缓存的替换策略决定，如随机替换策略和LRU(具有最近最少被使用策略)。</p>
 <h3 id="通用的高速缓存存储器组织结构"><a href="#通用的高速缓存存储器组织结构" class="headerlink" title="通用的高速缓存存储器组织结构"></a>通用的高速缓存存储器组织结构</h3><p>如图<br><img src="/images/2022-07-23151622.png" alt="avatar"><br>高速缓存的结构可以使用元组(S,E,B,m)来描述，组索引可以索引到对应的组，标记位用于告知组的行数(索引时)，块偏移即，在B个字节的字偏移(这里用索引一个字节举例)</p>
-<h3 id="直接映射高速缓存"><a href="#直接映射高速缓存" class="headerlink" title="直接映射高速缓存"></a>直接映射高速缓存</h3><p>如图<br><img src="/images/2022-07-23203514.png" alt="avatar"><br>组选择，如图<br><img src="/images/2022-07-23203643.png" alt="avatar"><br>行匹配<br><a href="/images/2022-07-23203725.png">avatar</a></p>
+<h3 id="直接映射高速缓存"><a href="#直接映射高速缓存" class="headerlink" title="直接映射高速缓存"></a>直接映射高速缓存</h3><p>如图<br><img src="/images/2022-07-23203514.png" alt="avatar"><br>组选择，如图<br><img src="/images/2022-07-23203643.png" alt="avatar"><br>行匹配<br><img src="/images/2022-07-23203725.png" alt="avatar"></p>
 <h3 id="组相联高速缓存"><a href="#组相联高速缓存" class="headerlink" title="组相联高速缓存"></a>组相联高速缓存</h3><p>如图<br><img src="/images/2022-07-23211501.png" alt="avatar"><br>在进行行匹配时，需要搜索组中的每一行</p>
 <h3 id="全相联高速缓存"><a href="#全相联高速缓存" class="headerlink" title="全相联高速缓存"></a>全相联高速缓存</h3><p>在全相联高速缓存中，一个组包含所有的行，因此没有组索引位，地址只被划分为了一个标记和一个块偏移<br>行选择和字选择，如图<br><img src="/images/2022-07-23211953.png" alt="avatar"></p>
 <h3 id="真实的结构"><a href="#真实的结构" class="headerlink" title="真实的结构"></a>真实的结构</h3><p>i7中缓冲的设计如图<br><img src="/images/2022-07-23212110.png" alt="avatar"></p>
