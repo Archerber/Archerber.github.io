@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="AFL阅读文档AFL在github上下载链接:https:&#x2F;&#x2F;github.com&#x2F;mirrorer&#x2F;afl (然后编译安装make+make install)AFL工具大致流程    1)将用户提供的初始测试案例加载到队列中    2)从队列中取出下一个输入文件    3)尝试最小程度的修改测试案例而不改变程序标准的行为    4)使用平衡、研究充分的传统模糊测试策略反复改变文件    5)如果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Archerの博客">
+<meta property="og:url" content="http://example.com/2022/09/19/afl-fuzz%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="AFL阅读文档AFL在github上下载链接:https:&#x2F;&#x2F;github.com&#x2F;mirrorer&#x2F;afl (然后编译安装make+make install)AFL工具大致流程    1)将用户提供的初始测试案例加载到队列中    2)从队列中取出下一个输入文件    3)尝试最小程度的修改测试案例而不改变程序标准的行为    4)使用平衡、研究充分的传统模糊测试策略反复改变文件    5)如果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2022-03-09211131.png">
+<meta property="article:published_time" content="2022-09-19T13:03:37.981Z">
+<meta property="article:modified_time" content="2022-09-19T12:40:54.204Z">
+<meta property="article:author" content="Archer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2022-03-09211131.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Welcome</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/19/afl-fuzz%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1652601666778.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-09-19T21:03:37+08:00">
+                2022-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/09/19/afl-fuzz%E5%AD%A6%E4%B9%A0/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="AFL阅读文档"><a href="#AFL阅读文档" class="headerlink" title="AFL阅读文档"></a>AFL阅读文档</h2><p>AFL在github上下载链接:<a target="_blank" rel="noopener" href="https://github.com/mirrorer/afl">https://github.com/mirrorer/afl</a> (然后编译安装make+make install)<br>AFL工具大致流程<br>    1)将用户提供的初始测试案例加载到队列中<br>    2)从队列中取出下一个输入文件<br>    3)尝试最小程度的修改测试案例而不改变程序标准的行为<br>    4)使用平衡、研究充分的传统模糊测试策略反复改变文件<br>    5)如果生成的变化导致程序的状态改变被仪器记录，将改变后的输出作为队列的新输入<br>    6)跳到2</p>
+<h3 id="简单的使用"><a href="#简单的使用" class="headerlink" title="简单的使用"></a>简单的使用</h3><p>当有源代码时，可以用自带的工具来标准的编译第三方代码，替代gcc或者clang</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ CC=/path/to/afl/afl-gcc ./configure</span><br><span class="line">$ make clean all</span><br><span class="line">//对于c++项目</span><br><span class="line">$ CXX=/path/to/afl/afl-g++</span><br><span class="line">//当使用clang时类似</span><br><span class="line">afl-clang和afl-clang++</span><br></pre></td></tr></table></figure>
+<p>静态构建(绑定.so文件等，可以通过设置LD_LIBRARTY_PATH)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ CC=/path/to/afl/afl-gcc ./configure --disable-shared</span><br></pre></td></tr></table></figure>
+<p>make时，设置AFL_HERDEN=1检测内存错误能力更强<br>Libdislocator可以帮助发现堆相关问题<br>检测可执行程序可以使用QEMU形式</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$cd</span> qemu_mode</span><br><span class="line">./build_qemu_support.sh//比编译时，检测慢2-5倍，可能还有其他问题</span><br><span class="line">//当安装时，如果缺少库使用sudo apt-get install libtool以及sudo apt-get install libtool-bin</span><br><span class="line">//还有sudo apt-get install automake和sudo apt-get install bison补全库</span><br></pre></td></tr></table></figure>
+<p>testcases/子目录里面有很多例子，当数据很多时，可以使用AFL-cmin，用来识别功能<br>不同的文件<br>模糊测试文件由afl-fuzz程序执行<br>语法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./afl-fuzz -i 测试案例集 -o 结果 文件路径 [...参数...]</span><br><span class="line">//从文件中获取输入使用<span class="string">&quot;@@&quot;</span>标记</span><br><span class="line">//-f可以将特别的数据写入特定的文件(当程序需要特定的文件扩展名时，很有用)</span><br><span class="line">//-Q参数在qemu模式下测试，传统的盲模糊测试使用-n</span><br><span class="line">//-t和-m跳过超时以及内存限制(编译器或者视频解码器等)</span><br><span class="line">//需要快速的结果可以加上-d</span><br></pre></td></tr></table></figure>
+
+<h3 id="fuzz输出文件解释"><a href="#fuzz输出文件解释" class="headerlink" title="fuzz输出文件解释"></a>fuzz输出文件解释</h3><p>fuzz完成后会在fuzz_out文件夹中生成三个文件夹，分别为queue、crashes、hangs<br>queue文件夹中存放的文件为测试案例，可以使用afl-cmin将其缩小<br>crashes文件夹中存放了可以导致程序崩溃的样例(当测试程序收到某些致命错误时，如SIGSEGV、SIGILL、SIGABRT)<br>hangs中存放了导致测试程序超时的案例(1s和-t参数中的较大值)，可以通过修改AFL_HANG_TMOUT调整<br>当无法重现afl-fuzz发生的崩溃时，可能的原因是没有设置与该工具使用的相同的内存限制。<br>解决方法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ LIMIT_MB=50</span><br><span class="line">$ ( <span class="built_in">ulimit</span> -Sv $[LIMIT_MB &lt;&lt; <span class="string">10]; /path/to/tested_binary ... )</span></span><br><span class="line"><span class="string">//更改 LIMIT_MB 以匹配传递给 afl-fuzz 的 -m 参数。</span></span><br><span class="line"><span class="string">//在 OpenBSD 上，还将 -Sv 更改为 -Sd。</span></span><br><span class="line"><span class="string">//使用现有的目录恢复过程</span></span><br><span class="line"><span class="string">$ ./afl-fuzz -i- -o existing_output_dir [...etc...]</span></span><br><span class="line"><span class="string">//使用xxd命令查看</span></span><br><span class="line"><span class="string">$ xxd id:000001,sig:11,src:000000,op:havoc,rep:128</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="fuzz界面解释"><a href="#fuzz界面解释" class="headerlink" title="fuzz界面解释"></a>fuzz界面解释</h3><p>① Process timing:Fuzzer运行时长、以及距离最近发现的路径、崩溃和挂起经过了多长时间。<br>② Overall results：Fuzzer当前状态的概述。<br>③ Cycle progress：我们输入队列的距离。<br>④ Map coverage：目标二进制文件中的插桩代码所观察到覆盖范围的细节。<br>⑤ Stage progress：Fuzzer现在正在执行的文件变异策略、执行次数和执行速度。<br>⑥ Findings in depth：有关我们找到的执行路径，异常和挂起数量的信息。<br>⑦ Fuzzing strategy yields：关于突变策略产生的最新行为和结果的详细信息。<br>⑧ Path geometry：有关Fuzzer找到的执行路径的信息。<br>⑨ CPU load：CPU利用率</p>
+<h2 id="afl及相关工具安装"><a href="#afl及相关工具安装" class="headerlink" title="afl及相关工具安装"></a>afl及相关工具安装</h2><h3 id="afl-fuzz"><a href="#afl-fuzz" class="headerlink" title="afl-fuzz"></a>afl-fuzz</h3><p>afl-fuzzing项目地址:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/mirrorer/afl</span><br></pre></td></tr></table></figure>
+<p>安装及配置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install make git curl cargo vim wget</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/mirrorer/afl</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/afl</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>afl-fuzz++安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y build-essential python3-dev automake git flex bison libglib2.0-dev libpixman-1-dev python3-setuptools</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y lld-11 llvm-11 llvm-11-dev clang-11 || sudo apt-get install -y lld llvm llvm-dev clang</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y gcc-$(gcc --version|head -n1|sed <span class="string">&#x27;s/.* //&#x27;</span>|sed <span class="string">&#x27;s/\..*//&#x27;</span>)-plugin-dev libstdc++-$(gcc --version|head -n1|sed <span class="string">&#x27;s/.* //&#x27;</span>|sed <span class="string">&#x27;s/\..*//&#x27;</span>)-dev</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/AFLplusplus/AFLplusplus &amp;&amp; <span class="built_in">cd</span> AFLplusplus</span><br><span class="line"><span class="built_in">export</span> LLVM_CONFIG=<span class="string">&quot;llvm-config-11&quot;</span></span><br><span class="line"></span><br><span class="line">make -j$(nproc) source-only <span class="comment"># &#x27;make distrib&#x27; for both binary-only and source code fuzzing</span></span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h3 id="crash-exploration-mode"><a href="#crash-exploration-mode" class="headerlink" title="crash exploration mode"></a>crash exploration mode</h3><p>afl-fuzz自带的运行模式，用于分析crashes利用的可行性，可以根据生成的crashes文件，产生不同的crashes</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -m none -C -i poc -o peruvian-were-rabbit_out -- ~/src/LuPng/a.out @@ out.png</span><br></pre></td></tr></table></figure>
+
+<h3 id="afl-cmin和afl-tmin"><a href="#afl-cmin和afl-tmin" class="headerlink" title="afl-cmin和afl-tmin"></a>afl-cmin和afl-tmin</h3><p>afl-cmin作用是移除执行相同代码的输入文件，在测试的时候有可能会用到多个测试案例，此时就可以使用afl-cmin精简输入文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Required parameters:</span><br><span class="line">  -i dir        - input directory with starting corpus</span><br><span class="line">  -o dir        - output directory <span class="keyword">for</span> minimized files</span><br><span class="line"></span><br><span class="line">Execution control settings:</span><br><span class="line">  -f file       - location <span class="built_in">read</span> by the fuzzed program (stdin)</span><br><span class="line">  -m megs       - memory <span class="built_in">limit</span> <span class="keyword">for</span> child process ( MB)</span><br><span class="line">  -t msec       - run time <span class="built_in">limit</span> <span class="keyword">for</span> child process (none)</span><br><span class="line">  -O            - use binary-only instrumentation (FRIDA mode)</span><br><span class="line">  -Q            - use binary-only instrumentation (QEMU mode)</span><br><span class="line">  -U            - use unicorn-based instrumentation (unicorn mode)</span><br><span class="line"></span><br><span class="line">Minimization settings:</span><br><span class="line">  -C            - keep crashing inputs, reject everything <span class="keyword">else</span></span><br><span class="line">  -e            - solve <span class="keyword">for</span> edge coverage only, ignore hit counts</span><br></pre></td></tr></table></figure>
+<p>afl-tmin作用是减小单个文件的大小</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">equired parameters:</span><br><span class="line">  -i file       - input <span class="built_in">test</span> <span class="keyword">case</span> to be shrunk by the tool</span><br><span class="line">  -o file       - final output location <span class="keyword">for</span> the minimized data</span><br><span class="line"></span><br><span class="line">Execution control settings:</span><br><span class="line">  -f file       - input file <span class="built_in">read</span> by the tested program (stdin)</span><br><span class="line">  -t msec       - timeout <span class="keyword">for</span> each run (1000 ms)</span><br><span class="line">  -m megs       - memory <span class="built_in">limit</span> <span class="keyword">for</span> child process (0 MB)</span><br><span class="line">  -O            - use binary-only instrumentation (FRIDA mode)</span><br><span class="line">  -Q            - use binary-only instrumentation (QEMU mode)</span><br><span class="line">  -U            - use unicorn-based instrumentation (Unicorn mode)</span><br><span class="line">  -W            - use qemu-based instrumentation with Wine (Wine mode)</span><br><span class="line">                  (Not necessary, here <span class="keyword">for</span> consistency with other afl-* tools)</span><br><span class="line"></span><br><span class="line">Minimization settings:</span><br><span class="line">  -e            - solve <span class="keyword">for</span> edge coverage only, ignore hit counts</span><br><span class="line">  -x            - treat non-zero <span class="built_in">exit</span> codes as crashes</span><br><span class="line"></span><br><span class="line">  -H            - minimize a hang (hang mode)</span><br></pre></td></tr></table></figure>
+
+<h3 id="fuzz测试案例"><a href="#fuzz测试案例" class="headerlink" title="fuzz测试案例"></a>fuzz测试案例</h3><p>fuzz需要有测试案例，通过案例的变异，可以使程序crash，然后进行相关操作，一般使用项目自带的案例，或者是afl中的案例，除此<br>之外还有开源的语料库可供使用，如下<br><a target="_blank" rel="noopener" href="https://lcamtuf.coredump.cx/afl/demo/">afl generated image test sets</a><br><a target="_blank" rel="noopener" href="https://github.com/google/fuzzer-test-suite">fuzzer-test-suite</a><br><a target="_blank" rel="noopener" href="https://samples.libav.org/">samples-libav</a><br><a target="_blank" rel="noopener" href="https://github.com/MozillaSecurity/fuzzdata">fuzzdata</a><br><a target="_blank" rel="noopener" href="https://gitlab.anu.edu.au/lunar/moonlight">moonlight</a></p>
+<h3 id="afl-gcc和afl-g-构建项目"><a href="#afl-gcc和afl-g-构建项目" class="headerlink" title="afl-gcc和afl-g++构建项目"></a>afl-gcc和afl-g++构建项目</h3><p>在fuzz过程中，一般需要构建项目两次，第一次是使用afl自带的afl-gcc或者afl-g++以及afl-clang等，来源码中插桩，并测试<br>程序的crashes，第二次为出现crashes时，使用gdb进行调试<br>编译器等设置如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure CC=<span class="string">&quot;afl-gcc&quot;</span> CXX=<span class="string">&quot;afl-g++&quot;</span> </span><br><span class="line">./configure CC=<span class="variable">$HOME</span>/AFLplusplus/afl-clang-fast CXX=<span class="variable">$HOME</span>/AFLplusplus/afl-clang-fast++</span><br><span class="line"><span class="comment">#上面的模式速度比较慢，还有LLVM模式</span></span><br><span class="line"><span class="built_in">export</span> LLVM_CONFIG=<span class="string">&quot;llvm-config-11&quot;</span></span><br><span class="line">./configure CC=<span class="string">&quot;afl-clang-fast&quot;</span> CXX=<span class="string">&quot;afl-clang-fast++&quot;</span></span><br></pre></td></tr></table></figure>
+<p>下载项目后，此时得到的只是源代码、及相关文件部分，还需要编译等操作(对应项目目录)<br>流程</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/program-examples</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/program-examples</span><br><span class="line">./configure CC=<span class="string">&quot;afl-gcc&quot;</span> CXX=<span class="string">&quot;afl-g++&quot;</span> --prefix=<span class="string">&quot;<span class="variable">$HOME</span>/fuzzing_test/install/&quot;</span><span class="comment">#--prefix是目标路径</span></span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>当需要重新编译时，需要删除原来的文件，操作</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -r <span class="variable">$HOME</span>/fuzzing_test/install</span><br><span class="line"><span class="built_in">cd</span> %HOME/program-examples</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="afl-showmap"><a href="#afl-showmap" class="headerlink" title="afl-showmap"></a>afl-showmap</h3><p>使用afl-showmap可以在fuzz前后测试程序的输出等信息<br>用法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">afl-showmap [ options ] -- /path/to/target_app [ ... ]</span><br><span class="line"></span><br><span class="line">Required parameters:</span><br><span class="line">  -o file    - file to write the trace data to</span><br><span class="line"></span><br><span class="line">Execution control settings:</span><br><span class="line">  -t msec    - timeout <span class="keyword">for</span> each run (none)</span><br><span class="line">  -m megs    - memory <span class="built_in">limit</span> <span class="keyword">for</span> child process (0 MB)</span><br><span class="line">  -O         - use binary-only instrumentation (FRIDA mode)</span><br><span class="line">  -Q         - use binary-only instrumentation (QEMU mode)</span><br><span class="line">  -U         - use Unicorn-based instrumentation (Unicorn mode)</span><br><span class="line">  -W         - use qemu-based instrumentation with Wine (Wine mode)</span><br><span class="line">               (Not necessary, here <span class="keyword">for</span> consistency with other afl-* tools)</span><br><span class="line"></span><br><span class="line">Other settings:</span><br><span class="line">  -i dir     - process all files below this directory, must be combined with -o.</span><br><span class="line">               With -C, -o is a file, without -C it must be a directory</span><br><span class="line">               and each bitmap will be written there individually.</span><br><span class="line">  -C         - collect coverage, writes all edges to -o and gives a summary</span><br><span class="line">               Must be combined with -i.</span><br><span class="line">  -q         - sink program<span class="string">&#x27;s output and don&#x27;</span>t show messages</span><br><span class="line">  -e         - show edge coverage only, ignore hit counts</span><br><span class="line">  -r         - show real tuple values instead of AFL filter values</span><br><span class="line">  -s         - <span class="keyword">do</span> not classify the map</span><br><span class="line">  -c         - allow core dumps</span><br><span class="line"></span><br><span class="line">This tool displays raw tuple data captured by AFL instrumentation.</span><br><span class="line">For additional <span class="built_in">help</span>, consult /usr/<span class="built_in">local</span>/share/doc/afl/README.md.</span><br><span class="line"></span><br><span class="line">Environment variables used:</span><br><span class="line">LD_BIND_LAZY: <span class="keyword">do</span> not <span class="built_in">set</span> LD_BIND_NOW env var <span class="keyword">for</span> target</span><br><span class="line">AFL_CMIN_CRASHES_ONLY: (cmin_mode) only write tuples <span class="keyword">for</span> crashing inputs</span><br><span class="line">AFL_CMIN_ALLOW_ANY: (cmin_mode) write tuples <span class="keyword">for</span> crashing inputs also</span><br><span class="line">AFL_CRASH_EXITCODE: optional child <span class="built_in">exit</span> code to be interpreted as crash</span><br><span class="line">AFL_DEBUG: <span class="built_in">enable</span> extra developer output</span><br><span class="line">AFL_FORKSRV_INIT_TMOUT: time spent waiting <span class="keyword">for</span> forkserver during startup (<span class="keyword">in</span> milliseconds)</span><br><span class="line">AFL_KILL_SIGNAL: Signal ID delivered to child processes on timeout, etc. (default: SIGKILL)</span><br><span class="line">AFL_MAP_SIZE: the shared memory size <span class="keyword">for</span> that target. must be &gt;= the size the target was compiled <span class="keyword">for</span></span><br><span class="line">AFL_PRELOAD: LD_PRELOAD / DYLD_INSERT_LIBRARIES settings <span class="keyword">for</span> target</span><br><span class="line">AFL_PRINT_FILENAMES: If <span class="built_in">set</span>, the filename currently processed will be printed to stdout</span><br><span class="line">AFL_QUIET: <span class="keyword">do</span> not <span class="built_in">print</span> extra informational output</span><br><span class="line">AFL_NO_FORKSRV: run target via execve instead of using the forkserver</span><br></pre></td></tr></table></figure>
+<p>使用例子</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-showmap -m none -o /dev/null -- <span class="variable">$HOME</span>/fuzzing_xpdf/install/bin/pdftotext <span class="variable">$HOME</span>/fuzzing_xpdf/out/default/crashes/test.pdf</span><br></pre></td></tr></table></figure>
+<p>结果<br><img src="/images/2022-03-09211131.png" alt="not image"></p>
+<h3 id="crasheswalk"><a href="#crasheswalk" class="headerlink" title="crasheswalk"></a>crasheswalk</h3><p>分析crashes原因的工具<br>安装方式</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install gdb golang</span><br><span class="line">$ mkdir tools</span><br><span class="line">$ <span class="built_in">cd</span> tools</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/jfoote/exploitable.git</span><br><span class="line">$ mkdir go</span><br><span class="line">$ <span class="built_in">export</span> GOPATH=~/tools/go</span><br><span class="line">$ <span class="built_in">export</span> CW_EXPLOITABLE=~/tools/exploitable/exploitable/exploitable.py</span><br><span class="line">$ go get -u github.com/bnagy/crashwalk/cmd/...</span><br></pre></td></tr></table></figure>
+<p>当go get这一步装不上时见<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44384146/article/details/106561414?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&utm_relevant_index=1">blog.csdn.net</a></p>
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><p>使用screen命令可以暂停或者恢复fuzzing工作<br>用法如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen afl-fuzz ......</span><br><span class="line">screen -ls</span><br><span class="line">screen -r + port</span><br></pre></td></tr></table></figure>
+<p>具体的用法参考:<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-screen.html">https://www.runoob.com/linux/linux-comm-screen.html</a></p>
+<h3 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h3><p>如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz [ options ] -- /path/to/fuzzed_app [ ... ]</span><br><span class="line"></span><br><span class="line">Required parameters:</span><br><span class="line">  -i dir        - input directory with <span class="built_in">test</span> cases</span><br><span class="line">  -o dir        - output directory <span class="keyword">for</span> fuzzer findings</span><br><span class="line"></span><br><span class="line">Execution control settings:</span><br><span class="line">  -p schedule   - power schedules compute a seed<span class="string">&#x27;s performance score:</span></span><br><span class="line"><span class="string">                  fast(default), explore, exploit, seek, rare, mmopt, coe, lin</span></span><br><span class="line"><span class="string">                  quad -- see docs/power_schedules.md</span></span><br><span class="line"><span class="string">  -f file       - location read by the fuzzed program (default: stdin or @@)</span></span><br><span class="line"><span class="string">  -t msec       - timeout for each run (auto-scaled, default 1000 ms). Add a &#x27;</span>+<span class="string">&#x27;</span></span><br><span class="line"><span class="string">                  to auto-calculate the timeout, the value being the maximum.</span></span><br><span class="line"><span class="string">  -m megs       - memory limit for child process (0 MB, 0 = no limit [default])</span></span><br><span class="line"><span class="string">  -O            - use binary-only instrumentation (FRIDA mode)</span></span><br><span class="line"><span class="string">  -Q            - use binary-only instrumentation (QEMU mode)</span></span><br><span class="line"><span class="string">  -U            - use unicorn-based instrumentation (Unicorn mode)</span></span><br><span class="line"><span class="string">  -W            - use qemu-based instrumentation with Wine (Wine mode)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Mutator settings:</span></span><br><span class="line"><span class="string">  -D            - enable deterministic fuzzing (once per queue entry)</span></span><br><span class="line"><span class="string">  -L minutes    - use MOpt(imize) mode and set the time limit for entering the</span></span><br><span class="line"><span class="string">                  pacemaker mode (minutes of no new paths). 0 = immediately,</span></span><br><span class="line"><span class="string">                  -1 = immediately and together with normal mutation.</span></span><br><span class="line"><span class="string">                  See docs/README.MOpt.md</span></span><br><span class="line"><span class="string">  -c program    - enable CmpLog by specifying a binary compiled for it.</span></span><br><span class="line"><span class="string">                  if using QEMU, just use -c 0.</span></span><br><span class="line"><span class="string">  -l cmplog_opts - CmpLog configuration values (e.g. &quot;2AT&quot;):</span></span><br><span class="line"><span class="string">                  1=small files, 2=larger files (default), 3=all files,</span></span><br><span class="line"><span class="string">                  A=arithmetic solving, T=transformational solving.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Fuzzing behavior settings:</span></span><br><span class="line"><span class="string">  -Z            - sequential queue selection instead of weighted random</span></span><br><span class="line"><span class="string">  -N            - do not unlink the fuzzing input file (for devices etc.)</span></span><br><span class="line"><span class="string">  -n            - fuzz without instrumentation (non-instrumented mode)</span></span><br><span class="line"><span class="string">  -x dict_file  - fuzzer dictionary (see README.md, specify up to 4 times)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Test settings:</span></span><br><span class="line"><span class="string">  -s seed       - use a fixed seed for the RNG</span></span><br><span class="line"><span class="string">  -V seconds    - fuzz for a specified time then terminate</span></span><br><span class="line"><span class="string">  -E execs      - fuzz for an approx. no. of total executions then terminate</span></span><br><span class="line"><span class="string">                  Note: not precise and can have several more executions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Other stuff:</span></span><br><span class="line"><span class="string">  -M/-S id      - distributed mode (see docs/parallel_fuzzing.md)</span></span><br><span class="line"><span class="string">                  -M auto-sets -D, -Z (use -d to disable -D) and no trimming</span></span><br><span class="line"><span class="string">  -F path       - sync to a foreign fuzzer queue directory (requires -M, can</span></span><br><span class="line"><span class="string">                  be specified up to 32 times)</span></span><br><span class="line"><span class="string">  -T text       - text banner to show on the screen</span></span><br><span class="line"><span class="string">  -I command    - execute this command/script when a new crash is found</span></span><br><span class="line"><span class="string">  -C            - crash exploration mode (the peruvian rabbit thing)</span></span><br><span class="line"><span class="string">  -b cpu_id     - bind the fuzzing process to the specified CPU core (0-...)</span></span><br><span class="line"><span class="string">  -e ext        - file extension for the fuzz test input file (if needed)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">To view also the supported environment variables of afl-fuzz please use &quot;-hh&quot;.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Compiled with Python 3.6.9 module support, see docs/custom_mutator.md</span></span><br><span class="line"><span class="string">Compiled without AFL_PERSISTENT_RECORD support.</span></span><br><span class="line"><span class="string">Compiled with shmat support.</span></span><br><span class="line"><span class="string">For additional help please consult /usr/local/share/doc/afl/README.md :)</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/09/17/afl-fuzz%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="next" title="afl-fuzz源码学习">
+                <i class="fa fa-chevron-left"></i> afl-fuzz源码学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1652601666778.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AFL%E9%98%85%E8%AF%BB%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">AFL阅读文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">简单的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fuzz%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E8%A7%A3%E9%87%8A"><span class="nav-number">1.2.</span> <span class="nav-text">fuzz输出文件解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fuzz%E7%95%8C%E9%9D%A2%E8%A7%A3%E9%87%8A"><span class="nav-number">1.3.</span> <span class="nav-text">fuzz界面解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#afl%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">afl及相关工具安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#afl-fuzz"><span class="nav-number">2.1.</span> <span class="nav-text">afl-fuzz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crash-exploration-mode"><span class="nav-number">2.2.</span> <span class="nav-text">crash exploration mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#afl-cmin%E5%92%8Cafl-tmin"><span class="nav-number">2.3.</span> <span class="nav-text">afl-cmin和afl-tmin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fuzz%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">fuzz测试案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#afl-gcc%E5%92%8Cafl-g-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.5.</span> <span class="nav-text">afl-gcc和afl-g++构建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#afl-showmap"><span class="nav-number">2.6.</span> <span class="nav-text">afl-showmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crasheswalk"><span class="nav-number">2.7.</span> <span class="nav-text">crasheswalk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screen"><span class="nav-number">2.8.</span> <span class="nav-text">screen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="nav-number">2.9.</span> <span class="nav-text">相关参数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
