@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="afl-fuzz," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="AFL阅读文档AFL在github上下载链接:https:&#x2F;&#x2F;github.com&#x2F;mirrorer&#x2F;afl (然后编译安装make+make install)AFL工具大致流程    1)将用户提供的初始测试案例加载到队列中    2)从队列中取出下一个输入文件    3)尝试最小程度的修改测试案例而不改变程序标准的行为    4)使用平衡、研究充分的传统模糊测试策略反复改变文件    5)如果">
+<meta name="description" content="afl-fuzz学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Archerの博客">
-<meta property="og:url" content="http://example.com/2022/09/19/afl-fuzz%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="afl-fuzz学习笔记">
+<meta property="og:url" content="http://example.com/2022/03/14/afl-fuzz%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Archerの博客">
-<meta property="og:description" content="AFL阅读文档AFL在github上下载链接:https:&#x2F;&#x2F;github.com&#x2F;mirrorer&#x2F;afl (然后编译安装make+make install)AFL工具大致流程    1)将用户提供的初始测试案例加载到队列中    2)从队列中取出下一个输入文件    3)尝试最小程度的修改测试案例而不改变程序标准的行为    4)使用平衡、研究充分的传统模糊测试策略反复改变文件    5)如果">
+<meta property="og:description" content="afl-fuzz学习笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/2022-03-09211131.png">
-<meta property="article:published_time" content="2022-09-19T13:03:37.981Z">
-<meta property="article:modified_time" content="2022-09-19T12:40:54.204Z">
+<meta property="article:published_time" content="2022-03-14T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-19T13:10:57.758Z">
 <meta property="article:author" content="Archer">
+<meta property="article:tag" content="afl-fuzz">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/2022-03-09211131.png">
 
@@ -127,7 +128,7 @@
 
 
 
-  <title> | Archerの博客</title>
+  <title>afl-fuzz学习笔记 | Archerの博客</title>
   
 
 
@@ -264,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/19/afl-fuzz%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/14/afl-fuzz%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -281,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">afl-fuzz学习笔记</h1>
         
 
         <div class="post-meta">
@@ -293,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-09-19T21:03:37+08:00">
-                2022-09-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-03-14T20:00:00+08:00">
+                2022-03-14
               </time>
             
 
@@ -304,6 +305,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/afl-fuzz/" itemprop="url" rel="index">
+                    <span itemprop="name">afl-fuzz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -311,7 +334,7 @@
 
           
           
-             <span id="/2022/09/19/afl-fuzz%E5%AD%A6%E4%B9%A0/" class="leancloud_visitors" data-flag-title="">
+             <span id="/2022/03/14/afl-fuzz%E5%AD%A6%E4%B9%A0/" class="leancloud_visitors" data-flag-title="afl-fuzz学习笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -332,6 +355,10 @@
 
           
 
+          
+              <div class="post-description">
+                  afl-fuzz学习笔记
+              </div>
           
 
         </div>
@@ -410,6 +437,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/afl-fuzz/" rel="tag"># afl-fuzz</a>
+          
+        </div>
+      
 
       
       
@@ -419,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/09/17/afl-fuzz%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="next" title="afl-fuzz源码学习">
-                <i class="fa fa-chevron-left"></i> afl-fuzz源码学习
+              <a href="/2021/10/26/%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81-writeup/" rel="next" title="强网拟态 wp">
+                <i class="fa fa-chevron-left"></i> 强网拟态 wp
               </a>
             
           </div>
@@ -428,6 +461,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/03/14/fuzz101_xpdf/" rel="prev" title="Fuzz101_xpdf">
+                Fuzz101_xpdf <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
