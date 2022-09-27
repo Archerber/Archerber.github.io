@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="fuzz," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="js-fuzz-learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-fuzz-learning">
+<meta property="og:url" content="http://example.com/2022/09/22/js-fuzz-learning/index.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="js-fuzz-learning">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2022-09-24161103.png">
+<meta property="og:image" content="http://example.com/images/2022-09-24210529.png">
+<meta property="og:image" content="http://example.com/images/2022-09-24211217.png">
+<meta property="og:image" content="http://example.com/images/2022-09-25191053.png">
+<meta property="og:image" content="http://example.com/images/2022-09-25195331.png">
+<meta property="og:image" content="http://example.com/images/2022-09-25195934.png">
+<meta property="og:image" content="http://example.com/images/2022-09-25201820.png">
+<meta property="og:image" content="http://example.com/images/2022-09-25220549.png">
+<meta property="og:image" content="http://example.com/images/2022-09-26110034.png">
+<meta property="article:published_time" content="2022-09-22T07:52:30.000Z">
+<meta property="article:modified_time" content="2022-09-26T12:59:45.889Z">
+<meta property="article:author" content="Archer">
+<meta property="article:tag" content="fuzz">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2022-09-24161103.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>js-fuzz-learning | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Welcome</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/22/js-fuzz-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1652601666778.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js-fuzz-learning</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-09-22T15:52:30+08:00">
+                2022-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fuzz/" itemprop="url" rel="index">
+                    <span itemprop="name">fuzz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/09/22/js-fuzz-learning/" class="leancloud_visitors" data-flag-title="js-fuzz-learning">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  js-fuzz-learning
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="js相关原理"><a href="#js相关原理" class="headerlink" title="js相关原理"></a>js相关原理</h2><p>javascript引擎重要用于浏览器中，常见的js引擎有v8、chakraCore、javascriptcore、spiderMonkey、jerryscript等，js引擎解析js代码分为语法检查和运行阶段，语法检查包括词法分析和语法分析，运行阶段包<br>括预解析和实际执行。js引擎使用JIL即时编译技术，即存在监视模块监控代码运行的情况，会对多次运行的某段代码进行优化，并将编译后的代码(机器码)保存在缓存中，下次调用直接执行机器码。<br>js引擎运行流程，如图<br><img src="/images/2022-09-24161103.png" alt="avatar"><br>在js解析过程中，一但遇到错误，后面的代码就无法执行，相关错误有：语法错误(syntaxError)、范围错误(RangeError)、引用错误(ReferenceError)、类型错误(TypeError)和URI错误(URIError)。<br>js中常见的漏洞类型有缓冲区溢出漏洞(overflow)、释放后重用漏洞(uaf)、类型混淆漏洞和JIT漏洞</p>
+<h3 id="缓冲区溢出漏洞"><a href="#缓冲区溢出漏洞" class="headerlink" title="缓冲区溢出漏洞"></a>缓冲区溢出漏洞</h3><p>程序一般空间布局如图<br><img src="/images/2022-09-24210529.png" alt="avatar"><br>调用函数的栈空间布局如图<br><img src="/images/2022-09-24211217.png" alt="avatar"><br>一般缓冲区溢出漏洞可以控制栈上的内容，从而劫持程序流到system等函数。</p>
+<h3 id="释放后重用漏洞"><a href="#释放后重用漏洞" class="headerlink" title="释放后重用漏洞"></a>释放后重用漏洞</h3><p>uaf漏洞，一般为内存操作操作不当导致，即内存被释放后，可以继续修改内存内容，此时巧妙构造内存的内容，即可通过该内存进行对<br>应的攻击，例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *ptr_a = <span class="built_in">malloc</span>(<span class="number">0x80</span>);</span><br><span class="line">	read(<span class="number">0</span>,ptr_a,<span class="number">0x80</span>);</span><br><span class="line">	<span class="built_in">free</span>(ptr_a);</span><br><span class="line">	read(<span class="number">0</span>,ptr_a,<span class="number">0x80</span>);</span><br><span class="line">	<span class="comment">//这个例子中 ptr_a 应该置0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型混淆漏洞"><a href="#类型混淆漏洞" class="headerlink" title="类型混淆漏洞"></a>类型混淆漏洞</h3><p>类型混淆指数据类型A当作数据类型B解析使用，导致程序可以非法访问数据，在浏览器中有一个非常典型的例子,如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1.1</span>,<span class="number">2.2</span>,<span class="number">3.3</span>];</span><br><span class="line"><span class="keyword">var</span> b = [a];</span><br></pre></td></tr></table></figure>
+<p>如果类型b解释为a类型，此时就能泄露a的相关内容，进而可以任意地址读写</p>
+<h3 id="JIT类型漏洞"><a href="#JIT类型漏洞" class="headerlink" title="JIT类型漏洞"></a>JIT类型漏洞</h3><p>JIT类型漏洞的产生原因，一般是由于对代码进行错误的优化，例子<br><img src="/images/2022-09-25191053.png" alt="avatar"></p>
+<h2 id="jsfuzz中涉及到的相关技术"><a href="#jsfuzz中涉及到的相关技术" class="headerlink" title="jsfuzz中涉及到的相关技术"></a>jsfuzz中涉及到的相关技术</h2><h3 id="污点分析"><a href="#污点分析" class="headerlink" title="污点分析"></a>污点分析</h3><p>污点分析是一种跟踪污点信息在程序传递的技术，本质上是一个跟踪输入数据流向的过程，通过把不可信任的数据标记为污点数据，并跟踪污点数据，对程序漏洞进行监测。<br>一个简单的例子，如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in"><span class="keyword">void</span></span> ()</span><br><span class="line">&#123;</span><br><span class="line">	string X = <span class="built_in">source</span>();</span><br><span class="line">	string Y = <span class="keyword">new</span> <span class="built_in">String</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; X.<span class="built_in">length</span>();i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> x = (<span class="keyword">int</span>)X.<span class="built_in">charAt</span>(i)p;</span><br><span class="line">		<span class="keyword">int</span> y = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;x; j++)</span><br><span class="line">			y = y + <span class="number">1</span>;</span><br><span class="line">		Y = Y + (<span class="keyword">char</span>)y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sink</span>(Y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>字符串X和字符串Y之间没有显示流关系，但字符串X的污点标记通过控制以来可以隐式的传播到字符串Y。</p>
+<h3 id="符号执行"><a href="#符号执行" class="headerlink" title="符号执行"></a>符号执行</h3><p>符号执行是一种使用符号值来代替具体值执行程序的技术，将一些变量值用符号表示，分析程序可能的执行过程，将变量取值表示为符号和常量的计算表达式<br>例子如下<br><img src="/images/2022-09-25195331.png" alt="avatar"><br>最后给出3个输入就能遍历这三条路径，符号执行的目标就是生成输入集合，探索程序的路径</p>
+<h3 id="模糊测试"><a href="#模糊测试" class="headerlink" title="模糊测试"></a>模糊测试</h3><p>模糊测试的思路：通过向目标提供特殊构造的非预期的输入，监视程序运行中的异常，并且保存异常的测试用力，通过人工分析导致异常的测试用力进一步定位程序中漏洞的位置和形成原因。<br>一般流程如图<br><img src="/images/2022-09-25195934.png" alt="avatar"></p>
+<h2 id="变异"><a href="#变异" class="headerlink" title="变异"></a>变异</h2><h3 id="AFL变异原理"><a href="#AFL变异原理" class="headerlink" title="AFL变异原理"></a>AFL变异原理</h3><p>AFL的变异策略： bitflip位翻转、arithmetic简单算术、interest特殊整数、dictionary字典、havoc大破坏和splice拼接6种<br>如图<br><img src="/images/2022-09-25201820.png" alt="avatar"><br>上面的变异策略对与非结构化输入(png、avi等)有比较好的效果，但是对于结构化输入(javascript和xml)这类程序，难以产生有效的测试案例(无法通过语法检查等)</p>
+<h3 id="AFL基本块"><a href="#AFL基本块" class="headerlink" title="AFL基本块"></a>AFL基本块</h3><p>AFL中使用基本块计算覆盖率信息。基本块是一段线性代码语句，只有一个入口和一个出口，且基本块中的语句只会顺序执行一次。因此AFL根据基本块，获取基本块中所有的入口和出口语句，获取程序中所有的基本块。判断基本块的入口和出口语句方法<br>基本块入口语句：</p>
+<ol>
+<li>程序的第一条语句</li>
+<li>跳转语句的目标语句</li>
+<li>条件条状的下一条语句<br>基本块出口语句:</li>
+<li>停机语句</li>
+<li>跳转语句</li>
+<li>跳转目标语句的前一个语句<br>获取程序基本图后，在基本块集合中加入控制信息形成程序的有向图，该有向图就是程序的控制流图，如图<br><img src="/images/2022-09-25220549.png" alt="avatar"></li>
+</ol>
+<h3 id="覆盖率反馈方法"><a href="#覆盖率反馈方法" class="headerlink" title="覆盖率反馈方法"></a>覆盖率反馈方法</h3><p>AFL中通过gcc或者clang插桩实现覆盖率反馈。在插桩阶段，对目标程序变异时，在每个基本块插入一段代码，用以记录当前基本块和上一个基本块的信息，主要代码如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cur_location = &lt;COMPILE_TIME_RANDOM&gt;;</span><br><span class="line">shared_mem[cur_location^prev_location]++;</span><br><span class="line">prev_location = cur_location &gt;&gt; 1;</span><br></pre></td></tr></table></figure>
+<p>cur_location的值随机产生，用于标记当前基本块;shared_mem数组记录上一个基本块和当前基本块这条边的命中次数，如果命中次数的分类发生改变，则认为产生新路径;pre_location表示上一个基本块的标记值，右移一位是为了区分基本块的执行顺序，假设存在基本块A和B，若pre_location不右移，则A^B和结果和B^A的结果一致，但实际上A-&gt;B和B-&gt;A由于执行顺序不同，是两条不同的边。<br>插桩完成之后AFL的工作流程：</p>
+<ol>
+<li>从输入队列(包括初始种子和产生新路径的测试用例)中挑选一个种子;</li>
+<li>对种子进行变异生成新的测试用例;</li>
+<li>执行新的测试用例，并监控目标程序执行状态;</li>
+<li>根据目标程序执行结果根性输入队列，然后跳转步骤1<br>流程图，如图<br><img src="/images/2022-09-26110034.png" alt="avatar"></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/fuzz/" rel="tag"># fuzz</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/09/17/afl-fuzz%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="next" title="afl-fuzz源码学习">
+                <i class="fa fa-chevron-left"></i> afl-fuzz源码学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1652601666778.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js%E7%9B%B8%E5%85%B3%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">js相关原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.1.</span> <span class="nav-text">缓冲区溢出漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E5%90%8E%E9%87%8D%E7%94%A8%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.2.</span> <span class="nav-text">释放后重用漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%B7%B7%E6%B7%86%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.3.</span> <span class="nav-text">类型混淆漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JIT%E7%B1%BB%E5%9E%8B%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.4.</span> <span class="nav-text">JIT类型漏洞</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jsfuzz%E4%B8%AD%E6%B6%89%E5%8F%8A%E5%88%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF"><span class="nav-number">2.</span> <span class="nav-text">jsfuzz中涉及到的相关技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">污点分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">符号执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95"><span class="nav-number">2.3.</span> <span class="nav-text">模糊测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E5%BC%82"><span class="nav-number">3.</span> <span class="nav-text">变异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AFL%E5%8F%98%E5%BC%82%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">AFL变异原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AFL%E5%9F%BA%E6%9C%AC%E5%9D%97"><span class="nav-number">3.2.</span> <span class="nav-text">AFL基本块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E7%8E%87%E5%8F%8D%E9%A6%88%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">覆盖率反馈方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

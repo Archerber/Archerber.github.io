@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://example.com/images/2022-09-13191555.png">
 <meta property="og:image" content="http://example.com/images/2022-09-13193306.png">
 <meta property="article:published_time" content="2022-05-01T02:02:30.000Z">
-<meta property="article:modified_time" content="2022-09-13T12:15:14.680Z">
+<meta property="article:modified_time" content="2022-09-24T08:14:21.056Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="v8">
 <meta name="twitter:card" content="summary">
@@ -384,7 +384,7 @@
       
 
       
-        <h2 id="v8的组成"><a href="#v8的组成" class="headerlink" title="v8的组成"></a>v8的组成</h2><p>v8主要由这四个模块组成:<br>    1.Parser:将javascript源码转换为抽象的语法树(Abstract Syntax Tree/AST)<br>    2.Ignition:解释器,将AST转换为Bytecode，并解释执行Bytecode;此外还会同时收集TurboFan优化编译所需要的信息，比如函数参数的类型<br>    3.TurboFan:编译器，利用Ignitio收集的类型信息，将Bytecode转换为优化后的汇编代码(Optimized Machine Code/v8里将汇编代码称作machine code)<br>    4.Orinoco:Garbager Coollector(GC)，垃圾回收部分，负责将程序不再需要的内存空间回收<br>原理如下</p>
+        <h2 id="v8的组成"><a href="#v8的组成" class="headerlink" title="v8的组成"></a>v8的组成</h2><p>v8主要由这四个模块组成:<br>    1.Parser:解析器将javascript源码转换为抽象的语法树(Abstract Syntax Tree/AST)<br>    2.Ignition:解释器,将AST转换为Bytecode，并解释执行Bytecode;此外还会同时收集TurboFan优化编译所需要的信息，比如函数参数的类型<br>    3.TurboFan:编译器，利用Ignitio收集的类型信息，将Bytecode转换为优化后的汇编代码(Optimized Machine Code/v8里将汇编代码称作machine code)<br>    4.Orinoco:Garbager Coollector(GC)，垃圾回收部分，负责将程序不再需要的内存空间回收<br>原理如下</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">javascript ----&gt; Parser ----&gt; AST -----&gt; Ignition --------------&gt; Bytecode ------&gt; 运行结果(Ignition直接运行Bytecode)</span><br><span class="line">                                            |</span><br><span class="line">                                            |</span><br><span class="line">                                            |                                              </span><br><span class="line">                                            ----------------------&gt; TurboFan -----&gt; Machine code -----&gt; 运行结果(经过TurboFan优化)</span><br><span class="line">                                                                                            |</span><br><span class="line">                                                                                            |(deoptimization)</span><br><span class="line">                                                                                            |</span><br><span class="line">                                                                                            ------------&gt; Bytecode ------&gt; 运行结果</span><br></pre></td></tr></table></figure>
 
 <h2 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h2><p>Parser的部分源码如下</p>
@@ -544,7 +544,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

@@ -1,0 +1,25 @@
+starctf-oob复现				√
+CVE-2020-6507				√
+CVE-2020-6418				√
+dirty pipe
+CVE-2021-30632				
+CVE-2021-38001				
+CVE-2021-21220
+CVE-2021-21225				
+CVE-2021-30517
+AFl-fuzz原理学习
+fuzz101
+codeql原理学习
+linux内核原理学习
+Chrome Mojo 组件的沙箱逃逸：https://paper.seebug.org/1876/		
+CVE-2022-26717：https://blog.theori.io/research/Exploiting-Safari-ANGLE-Component/
+编译原理
+LLVM：https://zhuanlan.zhihu.com/p/122522485
+csapplab 5 - 9
+ucore
+N1CTF2020 Escape
+crackme 1-160
+SGI stl
+v8 learning:https://github.com/danbev/learning-v8	√
+cs144
+服务器： ubuntu@10.99.99.23
