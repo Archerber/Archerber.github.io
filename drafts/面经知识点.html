@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="知识点总结">
+<meta property="og:type" content="website">
+<meta property="og:title" content="二进制安全基础总结">
+<meta property="og:url" content="http://example.com/drafts/%E9%9D%A2%E7%BB%8F%E7%9F%A5%E8%AF%86%E7%82%B9.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="知识点总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/20230109225257.png">
+<meta property="og:image" content="http://example.com/images/20230111233138.png">
+<meta property="article:published_time" content="2023-01-09T07:38:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T12:05:28.184Z">
+<meta property="article:author" content="Archer">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/20230109225257.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>二进制安全基础总结 | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Welcome</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">二进制安全基础总结</h1>
+
+
+	<div class="post-meta">
+		<div class="post-description">知识点总结</div>
+	</div>
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>由于面试的岗位主要为二进制安全研究，其中本人主要学习的方向为浏览器以及模糊测试，因此可以大致分为以下内容:<br>    1.计算机系统<br>    2.ptmalloc<br>    3.ctfpwn<br>    4.fuzz(afl)<br>    5.v8<br>    5.c++/c<br>    6.算法<br>    7.gdb、ida工具原理等</p>
+<h2 id="计算机系统"><a href="#计算机系统" class="headerlink" title="计算机系统"></a>计算机系统</h2><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    High</span><br><span class="line">    Address |                 |</span><br><span class="line">            +-----------------+</span><br><span class="line">            | args            |</span><br><span class="line">            +-----------------+</span><br><span class="line">            | <span class="keyword">return</span> address  |</span><br><span class="line">            +-----------------+</span><br><span class="line">            | old ebp         |</span><br><span class="line">  rbp =&gt;    +-----------------+</span><br><span class="line">            | canary value    |</span><br><span class="line">rbp<span class="number">-8</span> =&gt;    +-----------------+</span><br><span class="line">            | 局部变量         |</span><br><span class="line">    Low     |                 |</span><br><span class="line">    Address</span><br></pre></td></tr></table></figure>
+
+<h3 id="linux下的保护以及绕过方式"><a href="#linux下的保护以及绕过方式" class="headerlink" title="linux下的保护以及绕过方式"></a>linux下的保护以及绕过方式</h3><p>保护:PIE\NX\ASLR\Canary\relro</p>
+<p>关于canary的原理:<br>security_init初始化TLS中的stack_guard–&gt;取出fs:0x28处stack_guard随机数值插入%ebp-0x8位置–函数执行后重新提取canary值并与fs:0x28做异或–&gt;如果异或为1（已篡改）则执行__stack_chk_fail函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mov    eax,gs:<span class="number">0x14</span></span><br><span class="line">mov    DWORD PTR [ebp<span class="number">-0xc</span>],eax <span class="comment">//canary设置</span></span><br><span class="line"></span><br><span class="line">mov    eax,DWORD PTR [ebp<span class="number">-0xc</span>]<span class="comment">//检测</span></span><br><span class="line"><span class="keyword">xor</span>    eax,DWORD PTR gs:<span class="number">0x14</span></span><br><span class="line">je     <span class="number">0x80492b2</span> &lt;vuln+<span class="number">103</span>&gt; # 正常函数返回</span><br><span class="line">call   <span class="number">0x8049380</span> &lt;__stack_chk_fail_local&gt; # 调用出错处理函数</span><br></pre></td></tr></table></figure>
+<p>绕过方式：<br>    1.使用格式化漏洞等方法泄露<br>    2.爆破（canary的值为随机数，并且会随着进程的重启发生变化，但是同一个进程的不同线程或fork函数创建的子进程中canary是不发生改变的，利用这一原理可以进行canary按位爆破）<br>    3.劫持__stack_chk_fail函数<br>    4.修改TLS中存储的Canary值</p>
+<p>NX：NX为堆栈不可执行保护，可以使用rop，因为gadget属于代码段，为程序内部执行代码</p>
+<p>PIE和ASLR：<br>ASLR的是操作系统的功能选项，作用于executable（ELF）装入内存运行时，因而只能随机化stack、heap、libraries的基址；而PIE（Position<br>Independent Executables）是编译器（gcc，..）功能选项（-fPIE），作用于excutable编译过程，可将其理解为特殊的PIC（so专用，Position<br>Independent<br>Code），加了PIE选项编译出来的ELF用file命令查看会显示其为so，其随机化了ELF装载内存的基址（代码段、plt、got、data等共同的基址）。<br>aslr的三种级别：<br>    0表示ASLR未开启，1表示随机化stack、libraries，2还会随机化heap<br>绕过的话，需要泄露程序基地址，然后通过偏移得到函数的真实地址，然后在进行其他如rop、shellcode等操作</p>
+<h3 id="函数调用约定"><a href="#函数调用约定" class="headerlink" title="函数调用约定"></a>函数调用约定</h3><p>stdcall、cdecl、fastcall、thiscall、naked call<br>stdcall（Microsoft Visual C、C++）<br>    参数从右向左入栈<br>    函数内部进行堆栈平衡<br>    编译修饰约定：下划线 + 函数名 + @ + 总参数字节数<br>cdecl（C Declaration的缩写，C语言默认的调用约定）<br>    参数从右向左入栈<br>    函数调用者平衡堆栈<br>    编译修饰约定：下划线 + 函数名<br>fastcall（Microsoft 专用）<br>    第一个和第二个小于等于DWORD长度的参数通过ecx和edx传递，其他参数从右向左入栈<br>    函数内部进行堆栈平衡<br>    编译修饰约定：@ + 函数名 + @ + 总参数字节数</p>
+<h3 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h3><p>关于进程有个重要的概念，当进程产生时，操作系统需要为其创建记录，操作系统为了维护进程记录，会创建进程控制块(PCB)<br>进程创建过程：<br>    1.分配进程控制块<br>    2.初始化机器寄存器<br>    3.初始化页表<br>    4.将程序代码从磁盘读进内存<br>    5.将处理器状态设置为用户态<br>    6.跳转到程序的起始地址（设置程序计数器）<br>unix：fork可以创建一个与自己完全一样的新进程；exec将新进程的地址空间用另一个程序的内容覆盖，然后跳转到新程序的起始地址，完成新程序的启动<br>Windows：使用一个系统调用CreateProcess就可以完成进程创建。把欲执行的程序名称作为参数传过来，创建新的页表，而不需要复制别的进程。<br>linux中进程的虚拟地址空间如图<br><img src="/images/20230109225257.png" alt="avatar"><br>进程与线程区别<br>（1）进程是运行时的程序，是系统进行资源分配和调度的基本单位，它实现了系统的并发；<br>（2）线程是进程的子单位，也称为轻量级进程，它是CPU进行分配和调度的基本(最小)单位，也是独立运行的基本单位，它实现了进程内部的并发；<br>（3）一个程序至少拥有一个进程，一个进程至少拥有一个线程，线程依赖于进程而存在；<br>（4）进程拥有独立的内存空间，而线程是共享进程的内存空间的，自己不占用资源；<br>（5）线程的优势：线程之间的信息共享和通讯比较方便，不需要资源的切换等.<br>进程在CPU上实现并发，不存在用户态实现的可能，而线程可以存在内核态或者用户态(可以由进程管理)<br>现代操作系统中，用户态的执行系统负责进程内部线程在非阻塞时的切换；内核态的操作系统负责阻塞线程的切换。即我们同时实现内核态和用户态线程管理。<br>其中内核态线程数量较少，而用户态线程数量较多。每个内核态线程可以服务一个或多个用户态线程。换句话说，用户态线程被多路复用到内核态线程上。</p>
+<h3 id="elf文件格式"><a href="#elf文件格式" class="headerlink" title="elf文件格式"></a>elf文件格式</h3><p>elf文件一般用于类unix系统中<br>elf文件包括:可执行文件，可重定向文件(.o文件)，共享文件目标(.so等)<br>ELF文件包含一个Header描述文件的基本信息；程序头表告诉系统如何构建进程的内存镜像，因此只有可执行文件有程序头表；Sections描述了链接过程中的<br>需要的符号表、数据、指令等信息，而在可执行文件中是Segments，是经过合并的Secitons；节/段头表指明了对应section/<br>segment在文件中的偏移，链接阶段的ELF文件必须包含该表头；而每个节/段头描述了对应的section/segment的大小，入口等基本信息。<br>大致可以分为:elf header/Program Header Table/Section Header Table/str table/sym table<br>elf header定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf64_hdr</span> &#123;</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span>	e_ident[EI_NIDENT];	<span class="comment">/* ELF &quot;magic number&quot; */</span> <span class="comment">//EI_NIDENT为16字节</span></span><br><span class="line">  <span class="comment">/* 可以分为5个部分，分别为e_ident[EI_MAG0-EI_MAG3]、e_ident[EI_CLASS]、e_ident[EI_DATA]、e_ident[EI_VERSION]、e_ident[EI_PAD] */</span></span><br><span class="line">  <span class="comment">//e_ident[EI_MAG0-EI_MAG3]为固定的 7f 45 4c 46 0x7f + &quot;elf&quot;，4bytes</span></span><br><span class="line">  <span class="comment">//e_ident[EI_CLASS]，表示当前文件类别，0表示非法，1表示32位，2表示64位,1byte</span></span><br><span class="line">  <span class="comment">//e_ident[EI_DATA]，表示文件的排列方式，0表示非法，1表示小端，2表示大端，1byte</span></span><br><span class="line">  <span class="comment">//e_ident[EI_VERSION]，表明当前文件的版本，目前该取值必须为EV_CURRENT即1，1byte</span></span><br><span class="line">  <span class="comment">//e_ident[EI_PAD]表明e_ident中未使用的字节的起点（值是相对于e_ident[EI_PAD+1]的偏移），未使用的字节会被初始化为0，解析ELF文件时需要忽略对应的字段；，1byte</span></span><br><span class="line">  Elf64_Half e_type; <span class="comment">//文件的标识字段标识文件的类型</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">	ET_NONE(0)：未知的文件格式；</span></span><br><span class="line"><span class="comment">	ET_REL(1)：可重定位文件，比如目标文件；</span></span><br><span class="line"><span class="comment">	ET_EXEC(2)：可执行文件；</span></span><br><span class="line"><span class="comment">	ET_DYN(3)：共享目标文件；</span></span><br><span class="line"><span class="comment">	ET_CORE(4)：Core转储文件，比如程序crash之后的转储文件；</span></span><br><span class="line"><span class="comment">	ET_LOPROC(0xff00)：特定处理器的文件标识；</span></span><br><span class="line"><span class="comment">	ET_HIPROC(0xffff)：特定处理器的文件标识;</span></span><br><span class="line"><span class="comment">	[ET_LOPROC,ET_HIPROC]之间的值用来表示特定处理器的文件格式；</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  Elf64_Half e_machine; <span class="comment">//目标文件的体系结构</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">	ET_NONE(0)：未知的处理器架构；</span></span><br><span class="line"><span class="comment">	EM_M32(1)：AT&amp;T WE 32100；</span></span><br><span class="line"><span class="comment">	EM_SPARC(2)：SPARC；</span></span><br><span class="line"><span class="comment">	EM_386(3)：Intel 80386；</span></span><br><span class="line"><span class="comment">	EM_68K(4)：Motorola 68000；</span></span><br><span class="line"><span class="comment">	EM_88K(5)：Motorola 88000；</span></span><br><span class="line"><span class="comment">	EM_860(6)：Intel 80860；</span></span><br><span class="line"><span class="comment">	EM_MIPS(7)：MIPS RS3000大端；</span></span><br><span class="line"><span class="comment">	EM_MIPS_RS4_BE(10)：MIPS RS4000大端；</span></span><br><span class="line"><span class="comment">	......</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"></span><br><span class="line">  Elf64_Word e_version;	<span class="comment">//当前文件的版本；</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  	EV_NONE(0)：非法的版本；</span></span><br><span class="line"><span class="comment">	EV_CURRENT(`)：当前版本；</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  Elf64_Addr e_entry;		<span class="comment">/* 程序的虚拟入口地址，如果文件没有对应的入口可以为0； */</span></span><br><span class="line">  Elf64_Off e_phoff;		<span class="comment">/* Program header table 偏移如果文件没有该项，则应该为0； */</span></span><br><span class="line">  Elf64_Off e_shoff;		<span class="comment">/* Section header table 偏移 */</span></span><br><span class="line">  Elf64_Word e_flags;		<span class="comment">/* 处理器相关的标志位，宏格式为EF_machine_flag比如EF_MIPS_PIC； */</span></span><br><span class="line">  Elf64_Half e_ehsize;		<span class="comment">//ELF文件头的大小（bytes）；</span></span><br><span class="line">  Elf64_Half e_phentsize;	<span class="comment">//程序头表中单项的大小，表中每一项的大小相同；</span></span><br><span class="line">  Elf64_Half e_phnum;		<span class="comment">//程序头表中的项数，也就是说程序头表的实际大小为ephentsize x e_phnum，如果文件中没有程序头表该项为0；</span></span><br><span class="line">  Elf64_Half e_shentsize;	<span class="comment">//节表中单项的大小，表中每一项的大小相同；</span></span><br><span class="line">  Elf64_Half e_shnum;		<span class="comment">//节表中项的数量；</span></span><br><span class="line">  Elf64_Half e_shstrndx;	<span class="comment">//节表中节名的索引，如果文件没有该表则该项为SHN_UNDEF(0)</span></span><br><span class="line">&#125; Elf64_Ehdr;</span><br></pre></td></tr></table></figure>
+<p>Program Header Table定义<br>可执行文件或者共享目标文件的程序头部是一个结构数组，每个结构描述了一个段或者系统准备程序执行所必需的其它信息。程序头表描述了ELF文件中Segment在文件中的布局，描述了OS该如何装载可执行文件到内存。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf64_phdr</span> &#123;</span></span><br><span class="line">	Elf64_Word p_type;	<span class="comment">/* 当前Segment的类型； */</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	PT_NULL(0)：当前项未使用，项中的成员是未定义的，需要忽略当前项；</span></span><br><span class="line"><span class="comment">	PT_LOAD(1)：当前Segment是一个可装载的Segment，即可以被装载映射到内存中，其大小由p_filesz和p_memsz描述。如果p_memsz&gt;p_filesz则剩余的字节被置零，但是p_filesz&gt;p_memsz是非法的。动态库一般包含两个该类型的段：代码段和数据段；</span></span><br><span class="line"><span class="comment">	PT_DYNAMIC(2)：动态段，动态库特有的段，包含了动态链接必须的一些信息，比如需要链接的共享库列表、GOT等等；</span></span><br><span class="line"><span class="comment">	PT_INTERP(3)：当前段用于存储一段以NULL为结尾的字符串，该字符串表明了程序解释器的位置。且当前段仅仅对于可执行文件有实际意义，一个可执行文件中不能出现两个当前段，如果一个文件中包含当前段。比如/lib64/ld-linux-x86-64.so.2；</span></span><br><span class="line"><span class="comment">	PT_NOTE(4)：用于保存与特定供应商或者系统相关的附加信息以便于兼容性、一致性检查，但是实际上只保存了操作系统的规范信息；</span></span><br><span class="line"><span class="comment">	PT_SHLIB(5)：保留段；</span></span><br><span class="line"><span class="comment">	PT_PHDR(6)：保存程序头表本身的位置和大小，当前段不能在文件中出现一次以上，且仅仅当程序表头为内存映像的一部分时起作用，它必须在所有加载项目之前；</span></span><br><span class="line"><span class="comment">	[PT_LPROC(0x70000000),PT_HIPROC(0x7fffffff)]：该范围内的值用作预留；</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	Elf64_Word p_flags; <span class="comment">/* 段相关的标志； */</span></span><br><span class="line">	Elf64_Off p_offset;	<span class="comment">/* 当前段相对于文件起始位置的偏移量； */</span></span><br><span class="line">	Elf64_Addr p_vaddr;	<span class="comment">/* 段的第一个字节将被映射到到内存中的虚拟地址； */</span></span><br><span class="line">	Elf64_Addr p_paddr;	<span class="comment">/* 此成员仅用于与物理地址相关的系统中。因为 System V 忽略所有应用程序的物理地址信息，此字段对与可执行文件和共享目标文件而言具体内容是指定的； */</span></span><br><span class="line">	Elf64_Xword p_filesz;	<span class="comment">/* 段在文件映像中所占的字节数，可能为 0； */</span></span><br><span class="line">	Elf64_Xword p_memsz;	<span class="comment">/* 段在内存映像中占用的字节数，可能为 0； */</span></span><br><span class="line">	Elf64_Xword p_align;	<span class="comment">/* 段段在文件中和内存中如何对齐，可加载的进程段的p_vaddr和- p_offset取值必须合适，相对于对页面大小的取模而言； */</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">0和1表示不需要对齐；</span></span><br><span class="line"><span class="comment">其他值必须为2的幂次方，且必须p_addr∣p_align == p_offset ∣ p_align</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125; Elf64_Phdr;</span><br></pre></td></tr></table></figure>
+<p>Section Header Table定义<br>节头表描述了ELF文件中的节的基本信息。可执行文件不一定由节头表但是一定有节，节头表可利用特殊的方式去除。<br>段(segment)包含了程序转载可执行的基本信息，段告诉os如何装载当前段到虚拟内存以及当前段的权限等和执行线管的信息，而节(section)包含了程序的代码数据等类容，链接器会将多个节合并为一个段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf64_shdr</span> &#123;</span></span><br><span class="line">  Elf64_Word sh_name;		<span class="comment">/* 值是节名称在字符串表中的索引 */</span></span><br><span class="line">  Elf64_Word sh_type;		<span class="comment">/* 描述节的类型 */</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">	SHT_NULL(0)：当前节是非活跃的，没有一个对应的具体的节内存；</span></span><br><span class="line"><span class="comment">	SHT_PROGBITS(1)：包含了程序的指令信息、数据等程序运行相关的信息；</span></span><br><span class="line"><span class="comment">	SHT_SYMTAB(2)：保存了符号信息，用于重定位；</span></span><br><span class="line"><span class="comment">	此种类型节的sh_link存储相关字符串表的节索引，sh_info存储最后一个局部符号的符号表索引+1；</span></span><br><span class="line"><span class="comment">	SHT_DYNSYM(11)：保存共享库导入动态符号信息；</span></span><br><span class="line"><span class="comment">	此种类型节的sh_link存储相关字符串表的节索引，sh_info存储最后一个局部符号的符号表索引+1；</span></span><br><span class="line"><span class="comment">	SHT_STRTAB(3)：一个字符串表，保存了每个节的节名称；</span></span><br><span class="line"><span class="comment">	SHT_RELA(4)：存储可重定位表项，可能会有附加内容，目标文件可能有多个可重定位表项；</span></span><br><span class="line"><span class="comment">	此种类型节的sh_link存储相关符号表的节索引，sh_info存储重定位所使用节的索引；</span></span><br><span class="line"><span class="comment">	SHT_HASH(5)：存储符号哈希表，所有参与动态链接的目标只能包含一个哈希表，一个目标文件只能包含一个哈希表；</span></span><br><span class="line"><span class="comment">	此种类型节的sh_link存储哈希表所使用的符号表的节索引,sh_info为0；</span></span><br><span class="line"><span class="comment">	SHT_DYAMIC(6)：存储包含动态链接的信息，一个目标文件只能包含一个；</span></span><br><span class="line"><span class="comment">	此种类型的节的sh_link存储当前节中使用到的字符串表格的节的索引，sh_info为0；</span></span><br><span class="line"><span class="comment">	SHT_NOTE(7)：存储以某种形式标记文件的信息；</span></span><br><span class="line"><span class="comment">	SHT_NOBITS(8)：这种类型的节不占据文件空间，但是成员sh_offset依然会包含对应的偏移；</span></span><br><span class="line"><span class="comment">	SHT_REL(9)：包含可重定位表项，无附加内容，目标文件可能有多个可重定位表项；</span></span><br><span class="line"><span class="comment">	此种类型节的sh_link存储相关符号表的节索引，sh_info存储重定位所使用节的索引；</span></span><br><span class="line"><span class="comment">	SHT_SHLIB(10)：保留区，包含此节的程序与ABI不兼容；</span></span><br><span class="line"><span class="comment">	[SHT_LOPROC(0x70000000),SHT_HIPROC(0x7fffffff)]：留给处理器专用语义；</span></span><br><span class="line"><span class="comment">	[SHT_LOUSER(0x80000000),SHT_HIUSER(0xffffffff)]：预留；</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  Elf64_Xword sh_flags;		<span class="comment">/* 1bit位的标志位； */</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">	SHF_WRITE(0x1)：当前节包含进程执行过程中可写的数据；</span></span><br><span class="line"><span class="comment">	SHF_ALLOC(0x2)：当前节在运行阶段占据内存；</span></span><br><span class="line"><span class="comment">	SHF_EXECINSTR(0x4)：当前节包含可执行的机器指令；</span></span><br><span class="line"><span class="comment">	SHF_MASKPROC(0xf0000000)：所有包含当前掩码都表示预留给特定处理器的；</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  Elf64_Addr sh_addr;		<span class="comment">/* 节在执行的虚拟地址，如果当前节需要被装载到内存，则当前项存储当前节映射到内存的首地址，否则应该为0； */</span></span><br><span class="line">  Elf64_Off sh_offset;		<span class="comment">/* 当前节的首地址相对于文件的偏移； */</span></span><br><span class="line">  Elf64_Xword sh_size;		<span class="comment">/* 节的大小。但是对于类型为SHT_NOBITS的节，当前值可能不为0但是在文件中不占据任何空间； */</span></span><br><span class="line">  Elf64_Word sh_link;		<span class="comment">/* 存储节投标中的索引，表示当前节依赖于对应的节。对于特定的节有特定的含义，其他为SHN_UNDEF； */</span></span><br><span class="line">  Elf64_Word sh_info;		<span class="comment">/* 节的附加信息。对于特定的节有特定的含义，其他为0； */</span></span><br><span class="line">  Elf64_Xword sh_addralign;	<span class="comment">/* 地址约束对齐，值应该为0或者2的幂次方，0和1表示未进行对齐； */</span></span><br><span class="line">  Elf64_Xword sh_entsize;	</span><br><span class="line">  <span class="comment">/* 某些节是一个数组，对于这类节当前字段给出数组中每个项的字节数，比如符号表。如果节并不包含对应的数组，值应该为0。 */</span></span><br><span class="line">&#125; Elf64_Shdr;</span><br></pre></td></tr></table></figure>
+<p>symbol table(符号表)定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">elf64_sym</span> &#123;</span></span><br><span class="line">  Elf64_Word st_name;		<span class="comment">/* 存储一个指向字符串表的索引来表示对应符号的名称； */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span>	st_info;	<span class="comment">/* 指定符号的类型和绑定属性。可以用下面的代码分别解析出bind,type,info三个属性： */</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">	#define ELF32_ST_BIND(i) ((i)&gt;&gt;4) </span></span><br><span class="line"><span class="comment">	#define ELF32_ST_TYPE(i) ((i)&amp;0xf) </span></span><br><span class="line"><span class="comment">	#define ELF32_ST_INFO(b,t) (((b)&lt;&lt;4)+((t)&amp;0xf))</span></span><br><span class="line"><span class="comment">	BIND:</span></span><br><span class="line"><span class="comment">		STB_LOCAL(0)：局部符号在包含其定义的目标文件之外是不可见的。 同名的本地符号可以存在于多个文件中，互不干扰；</span></span><br><span class="line"><span class="comment">		STB_GLOBAL(1)：全局符号对所有正在组合的目标文件都是可见的。 一个文件对全局符号的定义将满足另一个文件对同一全局符号的未定义引用；</span></span><br><span class="line"><span class="comment">		STB_WEAK(2)：弱符号类似于全局符号，但它们的定义具有较低的优先级；</span></span><br><span class="line"><span class="comment">		[STB_LOPROC(13),STB_HIPROC(15)]：预留位，用于特殊处理器的特定含义；</span></span><br><span class="line"><span class="comment">	TYPE：</span></span><br><span class="line"><span class="comment">		STT_NOTYPE(0)：符号的类型未指定；</span></span><br><span class="line"><span class="comment">		STT_OBJECT(1)：符号与数据对象相关联，例如变量、数组等；</span></span><br><span class="line"><span class="comment">		STT_FUNC(2)：符号与函数或其他可执行代码相关联；</span></span><br><span class="line"><span class="comment">		STT_SECTION(3)：该符号与一个节相关联。 这种类型的符号表条目主要用于重定位，通常具有STB_LOCALBIND属性；</span></span><br><span class="line"><span class="comment">		STT_FILE(4)：一个有STB_LOCAL的BIND属性的文件符号的节索引为SHN_ABS。并且如果存在其他STB_LOCAL属性的符号，则当前符号应该在其之前；</span></span><br><span class="line"><span class="comment">		[STT_LOPROC(13),STT_HIPROC(15)]：预留位，用于特殊处理器的特定含义；</span></span><br><span class="line"><span class="comment">	INFO：</span></span><br><span class="line"><span class="comment">		SHN_ABS：符号有一个绝对值，不会因为重定位而改变；</span></span><br><span class="line"><span class="comment">		SHN_COMMON：该符号标记尚未分配的公共块。 符号的值给出了对齐约束，类似于节的 sh_addralign 成员。 也就是说，链接编辑器将为符号分配存储空间，该地址是 st_value 的倍数。 符号的大小表明需要多少字节；</span></span><br><span class="line"><span class="comment">		SHN_UNDEF：此节表索引表示该符号未定义。 当链接编译器将此对象文件与另一个定义指定符号的文件组合时，此文件对符号的引用将链接到实际定义；</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span>	st_other;	<span class="comment">/* 该成员当前持有 0 并且没有定义的含义； */</span></span><br><span class="line">  Elf64_Half st_shndx;		<span class="comment">/* 每个符号都有属于的节，当前成员存储的就是对应节的索引。 */</span></span><br><span class="line">  Elf64_Addr st_value;		<span class="comment">/* 存储对应符号的取值，具体值依赖于上下文，可能是一个指针地址，立即数等。 */</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">	在重定位文件中在可重定位文件中，st_value保存节索引为SHN_COMMON的符号的对齐约束；</span></span><br><span class="line"><span class="comment">	在可重定位文件中，st_value保存已定义符号的节偏移量。 也就是说，st_value是从st_shndx标识的部分的开头的偏移量；</span></span><br><span class="line"><span class="comment">	在可执行文件和共享对象文件中，st_value保存一个虚拟地址。 为了使这些文件的符号对动态链接器更有用，节偏移（文件解释）让位于与节号无关的虚拟地址（内存解释）。</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  Elf64_Xword st_size;		<span class="comment">/* Associated symbol size */</span></span><br><span class="line">&#125; Elf64_Sym;</span><br></pre></td></tr></table></figure>
+<p>使用readelf查看elf的elf header如图<br><img src="/images/20230111233138.png" alt="avatar"><br>Program header table如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Elf file type is <span class="title">DYN</span> <span class="params">(Shared object file)</span></span></span><br><span class="line"><span class="function">Entry point 0x10c0</span></span><br><span class="line">There are 13 program headers, starting at offset 64</span><br><span class="line"></span><br><span class="line">Program Headers:</span><br><span class="line">  Type           Offset             VirtAddr           PhysAddr</span><br><span class="line">                 FileSiz            MemSiz              Flags  Align</span><br><span class="line">  PHDR           <span class="number">0x0000000000000040</span> <span class="number">0x0000000000000040</span> <span class="number">0x0000000000000040</span></span><br><span class="line">                 <span class="number">0x00000000000002d8</span> <span class="number">0x00000000000002d8</span>  R      <span class="number">0x8</span></span><br><span class="line">  INTERP         <span class="number">0x0000000000000318</span> <span class="number">0x0000000000000318</span> <span class="number">0x0000000000000318</span></span><br><span class="line">                 <span class="number">0x000000000000001c</span> <span class="number">0x000000000000001c</span>  R      <span class="number">0x1</span></span><br><span class="line">      [Requesting program interpreter: /lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span>]</span><br><span class="line">  LOAD           <span class="number">0x0000000000000000</span> <span class="number">0x0000000000000000</span> <span class="number">0x0000000000000000</span></span><br><span class="line">                 <span class="number">0x00000000000006a0</span> <span class="number">0x00000000000006a0</span>  R      <span class="number">0x1000</span></span><br><span class="line">  LOAD           <span class="number">0x0000000000001000</span> <span class="number">0x0000000000001000</span> <span class="number">0x0000000000001000</span></span><br><span class="line">                 <span class="number">0x0000000000000455</span> <span class="number">0x0000000000000455</span>  R E    <span class="number">0x1000</span></span><br><span class="line">  LOAD           <span class="number">0x0000000000002000</span> <span class="number">0x0000000000002000</span> <span class="number">0x0000000000002000</span></span><br><span class="line">                 <span class="number">0x0000000000000190</span> <span class="number">0x0000000000000190</span>  R      <span class="number">0x1000</span></span><br><span class="line">  LOAD           <span class="number">0x0000000000002da0</span> <span class="number">0x0000000000003da0</span> <span class="number">0x0000000000003da0</span></span><br><span class="line">                 <span class="number">0x0000000000000270</span> <span class="number">0x0000000000000278</span>  RW     <span class="number">0x1000</span></span><br><span class="line">  DYNAMIC        <span class="number">0x0000000000002db0</span> <span class="number">0x0000000000003db0</span> <span class="number">0x0000000000003db0</span></span><br><span class="line">                 <span class="number">0x00000000000001f0</span> <span class="number">0x00000000000001f0</span>  RW     <span class="number">0x8</span></span><br><span class="line">  NOTE           <span class="number">0x0000000000000338</span> <span class="number">0x0000000000000338</span> <span class="number">0x0000000000000338</span></span><br><span class="line">                 <span class="number">0x0000000000000020</span> <span class="number">0x0000000000000020</span>  R      <span class="number">0x8</span></span><br><span class="line">  NOTE           <span class="number">0x0000000000000358</span> <span class="number">0x0000000000000358</span> <span class="number">0x0000000000000358</span></span><br><span class="line">                 <span class="number">0x0000000000000044</span> <span class="number">0x0000000000000044</span>  R      <span class="number">0x4</span></span><br><span class="line">  GNU_PROPERTY   <span class="number">0x0000000000000338</span> <span class="number">0x0000000000000338</span> <span class="number">0x0000000000000338</span></span><br><span class="line">                 <span class="number">0x0000000000000020</span> <span class="number">0x0000000000000020</span>  R      <span class="number">0x8</span></span><br><span class="line">  GNU_EH_FRAME   <span class="number">0x0000000000002040</span> <span class="number">0x0000000000002040</span> <span class="number">0x0000000000002040</span></span><br><span class="line">                 <span class="number">0x0000000000000044</span> <span class="number">0x0000000000000044</span>  R      <span class="number">0x4</span></span><br><span class="line">  GNU_STACK      <span class="number">0x0000000000000000</span> <span class="number">0x0000000000000000</span> <span class="number">0x0000000000000000</span></span><br><span class="line">                 <span class="number">0x0000000000000000</span> <span class="number">0x0000000000000000</span>  RW     <span class="number">0x10</span></span><br><span class="line">  GNU_RELRO      <span class="number">0x0000000000002da0</span> <span class="number">0x0000000000003da0</span> <span class="number">0x0000000000003da0</span></span><br><span class="line">                 <span class="number">0x0000000000000260</span> <span class="number">0x0000000000000260</span>  R      <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line"> Section to Segment mapping:</span><br><span class="line">  Segment Sections...</span><br><span class="line">   <span class="number">00</span></span><br><span class="line">   <span class="number">01</span>     .interp</span><br><span class="line">   <span class="number">02</span>     .interp .note.gnu.property .note.gnu.build-id .note.ABI-tag .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_r .rela.dyn .rela.plt</span><br><span class="line">   <span class="number">03</span>     .init .plt .plt.got .plt.sec .text .fini</span><br><span class="line">   <span class="number">04</span>     .rodata .eh_frame_hdr .eh_frame</span><br><span class="line">   <span class="number">05</span>     .init_array .fini_array .dynamic .got .data .bss</span><br><span class="line">   <span class="number">06</span>     .dynamic</span><br><span class="line">   <span class="number">07</span>     .note.gnu.property</span><br><span class="line">   <span class="number">08</span>     .note.gnu.build-id .note.ABI-tag</span><br><span class="line">   <span class="number">09</span>     .note.gnu.property</span><br><span class="line">   <span class="number">10</span>     .eh_frame_hdr</span><br><span class="line">   <span class="number">11</span></span><br><span class="line">   <span class="number">12</span>     .init_array .fini_array .dynamic .got</span><br></pre></td></tr></table></figure>
+<p>Section Header Table如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">There are <span class="number">31</span> section headers, starting at offset <span class="number">0x39e8</span>:</span><br><span class="line"></span><br><span class="line">Section Headers:</span><br><span class="line">  [Nr] Name              Type             Address           Offset</span><br><span class="line">       Size              EntSize          Flags  Link  Info  Align</span><br><span class="line">  [ <span class="number">0</span>]                   <span class="literal">NULL</span>             <span class="number">0000000000000000</span>  <span class="number">00000000</span></span><br><span class="line">       <span class="number">0000000000000000</span>  <span class="number">0000000000000000</span>           <span class="number">0</span>     <span class="number">0</span>     <span class="number">0</span></span><br><span class="line">  [ <span class="number">1</span>] .interp           PROGBITS         <span class="number">0000000000000318</span>  <span class="number">00000318</span></span><br><span class="line">       <span class="number">000000000000001</span>c  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">1</span></span><br><span class="line">  [ <span class="number">2</span>] .note.gnu.propert NOTE             <span class="number">0000000000000338</span>  <span class="number">00000338</span></span><br><span class="line">       <span class="number">0000000000000020</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [ <span class="number">3</span>] .note.gnu.build-i NOTE             <span class="number">0000000000000358</span>  <span class="number">00000358</span></span><br><span class="line">       <span class="number">0000000000000024</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">4</span></span><br><span class="line">  [ <span class="number">4</span>] .note.ABI-tag     NOTE             <span class="number">000000000000037</span>c  <span class="number">0000037</span>c</span><br><span class="line">       <span class="number">0000000000000020</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">4</span></span><br><span class="line">  [ <span class="number">5</span>] .gnu.hash         GNU_HASH         <span class="number">00000000000003</span>a0  <span class="number">000003</span>a0</span><br><span class="line">       <span class="number">0000000000000024</span>  <span class="number">0000000000000000</span>   A       <span class="number">6</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [ <span class="number">6</span>] .dynsym           DYNSYM           <span class="number">00000000000003</span>c8  <span class="number">000003</span>c8</span><br><span class="line">       <span class="number">00000000000000f</span>0  <span class="number">0000000000000018</span>   A       <span class="number">7</span>     <span class="number">1</span>     <span class="number">8</span></span><br><span class="line">  [ <span class="number">7</span>] .dynstr           STRTAB           <span class="number">00000000000004b</span>8  <span class="number">000004b</span>8</span><br><span class="line">       <span class="number">0000000000000091</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">1</span></span><br><span class="line">  [ <span class="number">8</span>] .gnu.version      VERSYM           <span class="number">000000000000054</span>a  <span class="number">0000054</span>a</span><br><span class="line">       <span class="number">0000000000000014</span>  <span class="number">0000000000000002</span>   A       <span class="number">6</span>     <span class="number">0</span>     <span class="number">2</span></span><br><span class="line">  [ <span class="number">9</span>] .gnu.version_r    VERNEED          <span class="number">0000000000000560</span>  <span class="number">00000560</span></span><br><span class="line">       <span class="number">0000000000000020</span>  <span class="number">0000000000000000</span>   A       <span class="number">7</span>     <span class="number">1</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">10</span>] .rela.dyn         RELA             <span class="number">0000000000000580</span>  <span class="number">00000580</span></span><br><span class="line">       <span class="number">00000000000000</span>c0  <span class="number">0000000000000018</span>   A       <span class="number">6</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">11</span>] .rela.plt         RELA             <span class="number">0000000000000640</span>  <span class="number">00000640</span></span><br><span class="line">       <span class="number">0000000000000060</span>  <span class="number">0000000000000018</span>  AI       <span class="number">6</span>    <span class="number">24</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">12</span>] .init             PROGBITS         <span class="number">0000000000001000</span>  <span class="number">00001000</span></span><br><span class="line">       <span class="number">000000000000001b</span>  <span class="number">0000000000000000</span>  AX       <span class="number">0</span>     <span class="number">0</span>     <span class="number">4</span></span><br><span class="line">  [<span class="number">13</span>] .plt              PROGBITS         <span class="number">0000000000001020</span>  <span class="number">00001020</span></span><br><span class="line">       <span class="number">0000000000000050</span>  <span class="number">0000000000000010</span>  AX       <span class="number">0</span>     <span class="number">0</span>     <span class="number">16</span></span><br><span class="line">  [<span class="number">14</span>] .plt.got          PROGBITS         <span class="number">0000000000001070</span>  <span class="number">00001070</span></span><br><span class="line">       <span class="number">0000000000000010</span>  <span class="number">0000000000000010</span>  AX       <span class="number">0</span>     <span class="number">0</span>     <span class="number">16</span></span><br><span class="line">  [<span class="number">15</span>] .plt.sec          PROGBITS         <span class="number">0000000000001080</span>  <span class="number">00001080</span></span><br><span class="line">       <span class="number">0000000000000040</span>  <span class="number">0000000000000010</span>  AX       <span class="number">0</span>     <span class="number">0</span>     <span class="number">16</span></span><br><span class="line">  [<span class="number">16</span>] .text             PROGBITS         <span class="number">00000000000010</span>c0  <span class="number">000010</span>c0</span><br><span class="line">       <span class="number">0000000000000385</span>  <span class="number">0000000000000000</span>  AX       <span class="number">0</span>     <span class="number">0</span>     <span class="number">16</span></span><br><span class="line">  [<span class="number">17</span>] .fini             PROGBITS         <span class="number">0000000000001448</span>  <span class="number">00001448</span></span><br><span class="line">       <span class="number">000000000000000</span>d  <span class="number">0000000000000000</span>  AX       <span class="number">0</span>     <span class="number">0</span>     <span class="number">4</span></span><br><span class="line">  [<span class="number">18</span>] .rodata           PROGBITS         <span class="number">0000000000002000</span>  <span class="number">00002000</span></span><br><span class="line">       <span class="number">0000000000000040</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">19</span>] .eh_frame_hdr     PROGBITS         <span class="number">0000000000002040</span>  <span class="number">00002040</span></span><br><span class="line">       <span class="number">0000000000000044</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">4</span></span><br><span class="line">  [<span class="number">20</span>] .eh_frame         PROGBITS         <span class="number">0000000000002088</span>  <span class="number">00002088</span></span><br><span class="line">       <span class="number">0000000000000108</span>  <span class="number">0000000000000000</span>   A       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">21</span>] .init_array       INIT_ARRAY       <span class="number">0000000000003</span>da0  <span class="number">00002</span>da0</span><br><span class="line">       <span class="number">0000000000000008</span>  <span class="number">0000000000000008</span>  WA       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">22</span>] .fini_array       FINI_ARRAY       <span class="number">0000000000003</span>da8  <span class="number">00002</span>da8</span><br><span class="line">       <span class="number">0000000000000008</span>  <span class="number">0000000000000008</span>  WA       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">23</span>] .dynamic          DYNAMIC          <span class="number">0000000000003</span>db0  <span class="number">00002</span>db0</span><br><span class="line">       <span class="number">00000000000001f</span>0  <span class="number">0000000000000010</span>  WA       <span class="number">7</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">24</span>] .got              PROGBITS         <span class="number">0000000000003f</span>a0  <span class="number">00002f</span>a0</span><br><span class="line">       <span class="number">0000000000000060</span>  <span class="number">0000000000000008</span>  WA       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">25</span>] .data             PROGBITS         <span class="number">0000000000004000</span>  <span class="number">00003000</span></span><br><span class="line">       <span class="number">0000000000000010</span>  <span class="number">0000000000000000</span>  WA       <span class="number">0</span>     <span class="number">0</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">26</span>] .bss              NOBITS           <span class="number">0000000000004010</span>  <span class="number">00003010</span></span><br><span class="line">       <span class="number">0000000000000008</span>  <span class="number">0000000000000000</span>  WA       <span class="number">0</span>     <span class="number">0</span>     <span class="number">1</span></span><br><span class="line">  [<span class="number">27</span>] .comment          PROGBITS         <span class="number">0000000000000000</span>  <span class="number">00003010</span></span><br><span class="line">       <span class="number">000000000000002b</span>  <span class="number">0000000000000001</span>  MS       <span class="number">0</span>     <span class="number">0</span>     <span class="number">1</span></span><br><span class="line">  [<span class="number">28</span>] .symtab           SYMTAB           <span class="number">0000000000000000</span>  <span class="number">00003040</span></span><br><span class="line">       <span class="number">0000000000000660</span>  <span class="number">0000000000000018</span>          <span class="number">29</span>    <span class="number">46</span>     <span class="number">8</span></span><br><span class="line">  [<span class="number">29</span>] .strtab           STRTAB           <span class="number">0000000000000000</span>  <span class="number">000036</span>a0</span><br><span class="line">       <span class="number">000000000000022b</span>  <span class="number">0000000000000000</span>           <span class="number">0</span>     <span class="number">0</span>     <span class="number">1</span></span><br><span class="line">  [<span class="number">30</span>] .shstrtab         STRTAB           <span class="number">0000000000000000</span>  <span class="number">000038</span>cb</span><br><span class="line">       <span class="number">000000000000011</span>a  <span class="number">0000000000000000</span>           <span class="number">0</span>     <span class="number">0</span>     <span class="number">1</span></span><br><span class="line">Key to Flags:</span><br><span class="line">  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),</span><br><span class="line">  L (link order), O (extra OS processing required), G (group), T (TLS),</span><br><span class="line">  C (compressed), x (unknown), o (OS specific), E (exclude),</span><br><span class="line">  l (large), p (processor specific)</span><br></pre></td></tr></table></figure>
+<p>符号表如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">Symbol table &#x27;.dynsym&#x27; contains 10 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     <span class="number">0</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  LOCAL  DEFAULT  UND</span><br><span class="line">     <span class="number">1</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT  UND _ITM_deregisterTMCloneTab</span><br><span class="line">     <span class="number">2</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND <span class="built_in">printf</span>@GLIBC_2<span class="number">.2</span><span class="number">.5</span> (<span class="number">2</span>)</span><br><span class="line">     <span class="number">3</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND __libc_start_main@GLIBC_2<span class="number">.2</span><span class="number">.5</span> (<span class="number">2</span>)</span><br><span class="line">     <span class="number">4</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND srand@GLIBC_2<span class="number">.2</span><span class="number">.5</span> (<span class="number">2</span>)</span><br><span class="line">     <span class="number">5</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT  UND __gmon_start__</span><br><span class="line">     <span class="number">6</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND <span class="built_in">malloc</span>@GLIBC_2<span class="number">.2</span><span class="number">.5</span> (<span class="number">2</span>)</span><br><span class="line">     <span class="number">7</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT  UND _ITM_registerTMCloneTable</span><br><span class="line">     <span class="number">8</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND rand@GLIBC_2<span class="number">.2</span><span class="number">.5</span> (<span class="number">2</span>)</span><br><span class="line">     <span class="number">9</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    WEAK   DEFAULT  UND __cxa_finalize@GLIBC_2<span class="number">.2</span><span class="number">.5</span> (<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">Symbol table &#x27;.symtab&#x27; contains 68 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     <span class="number">0</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  LOCAL  DEFAULT  UND</span><br><span class="line">     <span class="number">1</span>: <span class="number">0000000000000318</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">1</span></span><br><span class="line">     <span class="number">2</span>: <span class="number">0000000000000338</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">2</span></span><br><span class="line">     <span class="number">3</span>: <span class="number">0000000000000358</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">3</span></span><br><span class="line">     <span class="number">4</span>: <span class="number">000000000000037</span>c     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">4</span></span><br><span class="line">     <span class="number">5</span>: <span class="number">00000000000003</span>a0     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">5</span></span><br><span class="line">     <span class="number">6</span>: <span class="number">00000000000003</span>c8     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">6</span></span><br><span class="line">     <span class="number">7</span>: <span class="number">00000000000004b</span>8     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">7</span></span><br><span class="line">     <span class="number">8</span>: <span class="number">000000000000054</span>a     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">8</span></span><br><span class="line">     <span class="number">9</span>: <span class="number">0000000000000560</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT    <span class="number">9</span></span><br><span class="line">    <span class="number">10</span>: <span class="number">0000000000000580</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">10</span></span><br><span class="line">    <span class="number">11</span>: <span class="number">0000000000000640</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">11</span></span><br><span class="line">    <span class="number">12</span>: <span class="number">0000000000001000</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">12</span></span><br><span class="line">    <span class="number">13</span>: <span class="number">0000000000001020</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">13</span></span><br><span class="line">    <span class="number">14</span>: <span class="number">0000000000001070</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">14</span></span><br><span class="line">    <span class="number">15</span>: <span class="number">0000000000001080</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">15</span></span><br><span class="line">    <span class="number">16</span>: <span class="number">00000000000010</span>c0     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">16</span></span><br><span class="line">    <span class="number">17</span>: <span class="number">0000000000001448</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">17</span></span><br><span class="line">    <span class="number">18</span>: <span class="number">0000000000002000</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">18</span></span><br><span class="line">    <span class="number">19</span>: <span class="number">0000000000002040</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">19</span></span><br><span class="line">    <span class="number">20</span>: <span class="number">0000000000002088</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">20</span></span><br><span class="line">    <span class="number">21</span>: <span class="number">0000000000003</span>da0     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">21</span></span><br><span class="line">    <span class="number">22</span>: <span class="number">0000000000003</span>da8     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">22</span></span><br><span class="line">    <span class="number">23</span>: <span class="number">0000000000003</span>db0     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">23</span></span><br><span class="line">    <span class="number">24</span>: <span class="number">0000000000003f</span>a0     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">24</span></span><br><span class="line">    <span class="number">25</span>: <span class="number">0000000000004000</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">25</span></span><br><span class="line">    <span class="number">26</span>: <span class="number">0000000000004010</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">26</span></span><br><span class="line">    <span class="number">27</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> SECTION LOCAL  DEFAULT   <span class="number">27</span></span><br><span class="line">    <span class="number">28</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FILE    LOCAL  DEFAULT  ABS crtstuff.c</span><br><span class="line">    <span class="number">29</span>: <span class="number">00000000000010f</span>0     <span class="number">0</span> FUNC    LOCAL  DEFAULT   <span class="number">16</span> deregister_tm_clones</span><br><span class="line">    <span class="number">30</span>: <span class="number">0000000000001120</span>     <span class="number">0</span> FUNC    LOCAL  DEFAULT   <span class="number">16</span> register_tm_clones</span><br><span class="line">    <span class="number">31</span>: <span class="number">0000000000001160</span>     <span class="number">0</span> FUNC    LOCAL  DEFAULT   <span class="number">16</span> __do_global_dtors_aux</span><br><span class="line">    <span class="number">32</span>: <span class="number">0000000000004010</span>     <span class="number">1</span> OBJECT  LOCAL  DEFAULT   <span class="number">26</span> completed<span class="number">.8061</span></span><br><span class="line">    <span class="number">33</span>: <span class="number">0000000000003</span>da8     <span class="number">0</span> OBJECT  LOCAL  DEFAULT   <span class="number">22</span> __do_global_dtors_aux_fin</span><br><span class="line">    <span class="number">34</span>: <span class="number">00000000000011</span>a0     <span class="number">0</span> FUNC    LOCAL  DEFAULT   <span class="number">16</span> frame_dummy</span><br><span class="line">    <span class="number">35</span>: <span class="number">0000000000003</span>da0     <span class="number">0</span> OBJECT  LOCAL  DEFAULT   <span class="number">21</span> __frame_dummy_init_array_</span><br><span class="line">    <span class="number">36</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FILE    LOCAL  DEFAULT  ABS test.c</span><br><span class="line">    <span class="number">37</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FILE    LOCAL  DEFAULT  ABS crtstuff.c</span><br><span class="line">    <span class="number">38</span>: <span class="number">000000000000218</span>c     <span class="number">0</span> OBJECT  LOCAL  DEFAULT   <span class="number">20</span> __FRAME_END__</span><br><span class="line">    <span class="number">39</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FILE    LOCAL  DEFAULT  ABS</span><br><span class="line">    <span class="number">40</span>: <span class="number">0000000000003</span>da8     <span class="number">0</span> NOTYPE  LOCAL  DEFAULT   <span class="number">21</span> __init_array_end</span><br><span class="line">    <span class="number">41</span>: <span class="number">0000000000003</span>db0     <span class="number">0</span> OBJECT  LOCAL  DEFAULT   <span class="number">23</span> _DYNAMIC</span><br><span class="line">    <span class="number">42</span>: <span class="number">0000000000003</span>da0     <span class="number">0</span> NOTYPE  LOCAL  DEFAULT   <span class="number">21</span> __init_array_start</span><br><span class="line">    <span class="number">43</span>: <span class="number">0000000000002040</span>     <span class="number">0</span> NOTYPE  LOCAL  DEFAULT   <span class="number">19</span> __GNU_EH_FRAME_HDR</span><br><span class="line">    <span class="number">44</span>: <span class="number">0000000000003f</span>a0     <span class="number">0</span> OBJECT  LOCAL  DEFAULT   <span class="number">24</span> _GLOBAL_OFFSET_TABLE_</span><br><span class="line">    <span class="number">45</span>: <span class="number">0000000000001000</span>     <span class="number">0</span> FUNC    LOCAL  DEFAULT   <span class="number">12</span> _init</span><br><span class="line">    <span class="number">46</span>: <span class="number">0000000000001440</span>     <span class="number">5</span> FUNC    GLOBAL DEFAULT   <span class="number">16</span> __libc_csu_fini</span><br><span class="line">    <span class="number">47</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT  UND _ITM_deregisterTMCloneTab</span><br><span class="line">    <span class="number">48</span>: <span class="number">0000000000004000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT   <span class="number">25</span> data_start</span><br><span class="line">    <span class="number">49</span>: <span class="number">0000000000004010</span>     <span class="number">0</span> NOTYPE  GLOBAL DEFAULT   <span class="number">25</span> _edata</span><br><span class="line">    <span class="number">50</span>: <span class="number">0000000000001448</span>     <span class="number">0</span> FUNC    GLOBAL HIDDEN    <span class="number">17</span> _fini</span><br><span class="line">    <span class="number">51</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND <span class="built_in">printf</span>@@GLIBC_2<span class="number">.2</span><span class="number">.5</span></span><br><span class="line">    <span class="number">52</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND __libc_start_main@@GLIBC_</span><br><span class="line">    <span class="number">53</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND srand@@GLIBC_2<span class="number">.2</span><span class="number">.5</span></span><br><span class="line">    <span class="number">54</span>: <span class="number">0000000000004000</span>     <span class="number">0</span> NOTYPE  GLOBAL DEFAULT   <span class="number">25</span> __data_start</span><br><span class="line">    <span class="number">55</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT  UND __gmon_start__</span><br><span class="line">    <span class="number">56</span>: <span class="number">0000000000004008</span>     <span class="number">0</span> OBJECT  GLOBAL HIDDEN    <span class="number">25</span> __dso_handle</span><br><span class="line">    <span class="number">57</span>: <span class="number">0000000000002000</span>     <span class="number">4</span> OBJECT  GLOBAL DEFAULT   <span class="number">18</span> _IO_stdin_used</span><br><span class="line">    <span class="number">58</span>: <span class="number">00000000000013</span>d0   <span class="number">101</span> FUNC    GLOBAL DEFAULT   <span class="number">16</span> __libc_csu_init</span><br><span class="line">    <span class="number">59</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND <span class="built_in">malloc</span>@@GLIBC_2<span class="number">.2</span><span class="number">.5</span></span><br><span class="line">    <span class="number">60</span>: <span class="number">0000000000004018</span>     <span class="number">0</span> NOTYPE  GLOBAL DEFAULT   <span class="number">26</span> _end</span><br><span class="line">    <span class="number">61</span>: <span class="number">00000000000010</span>c0    <span class="number">47</span> FUNC    GLOBAL DEFAULT   <span class="number">16</span> _start</span><br><span class="line">    <span class="number">62</span>: <span class="number">0000000000004010</span>     <span class="number">0</span> NOTYPE  GLOBAL DEFAULT   <span class="number">26</span> __bss_start</span><br><span class="line">    <span class="number">63</span>: <span class="number">00000000000011</span>a9   <span class="number">540</span> FUNC    GLOBAL DEFAULT   <span class="number">16</span> main</span><br><span class="line">    <span class="number">64</span>: <span class="number">0000000000004010</span>     <span class="number">0</span> OBJECT  GLOBAL HIDDEN    <span class="number">25</span> __TMC_END__</span><br><span class="line">    <span class="number">65</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> NOTYPE  WEAK   DEFAULT  UND _ITM_registerTMCloneTable</span><br><span class="line">    <span class="number">66</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    WEAK   DEFAULT  UND __cxa_finalize@@GLIBC_2<span class="number">.2</span></span><br><span class="line">    <span class="number">67</span>: <span class="number">0000000000000000</span>     <span class="number">0</span> FUNC    GLOBAL DEFAULT  UND rand@@GLIBC_2<span class="number">.2</span><span class="number">.5</span></span><br><span class="line">符号表可以看到有两个分别为dynsym和symtab，symtab中包含所有在程序中出现的符号以及一些库函数的符号，而dynsym中的符号是symtab中符号的子集</span><br><span class="line">，仅仅出现了外部可以看到的符号（静态函数mult的符号在dynsym就看不到）。这是因为dynsym中的符号只有在动态链接时也就是运行时才能被解析。</span><br></pre></td></tr></table></figure>
+
+<h3 id="程序编译、汇编、链接过程"><a href="#程序编译、汇编、链接过程" class="headerlink" title="程序编译、汇编、链接过程"></a>程序编译、汇编、链接过程</h3><p>程序从.c文件到最后的可执行文件需要经历：预处理（Preprocessing）、编译（Compilation）、汇编（Assembly）、链接（Linking）。执行这四个阶段的<br>程序（预处理器、编译器、汇编器、和链接器）一起构成了编译系统。</p>
+<p>预处理阶段：<br>    1.预处理器（cpp）将所有的#define删除，并且展开所有的宏定义。<br>    2.处理所有的条件预编译指令，比如#if、#ifdef、#elif、#else、#endif等。<br>    3.处理#include预编译指令，将被包含的文件直接插入到预编译指令的位置。<br>    4.删除所有的注释。<br>    5.添加行号和文件标识，以便编译时产生调试用的行号及编译错误警告行号。<br>    6.保留所有的#pragma编译器指令，因为编译器需要使用它们。<br>    7.使用gcc -E hello.c -o hello.i命令来进行预处理， 预处理得到的另一个程序通常是以.i作为文件扩展名。</p>
+<p>编译阶段：<br>编译器（ccl）将预处理完的文本文件hello.i进行一系列的词法分析、语法分析、语义分析和优化，翻译成文本文件hello.s，它包含一个汇编语言程序。<br>编译过程可分为6步：扫描（词法分析）、语法分析、语义分析、源代码优化、代码生成、目标代码优化。<br>如下:<br>    1.词法分析：扫描器（Scanner）将源代的字符序列分割成一系列的记号（Token）。lex工具可实现词法扫描。<br>    2.语法分析：语法分析器将记号（Token）产生语法树（Syntax Tree）。yacc工具可实现语法分析(yacc: Yet Another Compiler Compiler)。<br>    3.语义分析：静态语义（在编译器可以确定的语义）、动态语义（只能在运行期才能确定的语义）。<br>    4.源代码优化：源代码优化器(Source Code Optimizer)，将整个语法书转化为中间代码（Intermediate Code）（中间代码是与目标机器和运行环境无关的）。中间代码使得编译器被分为前端和后端。编译器前端负责产生机器无关的中间代码；编译器后端将中间代码转化为目标机器代码。<br>    5.目标代码生成：代码生成器(Code Generator).<br>    6.目标代码优化：目标代码优化器(Target Code Optimizer)。</p>
+<p>汇编阶段：<br>汇编器（as）将hello.s翻译成机器语言指令，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中，hello.o是一个二进制文件。</p>
+<p>链接阶段：<br>hello程序调用了printf函数，它存在于一个名为printf.o的单独的预编译好了的目标文件中，而这个文件必须以某种方式合并到我们的hello.o程序中。连接器（ld）就负责处理这种合并。结果就得到了hello文件，它是一个可执行目标文件（或者称为可执行文件），可以被加载到内存中，由系统执行。（链接程序运行需要的一大堆目标文件，以及所依赖的其它库文件，最后生成可执行文件）。</p>
+<h2 id="ptmalloc"><a href="#ptmalloc" class="headerlink" title="ptmalloc"></a>ptmalloc</h2><p>关于主分配区和从分配区(目的是为了保证线程安全，)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">主分配区和从分配区：</span><br><span class="line">主分配区一个进程只能有一个，其是调用brk，从堆区去分配内存。</span><br><span class="line">从分配区一个线程可以拥有多个从分配区，其调用mmap从memory mapping区域去分配一个sub-heap</span><br></pre></td></tr></table></figure>
+
+<h3 id="chunk结构"><a href="#chunk结构" class="headerlink" title="chunk结构"></a>chunk结构</h3><p>组成为pre_size + size + amp(a判断主分配区，m表示mmap，p表示是否在使用) + 指向前一个chunk的指针 + 指向后一个chunk的指针 + user data</p>
+<h3 id="malloc原理"><a href="#malloc原理" class="headerlink" title="malloc原理"></a>malloc原理</h3><p>使用brk()和mmap()系统调用函数分配空间<br>brk()函数在heap部分分配空间使用start_brk和brk两个标志，brk向高地址偏移标记heap堆区被分配<br>mmap()函数在memory mapping区域分配空间</p>
+<h3 id="内存分配规则"><a href="#内存分配规则" class="headerlink" title="内存分配规则"></a>内存分配规则</h3><p>1.获取分配区锁，加锁成功则使用该分配区分配内存，否则就遍历分配区的环形链表。如果链表中没有空闲的，就开辟一个新的分配区，把其加入线程私有实例并且加入到环形链表。<br>2.将用户请求的字节向上对齐到bins中的最近字节。<br>3.如果小于64B就在fast bin中分配内存，如果大于再去判断是否小于512B，如果小于就去small bin中分配大小，如果大于就说明此时分配的是大内存。<br>4.首先会将fast bin中的chunk进行合并，然后链接至unsorted bin，再将其链接到相应的bin中<br>5然后去large bins中进行寻找，如果够用结束，不够下一步。<br>6.这个时候就需要判断top chunk是否够用，不够用下一步<br>7.有两种选择，判断分配的字节大小是否大于等于mmap分配阈值，如果小于根据分配区去选择brk还是mmap去增加top chunk的大小；如果大于就直接调用mmap去映射。</p>
+<h3 id="内存释放规则"><a href="#内存释放规则" class="headerlink" title="内存释放规则"></a>内存释放规则</h3><p>1.获取分配区的锁<br>2.判断free参数是否位nullptr，如果为nullptr则什么都不做<br>3.如果释放空间为mmaped chunk，直接使用munmap释放<br>4.如果size &lt; 64B且不和top chunk相邻，放入fast bin<br>5.判断前一个块是否空闲，空闲则合并<br>6.判断下一个是否空闲，空闲则合并放入unsorted bin，然后放入相应的bin中<br>7.判读合并后是否大于64kb，如果大于fast bin中chunk进行合并，放入unsorted bin，然后下一步。<br>8.判读top chunk是否大于128kb，如果大于就会归还给操作系统。注意：如果为非主分配区，就只会归还一部部分。</p>
+<h3 id="fastbin"><a href="#fastbin" class="headerlink" title="fastbin"></a>fastbin</h3><p>bins是ptmalloc用来维护chunk的一个数据结构，其和哈希思想十分相似。bins本身可以看成一个数组，这个数组总共有128个整型数据，每个整型数据叫bin，其中第1个整型数据表示unsorted bin，其是用来chunk复用或者释放策略实施的。从第2个bin到第64个bin统称为small bins，每个相邻的samll bin相差8，这个bin上代表的数据就是其维护的chunk中可用给用户的字节大小。从第65个开始到127个就属于large bins了，每个相邻的large bin相差64。<br>大小&lt;=64bytes</p>
+<h2 id="ctfpwn"><a href="#ctfpwn" class="headerlink" title="ctfpwn"></a>ctfpwn</h2><h3 id="栈-1"><a href="#栈-1" class="headerlink" title="栈"></a>栈</h3><p>栈部分相关的漏洞有rop\格式化字符串\整数溢出等</p>
+<h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>堆的话需要分版本讨论</p>
+<h4 id="libc-2-23-libc-2-25"><a href="#libc-2-23-libc-2-25" class="headerlink" title="libc-2.23 - libc-2.25"></a>libc-2.23 - libc-2.25</h4><p>这一版本的ptmalloc中使用了fastbin，对于fastbin，存在uaf漏洞可以轻易getshell<br>在free fastbin过程中的检测</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">检测你要<span class="built_in">malloc</span>的freechunk的大小是否在该chunk所在的fastbin链的大小尺寸范围内</span><br><span class="line">检测你这个freechunk的size成员的PREV_INUSE为是否为<span class="number">1</span>，为<span class="number">1</span>才可以通过检测（libc2<span class="number">.23</span>没有）</span><br></pre></td></tr></table></figure>
+<p>因此修改了以及free的fastbin的fd后，需要保证fd指向的地方size符合范围，一般使用的是malloc_hook - 0x23</p>
+<h4 id="libc-2-27"><a href="#libc-2-27" class="headerlink" title="libc-2.27"></a>libc-2.27</h4><p>libc2.27在更新后，malloc源码发生了变化，引入了tcache， tcache bin和fastbin的管理方式很像，都采用FILO的单链表（理解为数据结构中的栈），但是tcache的优先级更高，并且在bin中，fastbin的fd指针指向上一个chunk的头部，而tcache会指向上一个chunk的数据部分。旧版libc2.27中，tcache结构体没有引入key指针，可以随意double free任意攻击，在UAF下，使得利用手法更为容易，并且在分配的过程中没有对size进行检查。</p>
+<h4 id="libc-2-31"><a href="#libc-2-31" class="headerlink" title="libc-2.31"></a>libc-2.31</h4><p>引入了新的内容key，如果key值等于tcache的地址，那么就进入tcache的链表，然后后移，判断当前堆块是否在链表中，如果在链表中，那么很显然就是do<br>uble free了。绕过方法很简单，利用漏洞改掉key值即可，直接给干掉if判断了，就不会进入这个if分支了。<br>在UAF下的利用手法为首先填满tcache，然后申请unsorted bin大小的chunk，利用UAF泄露libc基址，最后通过修改tcache的指针轻松的将堆块申请到__<br>free_hook，修改为system地址，然后free一个chunk，chunk的内容为”/bin/shx00”即可轻松getshell。</p>
+<h4 id="libc-2-32"><a href="#libc-2-32" class="headerlink" title="libc-2.32"></a>libc-2.32</h4><p>2.32引入了一个宏PROTECT_PTR，加入了一个safelink机制，检测了申请地址是否以0x10对齐，fastbin attack的利用办法受到限制，例如经典的通过错位构造”x7f”劫持malloc_hook和IO_FILE的利用办法。<br>与libc2.31做对比的话，libc2.31是tcache-&gt;entries[tc_idx] = e-&gt;next;<br>而libc2.32是tcache-&gt;entries[tc_idx] = REVEAL_PTR (e-&gt;next);<br>在UAF的场景下，我们可以直接用show即可泄露出e-&gt;next值，因为最初tcache链表是为空的，也就是说safe-linking机制只相当于用堆地址右移了12位，通过左移即可恢复出堆地址，从而泄露出堆的基址，泄露出堆地址以后就可以来伪造tcache的next位了，我们可以在free态的chunk中修改next为(&amp;next)&gt;&gt;12 &amp; _ _ free_hook（因为我们泄露出堆基址所以可以轻松的获取到&amp;next的值），这样调用完tcacheget之后就可以把_free_hook链入到可供我们申请的链表当中，即可覆写__free_hook来getshell。（由于tcache链表头指针存储的是当前释放堆地址的值，即tcache-&gt;entries[tc_idx] = e，tcache_stashing_unlink_attack的办法依然有效，注意！注意！注意！只是针对表头，因为表头和0异或的）</p>
+<h4 id="libc-2-34"><a href="#libc-2-34" class="headerlink" title="libc-2.34"></a>libc-2.34</h4><p>移除了几个hook符号：<br>free_hook<br>malloc_hook<br>realloc_hook<br>memalign_hook<br>after_morecore_hook<br>利用方法<br>1、泄漏环境变量去打栈地址<br>在libc中存在符号environ指向了&amp;argv[argc + 1]的地址，这个地址保存在栈上，而environ地址可以通过libc偏移计算获得，所以如果条件允许通过泄漏environ的值获得栈地址，再通过计算并劫持栈返回地址提前布置好rop链，可以最终达到getshell的目的。<br>2、劫持exit<br>3、劫持got<br>4、打SROP<br>5、利用IO_vtable<br>在glibc-2.34中，可以看到vtable拥有可写权限，首先将_IO_DOALLOCATE覆盖成满足条件的one_gadget地址，然后再将stdout结构体中缓冲区指针清空，再次调用puts时getshell。</p>
+<h4 id="libc-2-35"><a href="#libc-2-35" class="headerlink" title="libc-2.35"></a>libc-2.35</h4><p>相关的虚表已经不可以写了<br>1、攻击_rtld_global结构体中的link_map链表<br>2、打got<br>3、打栈</p>
+<h2 id="afl"><a href="#afl" class="headerlink" title="afl"></a>afl</h2><p>使用afl进行fuzz的过程:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>从源码编译程序时进行插桩，以记录代码覆盖率（Code Coverage）；</span><br><span class="line"><span class="number">2.</span>选择一些输入文件，作为初始测试集加入输入队列（<span class="built_in">queue</span>）；</span><br><span class="line"><span class="number">3.</span>将队列中的文件按一定的策略进行<span class="string">&quot;突变&quot;</span>;</span><br><span class="line"><span class="number">4.</span>如果经过变异文件更新了覆盖范围，则将其保留添加到队列中;</span><br><span class="line"><span class="number">5.</span>上述过程会一直循环进行，期间触发了crash的文件会被记录下来。</span><br></pre></td></tr></table></figure>
+<p>插桩过程主要是在input_file中插入固定的汇编语句<br>应该插入的条件如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	1.条件跳转指令(jne\je\jle等)</span></span><br><span class="line"><span class="comment">	2.main函数入口</span></span><br><span class="line"><span class="comment">	3.function入口</span></span><br><span class="line"><span class="comment">	4.插桩只向.text 段插入</span></span><br><span class="line"><span class="comment">	5.跳过intel汇编，设置skip_intel</span></span><br><span class="line"><span class="comment">	6.跳过 ad-hoc __asm__</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>变异策略：SIMPLE BITFLIP + ARITHMETIC INC/DEC + INTERESTING VALUES + DICTIONARY STUFF + RANDOM HAVOC + SPLICING</p>
+<h3 id="asan原理"><a href="#asan原理" class="headerlink" title="asan原理"></a>asan原理</h3><p>ASAN要记录每一块内存的可用性。把用户程序所在的内存区域叫做主内存, 而记录主内存可用性的内存区域，则叫做影子内存 (Shadow memory)。<br>所有主内存的分配都按照 8 字节的方式对齐。然后按照 1：8 的压缩比例对主内存的可用性进行记录，然后存入影子内存中。影子内存无法被用户直接读写,<br>需要编译器生成相关的代码来访问。<br>每一次内存的分配和释放, 都会写入影子内存。每次读/写内存区域前, 都会读取一下影子内存, 获得这块内存访问合法性 (是否被分配, 是否已被释放)。<br>对影子内存的写入只在分配内存的时候发生, 所以只要分配内存是多线程安全的, ASan 就是多线程安全的, 这在大部分情况下也确实成立。<br>计算影子内存的地址需要快速，他们采用了: 主内存地址除以 8，再加上一个偏移量的做法. 因为堆栈分别在虚拟内存地址空间的两端，这样影子内存就会落<br>在中间。而如果用户以外访问了影子内存，那么影子内存的”影子内存”就会落到一个非法的范围 (Shadow Gap) 内，就可以知道访问出了些问题。<br>asan主要可以定位oob（堆、栈、全局变量）、uaf、uar(栈回收后使用)、UMR(uninitialized memory reads读取未初始化内存)、Leaks（内存泄露）</p>
+<h2 id="v8"><a href="#v8" class="headerlink" title="v8"></a>v8</h2><p>v8的组成解析器、解释器、编译器、gc</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/GrayOnDream/article/details/124564129">ELF文件格式简介</a></p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1652601666778.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">计算机系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88"><span class="nav-number">1.1.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux%E4%B8%8B%E7%9A%84%E4%BF%9D%E6%8A%A4%E4%BB%A5%E5%8F%8A%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">linux下的保护以及绕过方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.3.</span> <span class="nav-text">函数调用约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">进程和线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elf%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">elf文件格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E3%80%81%E6%B1%87%E7%BC%96%E3%80%81%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">1.6.</span> <span class="nav-text">程序编译、汇编、链接过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ptmalloc"><span class="nav-number">2.</span> <span class="nav-text">ptmalloc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chunk%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">chunk结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#malloc%E5%8E%9F%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">malloc原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E8%A7%84%E5%88%99"><span class="nav-number">2.3.</span> <span class="nav-text">内存分配规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE%E8%A7%84%E5%88%99"><span class="nav-number">2.4.</span> <span class="nav-text">内存释放规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fastbin"><span class="nav-number">2.5.</span> <span class="nav-text">fastbin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ctfpwn"><span class="nav-number">3.</span> <span class="nav-text">ctfpwn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88-1"><span class="nav-number">3.1.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86"><span class="nav-number">3.2.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#libc-2-23-libc-2-25"><span class="nav-number">3.2.1.</span> <span class="nav-text">libc-2.23 - libc-2.25</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libc-2-27"><span class="nav-number">3.2.2.</span> <span class="nav-text">libc-2.27</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libc-2-31"><span class="nav-number">3.2.3.</span> <span class="nav-text">libc-2.31</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libc-2-32"><span class="nav-number">3.2.4.</span> <span class="nav-text">libc-2.32</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libc-2-34"><span class="nav-number">3.2.5.</span> <span class="nav-text">libc-2.34</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libc-2-35"><span class="nav-number">3.2.6.</span> <span class="nav-text">libc-2.35</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#afl"><span class="nav-number">4.</span> <span class="nav-text">afl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#asan%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">asan原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v8"><span class="nav-number">5.</span> <span class="nav-text">v8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

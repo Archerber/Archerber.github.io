@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://example.com/images/2022-09-13191555.png">
 <meta property="og:image" content="http://example.com/images/2022-09-13193306.png">
 <meta property="article:published_time" content="2022-05-01T02:02:30.000Z">
-<meta property="article:modified_time" content="2022-09-24T08:14:21.056Z">
+<meta property="article:modified_time" content="2023-01-12T10:03:04.301Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="v8">
 <meta name="twitter:card" content="summary">
@@ -396,10 +396,10 @@
 
 <h3 id="Pre-parser"><a href="#Pre-parser" class="headerlink" title="Pre-parser"></a>Pre-parser</h3><p>例子如下</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&#x27;aaa&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&#x27;bbb&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">func1();</span><br></pre></td></tr></table></figure>
-<p>v8并不会直接解析代码中的所有函数，对于函数申明，会使用pre-parser进行预解析，而遇到立即调用的函数表达式(IIFE)会调用parser完全解析函数，并生成<br>AST。<br>pre-parser需要做的事情有:验证它跳过的函数在语法上是否有效，并生成正确编译外部函数所需的所有信息。当稍后调用预先解析的函数时，它会根据需要进行完全<br>解析和编译。<br>关于惰性parser例子如下</p>
+<p>v8并不会直接解析代码中的所有函数，对于函数申明，会使用pre-parser进行预解析，而遇到立即调用的函数表达式(IIFE)<br>会调用parser完全解析函数，并生成AST。<br>pre-parser需要做的事情有:验证它跳过的函数在语法上是否有效，并生成正确编译外部函数所需的所有信息。当稍后调用预先解析的函数时，它会根据需要<br>进行完全<br>解析和编译。<br>关于惰性parser例子如下</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This is the top-level scope.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// preparsed</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inner</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// preparsed</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">outer(); <span class="comment">// Fully parses and compiles `outer`, but not `inner`.</span></span><br></pre></td></tr></table></figure>
 <p>outer直接指向外部context，该context包含内部函数使用变量申明的值。为了允许函数的惰性编译（并支持调试器），上下文指向一个名为ScopeInfo。<br>ScopeInfo对象描述了上下文中列出的变量。这意味着在编译内部函数时，我们可以计算变量在上下文链中的位置。<br>关于per-parser更详细的信息见:<a target="_blank" rel="noopener" href="https://v8.dev/blog/preparser">https://v8.dev/blog/preparser</a></p>
-<h3 id="parser"><a href="#parser" class="headerlink" title="parser"></a>parser</h3><p>javascritp代码中，立即调用的函数表达式(IIFE)由parser将其进行完全解析，并生成AST</p>
+<h3 id="Parser-1"><a href="#Parser-1" class="headerlink" title="Parser"></a>Parser</h3><p>javascritp代码中，立即调用的函数表达式(IIFE)由parser将其进行完全解析，并生成AST</p>
 <h2 id="Ignition"><a href="#Ignition" class="headerlink" title="Ignition"></a>Ignition</h2><p>Ignition 解释器本身由一系列字节码处理程序代码片段组成，每个片段都处理一个特定的字节码，然后调度给下一个字节码的处理程序。这些字节码处理程序使用高<br>层级的、机器架构无关的汇编代码写成，由 CodeStubAssembler 类实现，并由 TurboFan 编译。<br>在2017之前v8使用full-codegen+Crankshaft  生成machine code，不生成bytecode，之后设计了Ignition，通过生成bytecode的方式节省空间与时间<br>AST到bytecode的流程大致如下:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Parser --&gt; AST --&gt; Bytecode Generator --&gt; Register Optimizer --&gt; Peephole Optimizer</span><br><span class="line">--&gt; Dead-code Elimination --&gt; Bytecode Array Writer --&gt; Bytecode --&gt; Interpreter</span><br></pre></td></tr></table></figure>
 <p>1.Bytecode Generator:作用是遍历AST，并为每个子节点生成Bytecode<br>补充：Bytecode Generator本质是一系列字节码处理片段，是用与机器架构无关的高级别的汇编代码写成的，由CodeStubAssembler 实现并由Turbofan编译<br>更多细节参考:<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=r5OWCtuKiAk&amp;t=1062s">https://www.youtube.com/watch?v=r5OWCtuKiAk&amp;t=1062s</a> 以及<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41496446">https://zhuanlan.zhihu.com/p/41496446</a></p>
@@ -544,7 +544,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -555,7 +555,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -566,7 +566,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -636,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">v8的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parser"><span class="nav-number">2.</span> <span class="nav-text">Parser</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pre-parser"><span class="nav-number">2.1.</span> <span class="nav-text">Pre-parser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parser"><span class="nav-number">2.2.</span> <span class="nav-text">parser</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ignition"><span class="nav-number">3.</span> <span class="nav-text">Ignition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TurboFan"><span class="nav-number">4.</span> <span class="nav-text">TurboFan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#object"><span class="nav-number">5.</span> <span class="nav-text">object</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TaggedImpl"><span class="nav-number">5.1.</span> <span class="nav-text">TaggedImpl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HeapObject"><span class="nav-number">5.2.</span> <span class="nav-text">HeapObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSReceiver"><span class="nav-number">5.3.</span> <span class="nav-text">JSReceiver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">5.4.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayObject"><span class="nav-number">5.5.</span> <span class="nav-text">ArrayObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inobject%E3%80%81fast%E3%80%81slow"><span class="nav-number">5.6.</span> <span class="nav-text">inobject、fast、slow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#slack-tracking"><span class="nav-number">5.6.1.</span> <span class="nav-text">slack tracking</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Others"><span class="nav-number">6.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9"><span class="nav-number">6.1.</span> <span class="nav-text">指针压缩</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#v8%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">v8的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parser"><span class="nav-number">2.</span> <span class="nav-text">Parser</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pre-parser"><span class="nav-number">2.1.</span> <span class="nav-text">Pre-parser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parser-1"><span class="nav-number">2.2.</span> <span class="nav-text">Parser</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ignition"><span class="nav-number">3.</span> <span class="nav-text">Ignition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TurboFan"><span class="nav-number">4.</span> <span class="nav-text">TurboFan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#object"><span class="nav-number">5.</span> <span class="nav-text">object</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TaggedImpl"><span class="nav-number">5.1.</span> <span class="nav-text">TaggedImpl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HeapObject"><span class="nav-number">5.2.</span> <span class="nav-text">HeapObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSReceiver"><span class="nav-number">5.3.</span> <span class="nav-text">JSReceiver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">5.4.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayObject"><span class="nav-number">5.5.</span> <span class="nav-text">ArrayObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inobject%E3%80%81fast%E3%80%81slow"><span class="nav-number">5.6.</span> <span class="nav-text">inobject、fast、slow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#slack-tracking"><span class="nav-number">5.6.1.</span> <span class="nav-text">slack tracking</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Others"><span class="nav-number">6.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%8E%8B%E7%BC%A9"><span class="nav-number">6.1.</span> <span class="nav-text">指针压缩</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -656,7 +656,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
