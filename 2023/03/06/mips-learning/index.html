@@ -88,11 +88,13 @@
 <meta property="og:site_name" content="Archerの博客">
 <meta property="og:description" content="mips-learning">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2023-03-11194701.png">
 <meta property="article:published_time" content="2023-03-06T05:36:30.000Z">
-<meta property="article:modified_time" content="2023-03-06T06:04:55.824Z">
+<meta property="article:modified_time" content="2023-03-11T12:02:31.488Z">
 <meta property="article:author" content="Archer">
 <meta property="article:tag" content="mips">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2023-03-11194701.png">
 
 
 
@@ -373,8 +375,9 @@
 
       
         <h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><hr>
-<p>编号        寄存器名称            寄存器描述<br>0            zero                第0号寄存器，值始终为0<br>1            $at                 保留寄存器<br>2-3            $v0-$v1                values,保存表达式或者函数返回值<br>4-7            $a0-$a3                aruments,作为函数的参数<br>8-15        $t0-$t7                temporaries,供汇编程序使用的临时寄存器<br>16-23        $s0-$s7                saved values,调用子函数时，保存寄存器值<br>24-25        $t8-$t9                temporaries,供汇编程序使用的临时寄存器，补充$t0-$t7<br>26-27        $k0-$k1                保留，中断处理函数使用<br>28            $gp                    全局指针<br>29            $sp                    堆栈指针<br>30            $fp                    保存栈指针<br>31            $ra                    返回地址</p>
-<h2 id="mips指令集"><a href="#mips指令集" class="headerlink" title="mips指令集"></a>mips指令集</h2>
+<p>编号        寄存器名称            寄存器描述<br>0            zero                第0号寄存器，值始终为0<br>1            $at                 保留寄存器<br>2-3            $v0-$v1                values,保存表达式或者函数返回值<br>4-7            $a0-$a3                aruments,作为函数的参数<br>8-15        $t0-$t7                temporaries,供汇编程序使用的临时寄存器<br>16-23        $s0-$s7                saved values,调用子函数时，保存寄存器值<br>24-25        $t8-$t9                temporaries,供汇编程序使用的临时寄存器，补充$t0-$t7<br>26-27        $k0-$k1                保留，中断处理函数使用<br>28            $gp                    全局指针<br>29            $sp                    堆栈指针<br>30            $fp                    保存栈指针<br>31            $ra                    返回地址<br>上述的寄存器为通用寄存器，mips中还有特殊寄存器为PC、HI(乘除结果高位寄存器)和LO(乘除结果低位寄存器)</p>
+<h2 id="mips指令集"><a href="#mips指令集" class="headerlink" title="mips指令集"></a>mips指令集</h2><p>有关特点:<br>    1.指令固定4字节长度<br>    2.内存中的数据访问(Load/Store)必须严格对齐(至少四字节)<br>    3.mips默认不将子函数的返回地址存放到栈中，而是放到$ra中<br>    4.流水线效应(当程序执行跳转指令时，跳转指令后面的指令也会执行)<br>常见指令：<br>LOAD/STORE指令：<br>1.LA将一个地址或者标签存入一个寄存器<br>2.LW用于从一个指定的地址加载一个word类型的值到寄存器<br>3.SW用于将源寄存器中的值存入指定的地址<br>syscall：<br>    系统调用号通常存放于$v0，参数放在$a0-$a3<br>关于mips中的分支跳转，如下<br><img src="/images/2023-03-11194701.png"><br>直接的跳转指令：<br>    1.j target：无条件跳转到target<br>    2.jr $t3：跳转到$t3指向的地址处<br>    3.jal target:跳转到target标签处，并保存返回地址到$ra中<br>在jal target中，需要将当前的pc值复制到$ra中，然后程序跳转到target，如果子函数又调用了其他函数，则$ra的值应该被保存到堆栈</p>
+
       
     </div>
     
@@ -413,6 +416,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/03/27/Qnap-Rearcher-note/" rel="prev" title="Qnap-NAS-Rearcher-note">
+                Qnap-NAS-Rearcher-note <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -493,7 +500,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -504,7 +511,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -515,7 +522,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

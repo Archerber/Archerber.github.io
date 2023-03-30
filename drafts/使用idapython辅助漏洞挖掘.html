@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,,,,,,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Archerの博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="使用idapython辅助漏洞挖掘">
+<meta property="og:type" content="website">
+<meta property="og:title" content="使用idapython辅助漏洞挖掘">
+<meta property="og:url" content="http://example.com/drafts/%E4%BD%BF%E7%94%A8idapython%E8%BE%85%E5%8A%A9%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98.html">
+<meta property="og:site_name" content="Archerの博客">
+<meta property="og:description" content="使用idapython辅助漏洞挖掘">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-15T02:12:30.000Z">
+<meta property="article:modified_time" content="2023-03-15T05:09:01.991Z">
+<meta property="article:author" content="Archer">
+<meta property="article:tag" content="idapython">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>使用idapython辅助漏洞挖掘 | Archerの博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Archerの博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Welcome</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">使用idapython辅助漏洞挖掘</h1>
+
+
+	<div class="post-meta">
+		<div class="post-description">使用idapython辅助漏洞挖掘</div>
+	</div>
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>在路由器固件漏洞挖掘中，由于代码量庞大，需要分析的文件量多等一系列原因，使用人工的方式对二进制文件进行漏洞挖掘十分费时费力，而使用idapython可以调用ida中相关的接口，从而大大加快对文件的分析<br>固件的漏洞主要有：<br>    1.栈溢出<br>    2.堆溢出<br>    3.格式化字符串漏洞<br>    4.命令执行<br>    …待补充</p>
+<h2 id="危险函数"><a href="#危险函数" class="headerlink" title="危险函数"></a>危险函数</h2><p>常见的危险函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#alloca(), _alloca(), scanf(), wscanf(), sscanf(), swscanf(), vscanf(), vsscanf(), strlen(), wcslen(), strtok(), strtok_r(), wcstok()</span></span><br><span class="line"><span class="comment">#strcat(), strncat(), wcscat(), wcsncat(), strcpy(), strncpy(), wcscpy(), wcsncpy(), memcpy(), wmemcpy(), </span></span><br><span class="line"><span class="comment">#stpcpy(), stpncpy(), wcpcpy(), wcpncpy(), memmove(), wmemmove(), memcmp(), wmemcmp(), memset(), wmemset(), gets(), </span></span><br><span class="line"><span class="comment">#sprintf(), vsprintf(), swprintf(), vswprintf(), snprintf(), vsnprintf(), realpath(), getwd()</span></span><br><span class="line"><span class="comment">#wctomb(), wcrtomb(), wcstombs(), wcsrtombs(), wcsnrtombs()</span></span><br><span class="line"><span class="comment">#read, strncat, strstr</span></span><br><span class="line"><span class="comment">#system, execve, popen, unlink</span></span><br></pre></td></tr></table></figure>
+<p>根据功能可以对上述这些函数进行分类<br>str类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str_dangerour_funcs = [<span class="string">&quot;strcpy&quot;</span>, <span class="string">&quot;strncpy&quot;</span>, <span class="string">&quot;strtok&quot;</span>, <span class="string">&quot;strtok_r&quot;</span>, <span class="string">&quot;strntok&quot;</span>, <span class="string">&quot;strcat&quot;</span>, <span class="string">&quot;strncat&quot;</span>, <span class="string">&quot;strstr&quot;</span>, <span class="string">&quot;strlen&quot;</span>, <span class="string">&quot;strcmp&quot;</span>, <span class="string">&quot;strncmp&quot;</span> ]</span><br></pre></td></tr></table></figure>
+<p>命令执行类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec_dangerour_funcs = [<span class="string">&quot;system&quot;</span>, <span class="string">&quot;execve&quot;</span>, <span class="string">&quot;unlink&quot;</span>, <span class="string">&quot;popen&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>scanf类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scanf_dangerour_funcs = [<span class="string">&quot;scanf&quot;</span>, <span class="string">&quot;wscanf&quot;</span>, <span class="string">&quot;sscanf&quot;</span>, <span class="string">&quot;swscanf&quot;</span>, <span class="string">&quot;vscanf&quot;</span>, <span class="string">&quot;vsscanf&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>printf类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf_dangerour_funcs = [<span class="string">&quot;printf&quot;</span>, <span class="string">&quot;sprintf&quot;</span>, <span class="string">&quot;vsprintf&quot;</span>, <span class="string">&quot;swprintf&quot;</span>, <span class="string">&quot;vswprintf&quot;</span>, <span class="string">&quot;snprintf&quot;</span>, <span class="string">&quot;vsnprintf&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>mem类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mem_dangerour_funcs = [<span class="string">&quot;memcpy&quot;</span>, <span class="string">&quot;wmemcpy&quot;</span>, <span class="string">&quot;memmove&quot;</span>, <span class="string">&quot;wmemmove&quot;</span>, <span class="string">&quot;memcmp&quot;</span>, <span class="string">&quot;wmemcmp&quot;</span>, <span class="string">&quot;memset&quot;</span>, <span class="string">&quot;wmemset&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>wcs类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wcs_dangerour_funcs = [<span class="string">&quot;wcslen&quot;</span>, <span class="string">&quot;wcstok&quot;</span>, <span class="string">&quot;wcscat&quot;</span>, <span class="string">&quot;wcsncat&quot;</span>, <span class="string">&quot;wcscpy&quot;</span>, <span class="string">&quot;wcsncpy&quot;</span>, <span class="string">&quot;wctomb&quot;</span>, <span class="string">&quot;wcrtomb&quot;</span>, <span class="string">&quot;wcstombs&quot;</span>, <span class="string">&quot;wcsrtombs&quot;</span>, <span class="string">&quot;wcsnrtombs&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>读取类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_dangerour_funcs = [<span class="string">&quot;gets&quot;</span>, <span class="string">&quot;read&quot;</span>, <span class="string">&quot;fgets&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>其他</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">other_dangerour_funcs = [<span class="string">&quot;realpath&quot;</span>, <span class="string">&quot;getwd&quot;</span>, <span class="string">&quot;getenv&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h2><p>ida中提供了很多辅助进行程序分析的函数，如get_name_ea_simple(fun_name)，获取函数的调用地址等，这里通过对这些函数的调用，实现对危险函数的检测</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> idautils <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> idc <span class="keyword">import</span> *</span><br><span class="line">str_dangerous_funcs = [<span class="string">&quot;strcpy&quot;</span>, <span class="string">&quot;strncpy&quot;</span>, <span class="string">&quot;strtok&quot;</span>, <span class="string">&quot;strtok_r&quot;</span>, <span class="string">&quot;strntok&quot;</span>, <span class="string">&quot;strcat&quot;</span>, <span class="string">&quot;strncat&quot;</span>, <span class="string">&quot;strstr&quot;</span>, <span class="string">&quot;strlen&quot;</span>, <span class="string">&quot;strcmp&quot;</span>, <span class="string">&quot;strncmp&quot;</span>]</span><br><span class="line">exec_dangerous_funcs = [<span class="string">&quot;system&quot;</span>, <span class="string">&quot;execve&quot;</span>, <span class="string">&quot;unlink&quot;</span>, <span class="string">&quot;popen&quot;</span>]</span><br><span class="line">scanf_dangerous_funcs = [<span class="string">&quot;scanf&quot;</span>, <span class="string">&quot;wscanf&quot;</span>, <span class="string">&quot;sscanf&quot;</span>, <span class="string">&quot;swscanf&quot;</span>, <span class="string">&quot;vscanf&quot;</span>, <span class="string">&quot;vsscanf&quot;</span>]</span><br><span class="line">printf_dangerous_funcs = [<span class="string">&quot;printf&quot;</span>, <span class="string">&quot;sprintf&quot;</span>, <span class="string">&quot;vsprintf&quot;</span>, <span class="string">&quot;swprintf&quot;</span>, <span class="string">&quot;vswprintf&quot;</span>, <span class="string">&quot;snprintf&quot;</span>, <span class="string">&quot;vsnprintf&quot;</span>]</span><br><span class="line">mem_dangerous_funcs = [<span class="string">&quot;memcpy&quot;</span>, <span class="string">&quot;wmemcpy&quot;</span>, <span class="string">&quot;memmove&quot;</span>, <span class="string">&quot;wmemmove&quot;</span>, <span class="string">&quot;memcmp&quot;</span>, <span class="string">&quot;wmemcmp&quot;</span>, <span class="string">&quot;memset&quot;</span>, <span class="string">&quot;wmemset&quot;</span>]</span><br><span class="line">wcs_dangerous_funcs = [<span class="string">&quot;wcslen&quot;</span>, <span class="string">&quot;wcstok&quot;</span>, <span class="string">&quot;wcscat&quot;</span>, <span class="string">&quot;wcsncat&quot;</span>, <span class="string">&quot;wcscpy&quot;</span>, <span class="string">&quot;wcsncpy&quot;</span>, <span class="string">&quot;wctomb&quot;</span>, <span class="string">&quot;wcrtomb&quot;</span>, <span class="string">&quot;wcstombs&quot;</span>, <span class="string">&quot;wcsrtombs&quot;</span>, <span class="string">&quot;wcsnrtombs&quot;</span>]</span><br><span class="line">input_dangerous_funcs = [<span class="string">&quot;gets&quot;</span>, <span class="string">&quot;read&quot;</span>, <span class="string">&quot;fgets&quot;</span>]</span><br><span class="line">other_dangerous_funcs = [<span class="string">&quot;realpath&quot;</span>, <span class="string">&quot;getwd&quot;</span>, <span class="string">&quot;getenv&quot;</span>]</span><br><span class="line">test_str = [<span class="string">&quot;strcpy&quot;</span>]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">str_check</span>():</span></span><br><span class="line">    <span class="keyword">for</span> func_name <span class="keyword">in</span> test_str:</span><br><span class="line">        addr = get_name_ea_simple(func_name)</span><br><span class="line">        <span class="keyword">if</span> addr != BADADDR:</span><br><span class="line">            cross_refs = CodeRefsTo(addr, <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;+<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span>*<span class="number">70</span>&#125;</span>+&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;|<span class="subst">&#123;<span class="string">&#x27;Function Name:&#x27;</span>:^<span class="number">70</span>&#125;</span>|&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;|<span class="subst">&#123;func_name:^<span class="number">70</span>&#125;</span>|&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;+<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span>*<span class="number">70</span>&#125;</span>+&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;|<span class="subst">&#123;<span class="string">&#x27;Function Address&#x27;</span>:^<span class="number">35</span>&#125;</span>|<span class="subst">&#123;<span class="string">&#x27;Function Name&#x27;</span>:^<span class="number">35</span>&#125;</span>|&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;+<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span>*<span class="number">70</span>&#125;</span>+&quot;</span>)</span><br><span class="line">            printed_func_names = <span class="built_in">set</span>()</span><br><span class="line">            <span class="keyword">for</span> ref <span class="keyword">in</span> cross_refs:</span><br><span class="line">                func_name = idaapi.get_func_name(ref)</span><br><span class="line">                <span class="keyword">if</span> func_name <span class="keyword">not</span> <span class="keyword">in</span> printed_func_names:</span><br><span class="line">                    printed_func_names.add(func_name)</span><br><span class="line">                    func = get_func(ref)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;|<span class="subst">&#123;<span class="string">f&#x27;0x<span class="subst">&#123;ref:08x&#125;</span>&#x27;</span>:^<span class="number">35</span>&#125;</span>|<span class="subst">&#123;func_name:^<span class="number">35</span>&#125;</span>|&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;+<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span>*<span class="number">70</span>&#125;</span>+&quot;</span>)</span><br><span class="line">str_check()</span><br></pre></td></tr></table></figure>
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1652601666778.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiquanmuhua.github.io/" title="muhua" target="_blank">muhua</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianmai1.github.io/" title="tianmai" target="_blank">tianmai</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://makabaka-yyds.github.io/" title="makabaka" target="_blank">makabaka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lucifer-rossweisse.github.io/" title="Rossweisse" target="_blank">Rossweisse</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lemonprefect.cn/" title="lemon" target="_blank">lemon</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">危险函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text">检测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Archer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" rel="external nofollow noopener" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+**  <span id="busuanzi_container_site_pv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  <span id="busuanzi_container_site_uv" class="theme-info">
+&nbsp;&nbsp;|&nbsp;&nbsp;本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+**
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LbPELecNVT4mCuCTYHSU2wzm-gzGzoHsz", "iRokzKJjxE22Vs6iknD1dqGA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
