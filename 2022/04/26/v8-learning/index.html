@@ -902,7 +902,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">traceback (most recent call last):</span><br><span class="line">File <span class="string">&quot;./gyp-mac-tool&quot;</span>, line 713, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  sys.exit(main(sys.argv[1:]))</span><br><span class="line">File <span class="string">&quot;./gyp-mac-tool&quot;</span>, line 29, <span class="keyword">in</span> main</span><br><span class="line">  exit_code = executor.Dispatch(args)</span><br><span class="line">File <span class="string">&quot;./gyp-mac-tool&quot;</span>, line 44, <span class="keyword">in</span> Dispatch</span><br><span class="line">  <span class="built_in">return</span> getattr(self, method)(*args[1:])</span><br><span class="line">File <span class="string">&quot;./gyp-mac-tool&quot;</span>, line 68, <span class="keyword">in</span> ExecCopyBundleResource</span><br><span class="line">  self._CopyStringsFile(<span class="built_in">source</span>, dest)</span><br><span class="line">File <span class="string">&quot;./gyp-mac-tool&quot;</span>, line 134, <span class="keyword">in</span> _CopyStringsFile</span><br><span class="line">  import CoreFoundation</span><br><span class="line">ImportError: No module named CoreFoundation</span><br><span class="line">[6642/20987] CXX obj/base/debug/base.task_annotator.o</span><br><span class="line">[6644/20987] ACTION base_nacl: build newlib plib_9b4f41e4158ebb93a5d28e6734a13e85</span><br><span class="line">ninja: build stopped: subcommand failed.</span><br></pre></td></tr></table></figure>
 <p>我能够通过以下方式解决这个问题：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install -U pyobjc</span><br></pre></td></tr></table></figure>
-<h3 id="Using-a-specific-version-of-V8"><a href="#Using-a-specific-version-of-V8" class="headerlink" title="Using a specific version of V8"></a>Using a specific version of V8</h3><p>以下说明有效，但也可以创建从 chromium/src/v8 到本地 v8 存储库和构建/测试的软链接。<br>因此，我们希望包含我们的 V8 更新版本，以便我们可以通过对 V8 的更改来验证它是否正确构建。 虽然我不确定这是不是正确的方法，但我能够更新 src (<br>chromium) 中的 DEPS 并将 v8 条目设置为 <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;</a>:danbev/v8.git@064718a8921608eaf9b5eadbb7d734ec04068a87：</p>
+<h3 id="Using-a-specific-version-of-V8"><a href="#Using-a-specific-version-of-V8" class="headerlink" title="Using a specific version of V8"></a>Using a specific version of V8</h3><p>以下说明有效，但也可以创建从 chromium/src/v8 到本地 v8 存储库和构建/测试的软链接。<br>因此，我们希望包含我们的 V8 更新版本，以便我们可以通过对 V8 的更改来验证它是否正确构建。 虽然我不确定这是不是正确的方法，但我能够更新 src (<br>chromium) 中的 DEPS 并将 v8 条目设置为 <a href="mailto:&#x67;&#105;&#116;&#64;&#x67;&#105;&#116;&#104;&#x75;&#x62;&#46;&#99;&#111;&#x6d;">&#x67;&#105;&#116;&#64;&#x67;&#105;&#116;&#104;&#x75;&#x62;&#46;&#99;&#111;&#x6d;</a>:danbev/v8.git@064718a8921608eaf9b5eadbb7d734ec04068a87：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;git@github.com:danbev/v8.git@064718a8921608eaf9b5eadbb7d734ec04068a87&quot;</span></span><br></pre></td></tr></table></figure>
 <p>在此之后，您必须运行 gclient sync。<br>另一种方法是不更新 DEPS 文件，这是一个版本控制文件，而是更新 .gclientrc 并添加一个 custom_deps 条目：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">solutions = [&#123;u<span class="string">&#x27;managed&#x27;</span>: False, u<span class="string">&#x27;name&#x27;</span>: u<span class="string">&#x27;src&#x27;</span>, u<span class="string">&#x27;url&#x27;</span>: u<span class="string">&#x27;https://chromium.googlesource.com/chromium/src.git&#x27;</span>, </span><br><span class="line">u<span class="string">&#x27;custom_deps&#x27;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;src/v8&quot;</span>: <span class="string">&quot;git@github.com:danbev/v8.git@27a666f9be7ca3959c7372bdeeee14aef2a4b7ba&quot;</span></span><br><span class="line">&#125;, u<span class="string">&#x27;deps_file&#x27;</span>: u<span class="string">&#x27;.DEPS.git&#x27;</span>, u<span class="string">&#x27;safesync_url&#x27;</span>: u<span class="string">&#x27;&#x27;</span>&#125;]</span><br></pre></td></tr></table></figure>
@@ -1244,7 +1244,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1255,7 +1255,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1266,7 +1266,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
